@@ -2,93 +2,174 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Current Repository Status
+## Project Overview
 
-This repository appears to have been recently cleared (commit d87d15e5 "bye bye"). The git history indicates this was previously a Strapi-based project called FLMintDeals.
+FLMintDeals is a full-stack deals/commerce website built with:
+- **Backend**: Strapi v5.22.0 (headless CMS)
+- **Frontend**: Astro v5.13.0 (static site generator)
+- **Styling**: Tailwind CSS
+- **Database**: SQLite (development), configurable for PostgreSQL (production)
+- **Deployment**: Fly.io
+- **Language**: TypeScript throughout
 
-## Project History Context
+## Project Structure
 
-From git history analysis, this was a deals/commerce application with the following architecture:
-
-### Previous Tech Stack
-- **Backend**: Strapi v5.21.0 (Node.js headless CMS)
-- **Language**: TypeScript
-- **Database**: SQLite (development)
-- **Frontend**: React 18 with TypeScript
-- **Deployment**: Docker + Google Cloud Build
-
-### Previous Project Structure
 ```
-flmintdeals/                    # Main Strapi application directory
-├── config/                     # Strapi configuration
-│   ├── admin.ts               # Admin panel config
-│   ├── api.ts                 # API configuration
-│   ├── database.ts            # Database config (SQLite)
-│   ├── middlewares.ts
-│   ├── plugins.ts
-│   └── server.ts              # Server configuration
-├── src/
-│   ├── admin/                 # Admin panel customizations
-│   ├── api/                   # API endpoints and content types
-│   ├── extensions/            # Plugin extensions
-│   └── index.ts               # Application entry point
-├── database/                  # Database files and migrations
-├── public/                    # Static files and uploads
-├── types/                     # TypeScript type definitions
-├── Dockerfile                 # Docker configuration
-├── .env                       # Environment variables
-└── package.json              # Dependencies and scripts
+FLMintDeal/
+├── backend/                   # Strapi CMS backend
+│   ├── config/               # Strapi configuration
+│   ├── src/                  # API endpoints and content types
+│   ├── Dockerfile            # Backend Docker configuration
+│   ├── fly.toml             # Fly.io backend deployment config
+│   └── package.json         # Backend dependencies
+├── frontend/                 # Astro static site
+│   ├── src/
+│   │   ├── layouts/         # Astro layout components
+│   │   ├── lib/             # Utilities (Strapi API client)
+│   │   └── pages/           # Site pages
+│   ├── Dockerfile           # Frontend Docker configuration
+│   ├── fly.toml            # Fly.io frontend deployment config
+│   ├── nginx.conf          # Nginx configuration for production
+│   └── tailwind.config.mjs # Tailwind CSS configuration
+├── deploy.sh               # Deployment script
+├── fly-setup.sh           # Fly.io initial setup script
+└── CLAUDE.md              # This file
 ```
 
-### Previous Commands (from git history)
+## Development Commands
+
+### Backend (Strapi)
 ```bash
-# Navigate to Strapi app
-cd flmintdeals
+cd backend
 
 # Development
-npm install                    # Install dependencies
-npm run develop               # Start Strapi in development mode
-npm run dev                   # Alias for develop
-npm run start                 # Start in production mode
-
-# Build & Deploy
-npm run build                 # Build admin panel for production
-npm run deploy               # Deploy Strapi project
+npm install                 # Install dependencies
+npm run dev                # Start development server (http://localhost:1337)
+npm run develop           # Alias for dev
+npm run build             # Build for production
+npm run start             # Start production server
 
 # Utilities
-npm run console              # Start Strapi console
-npm run strapi              # Display Strapi commands
-npm run upgrade             # Upgrade Strapi version
-npm run upgrade:dry         # Dry run upgrade
+npm run console           # Strapi console
+npm run strapi           # Display Strapi commands
 ```
 
-### Previous Configuration Details
-- Admin panel was accessible at `http://localhost:1337/admin`
-- API endpoint at `http://localhost:1337/api`
-- Database stored at `.tmp/data.db` (SQLite)
-- JWT secrets stored in `.env`
-- Docker deployment configured with cloudbuild.yaml
+### Frontend (Astro)
+```bash
+cd frontend
 
-## Working with This Repository
+# Development  
+npm install               # Install dependencies
+npm run dev              # Start development server (http://localhost:4321)
+npm run build            # Build for production
+npm run preview          # Preview production build
 
-### If Restoring the Project
-1. The project structure and configuration can be restored from git history
-2. Key commits to reference:
-   - `88795ed1`: "Add Strapi project setup and documentation"
-   - Earlier commits contain the full project structure
+# Utilities
+npm run astro            # Astro CLI commands
+```
 
-### If Starting Fresh
-1. This appears to be intended for a deals/commerce application
-2. Consider whether to restore the Strapi setup or start with a different stack
-3. The `flmintdeals` subdirectory was the main application container
+## Important Configuration
 
-### Environment Setup
-- Ensure Node.js is installed (Strapi v5.21.0 requires Node 18+)
-- If restoring Strapi, SQLite will be used for development
-- Docker configuration was previously set up for deployment
+### Environment Variables
 
-## Repository Context
-- Main branch: `main`
-- Recent activity suggests project restructuring or cleanup
-- Domain appears to be deals/commerce related based on name "FLMintDeals"
-- Previous setup included comprehensive TypeScript type definitions
+**Backend (.env)**:
+```bash
+# Server
+HOST=0.0.0.0
+PORT=1337
+
+# Secrets (generate new ones for production)
+APP_KEYS="key1,key2"
+API_TOKEN_SALT=salt
+ADMIN_JWT_SECRET=secret
+TRANSFER_TOKEN_SALT=salt
+JWT_SECRET=secret
+ENCRYPTION_KEY=key
+
+# Database
+DATABASE_CLIENT=sqlite
+DATABASE_FILENAME=.tmp/data.db
+
+# Production
+NODE_ENV=development
+PUBLIC_URL=                    # Set to your domain in production
+IS_PROXIED=true               # Set to true when behind a proxy
+```
+
+**Frontend**: Set `PUBLIC_STRAPI_URL` to point to your Strapi instance.
+
+### API Integration
+
+The frontend includes a Strapi API client at `frontend/src/lib/strapi.ts`:
+
+```typescript
+import { strapi } from '../lib/strapi';
+
+// Fetch multiple items
+const deals = await strapi.getMany('/deals');
+
+// Fetch single item
+const deal = await strapi.getOne('/deals', id);
+```
+
+## Deployment to Fly.io
+
+### First-time Setup
+1. Install Fly CLI: `https://fly.io/docs/hands-on/install-flyctl/`
+2. Login: `fly auth login`
+3. Run setup script: `./fly-setup.sh`
+4. Set backend secrets (commands provided by setup script)
+
+### Deploy Both Apps
+```bash
+./deploy.sh
+```
+
+### Manual Deployment
+```bash
+# Deploy backend
+cd backend && fly deploy --app flmintdeals-backend
+
+# Deploy frontend  
+cd frontend && fly deploy --app flmintdeals-frontend
+```
+
+### Production URLs
+- Frontend: `https://flmintdeals-frontend.fly.dev`
+- Backend: `https://flmintdeals-backend.fly.dev`
+- Strapi Admin: `https://flmintdeals-backend.fly.dev/admin`
+
+## Development Workflow
+
+1. **Start Backend**: `cd backend && npm run dev`
+2. **Create Content Types**: Access Strapi admin at `http://localhost:1337/admin`
+3. **Start Frontend**: `cd frontend && npm run dev`
+4. **Build Frontend API Integration**: Update `frontend/src/lib/strapi.ts` calls
+5. **Deploy**: Run `./deploy.sh`
+
+## Common Tasks
+
+### Adding Content Types in Strapi
+1. Access admin panel: `http://localhost:1337/admin`
+2. Go to Content-Types Builder
+3. Create new content type (e.g., "Deal")
+4. Add fields and configure
+5. Save and restart server
+
+### Connecting Frontend to New Content
+1. Update `frontend/src/pages/index.astro` or create new pages
+2. Use the Strapi client: `await strapi.getMany('/deals')`
+3. Style with Tailwind CSS classes
+
+### Database Management
+- **Development**: SQLite file at `backend/.tmp/data.db`
+- **Production**: Persistent volume mounted at `/data` on Fly.io
+- **Migrations**: Handled automatically by Strapi
+
+## Architecture Notes
+
+- **Backend Port**: 1337 (development), 8080 (production on Fly.io)
+- **Frontend Port**: 4321 (development), 80 (production)
+- **Database**: SQLite for development, easily configurable for PostgreSQL
+- **Static Assets**: Served by Nginx in production
+- **API Calls**: Made at build time (SSG) and runtime via fetch
