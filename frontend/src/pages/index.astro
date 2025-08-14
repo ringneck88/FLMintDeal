@@ -1,31 +1,70 @@
 ---
-// This will fetch data from Strapi in the future
+import Layout from '../layouts/Layout.astro';
+import { strapi } from '../lib/strapi';
+
+// Example: Fetch data from Strapi (uncomment when content types are created)
+// const deals = await strapi.getMany('/deals');
+
+let strapiStatus = 'Not connected';
+let strapiUrl = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1337';
+
+// Try to connect to Strapi to check status
+try {
+  // This will attempt to fetch from Strapi health check or any endpoint
+  await fetch(`${strapiUrl}/admin/init`);
+  strapiStatus = 'Connected';
+} catch (error) {
+  strapiStatus = 'Disconnected - Start your Strapi backend';
+}
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>FLMintDeals - Your Deals Website</title>
-	</head>
-	<body class="bg-gray-50 min-h-screen">
-		<header class="bg-white shadow">
-			<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-				<h1 class="text-3xl font-bold text-gray-900">FLMintDeals</h1>
-			</div>
-		</header>
-		<main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-			<div class="px-4 py-6 sm:px-0">
-				<div class="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center">
-					<div class="text-center">
-						<h2 class="text-2xl font-semibold text-gray-600 mb-4">Welcome to Your Deals Website</h2>
-						<p class="text-gray-500">Built with Astro, Strapi, and Tailwind CSS</p>
-						<p class="text-sm text-gray-400 mt-2">Ready for Fly.io deployment</p>
-					</div>
-				</div>
-			</div>
-		</main>
-	</body>
-</html>
+<Layout title="FLMintDeals - Your Deals Website">
+  <div class="px-4 py-6 sm:px-0">
+    <!-- Status Card -->
+    <div class="bg-white rounded-lg shadow p-6 mb-8">
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">System Status</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm font-medium text-gray-900">Astro Frontend</p>
+            <p class="text-sm text-gray-500">Running</p>
+          </div>
+        </div>
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class={`w-3 h-3 rounded-full ${strapiStatus === 'Connected' ? 'bg-green-400' : 'bg-red-400'}`}></div>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm font-medium text-gray-900">Strapi Backend</p>
+            <p class="text-sm text-gray-500">{strapiStatus}</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 text-sm text-gray-600">
+        <p>Strapi URL: <code class="bg-gray-100 px-2 py-1 rounded">{strapiUrl}</code></p>
+      </div>
+    </div>
+
+    <!-- Welcome Section -->
+    <div class="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center">
+      <div class="text-center">
+        <h2 class="text-2xl font-semibold text-gray-600 mb-4">Welcome to Your Deals Website</h2>
+        <p class="text-gray-500 mb-2">Built with Astro, Strapi, and Tailwind CSS</p>
+        <p class="text-sm text-gray-400 mb-6">Ready for Fly.io deployment</p>
+        
+        <div class="space-y-2 text-sm text-left bg-gray-100 p-4 rounded-lg max-w-md mx-auto">
+          <p class="font-medium text-gray-700">Next steps:</p>
+          <ul class="text-gray-600 space-y-1">
+            <li>1. Start your Strapi backend: <code>cd backend && npm run dev</code></li>
+            <li>2. Create content types in Strapi admin</li>
+            <li>3. Update this page to fetch and display content</li>
+            <li>4. Deploy to Fly.io</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,28 @@
+# Fly.io configuration for Astro frontend
+app = "flmintdeals-frontend"
+primary_region = "iad"
+
+[build]
+
+[env]
+  PUBLIC_STRAPI_URL = "https://flmintdeals-backend.fly.dev"
+
+[http_service]
+  internal_port = 80
+  force_https = true
+  auto_stop_machines = "suspend"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+  [http_service.checks]
+    [http_service.checks.alive]
+      type = "http"
+      interval = "15s"
+      timeout = "2s"
+      path = "/"
+
+[[vm]]
+  memory = '512mb'
+  cpu_kind = 'shared'
+  cpus = 1
