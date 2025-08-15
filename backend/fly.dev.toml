@@ -3,14 +3,15 @@ app = "flmintdeal-dev"
 primary_region = "iad"
 
 [build]
+  dockerfile = "Dockerfile.dev"
 
 [env]
   NODE_ENV = "development"
   HOST = "0.0.0.0"
-  PORT = "8080"
+  PORT = "1337"
 
 [http_service]
-  internal_port = 8080
+  internal_port = 1337
   force_https = true
   auto_stop_machines = "suspend"
   auto_start_machines = true
