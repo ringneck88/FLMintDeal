@@ -18,10 +18,47 @@ exports.default = {
      */
     async bootstrap({ strapi }) {
         try {
+            console.log('🚀 Setting up Deal permissions and sample data...');
+            // Wait a moment for all plugins to load
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            // Set up public permissions for Deal API
+            const publicRole = await strapi.query('plugin::users-permissions.role').findOne({
+                where: { type: 'public' }
+            });
+            if (publicRole) {
+                console.log('📋 Setting up public permissions for Deal API...');
+                // Find or create permissions for Deal API
+                const dealPermissions = [
+                    'api::deal.deal.find',
+                    'api::deal.deal.findOne'
+                ];
+                for (const action of dealPermissions) {
+                    const existingPermission = await strapi.query('plugin::users-permissions.permission').findOne({
+                        where: { action, role: publicRole.id }
+                    });
+                    if (!existingPermission) {
+                        await strapi.query('plugin::users-permissions.permission').create({
+                            data: {
+                                action,
+                                role: publicRole.id,
+                                enabled: true
+                            }
+                        });
+                        console.log(`✅ Created permission: ${action}`);
+                    }
+                    else {
+                        await strapi.query('plugin::users-permissions.permission').update({
+                            where: { id: existingPermission.id },
+                            data: { enabled: true }
+                        });
+                        console.log(`✅ Updated permission: ${action}`);
+                    }
+                }
+            }
             // Create sample data if deals collection is empty
             const dealCount = await strapi.entityService.count('api::deal.deal');
             if (dealCount === 0) {
-                console.log('Creating sample deals...');
+                console.log('📦 Creating sample deals...');
                 const sampleDeals = [
                     {
                         title: 'Gaming Laptop Deal',
@@ -61,7 +98,7 @@ exports.default = {
                 }
                 console.log(`✅ Created ${sampleDeals.length} sample deals`);
             }
-            console.log('🎉 Bootstrap completed successfully');
+            console.log('🎉 Bootstrap completed successfully - Deal API should now be accessible!');
         }
         catch (error) {
             console.error('Bootstrap error:', error.message);

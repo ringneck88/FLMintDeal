@@ -376,7 +376,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiDealDeal extends Struct.CollectionTypeSchema {
   collectionName: 'deals';
   info: {
-    description: 'A deals/commerce item';
+    description: 'Deals and offers';
     displayName: 'Deal';
     pluralName: 'deals';
     singularName: 'deal';
@@ -390,16 +390,8 @@ export interface ApiDealDeal extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
-    discount: Schema.Attribute.Integer &
-      Schema.Attribute.SetMinMax<
-        {
-          max: 100;
-          min: 0;
-        },
-        number
-      >;
+    discount: Schema.Attribute.Integer;
     featured: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    image: Schema.Attribute.Media<'images', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::deal.deal'> &
       Schema.Attribute.Private;

@@ -5,7 +5,7 @@
     "singularName": "deal",
     "pluralName": "deals",
     "displayName": "Deal",
-    "description": "A deals/commerce item"
+    "description": "Deals and offers"
   },
   "options": {
     "draftAndPublish": true
@@ -26,9 +26,7 @@
       "type": "decimal"
     },
     "discount": {
-      "type": "integer",
-      "min": 0,
-      "max": 100
+      "type": "integer"
     },
     "category": {
       "type": "string"
@@ -36,14 +34,6 @@
     "featured": {
       "type": "boolean",
       "default": false
-    },
-    "image": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ]
     },
     "slug": {
       "type": "uid",
