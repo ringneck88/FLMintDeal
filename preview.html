@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLMintDeals - Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold text-gray-900">
+                <a href="/" class="hover:text-blue-600 transition-colors">FLMintDeals</a>
+            </h1>
+        </div>
+    </header>
+    
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <!-- Status Card -->
+            <div class="bg-white rounded-lg shadow p-6 mb-8">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">System Status</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-3 h-3 bg-green-400 rounded-full"></div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-900">Astro Frontend</p>
+                            <p class="text-sm text-gray-500">Ready</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-gray-900">Strapi Backend</p>
+                            <p class="text-sm text-gray-500">Disconnected - Dependencies need installation</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 text-sm text-gray-600">
+                    <p>Strapi URL: <code class="bg-gray-100 px-2 py-1 rounded">http://localhost:1337</code></p>
+                </div>
+            </div>
+
+            <!-- Welcome Section -->
+            <div class="border-4 border-dashed border-gray-200 rounded-lg h-96 flex items-center justify-center">
+                <div class="text-center">
+                    <h2 class="text-2xl font-semibold text-gray-600 mb-4">Welcome to Your Deals Website</h2>
+                    <p class="text-gray-500 mb-2">Built with Astro, Strapi, and Tailwind CSS</p>
+                    <p class="text-sm text-gray-400 mb-6">Ready for Fly.io deployment</p>
+                    
+                    <div class="space-y-2 text-sm text-left bg-gray-100 p-4 rounded-lg max-w-md mx-auto">
+                        <p class="font-medium text-gray-700">Next steps:</p>
+                        <ul class="text-gray-600 space-y-1">
+                            <li>1. Complete dependency installation for both apps</li>
+                            <li>2. Start your Strapi backend: <code>cd backend && npm run dev</code></li>
+                            <li>3. Start your Astro frontend: <code>cd frontend && npm run dev</code></li>
+                            <li>4. Create content types in Strapi admin</li>
+                            <li>5. Deploy to Fly.io</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 mt-12">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-gray-500 text-sm">
+                Built with Astro, Strapi, and Tailwind CSS | Ready for Fly.io
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
