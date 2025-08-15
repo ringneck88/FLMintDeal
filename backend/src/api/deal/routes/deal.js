@@ -4,6 +4,25 @@
  * deal router
  */
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::deal.deal');
+module.exports = {
+  routes: [
+    {
+      method: 'GET',
+      path: '/deals',
+      handler: 'deal.find',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+    {
+      method: 'GET',
+      path: '/deals/:id',
+      handler: 'deal.findOne',
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
+  ],
+};
