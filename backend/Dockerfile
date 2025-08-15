@@ -5,14 +5,14 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Install dependencies first (for better caching)
-COPY package*.json ./
-RUN npm ci --only=production
+COPY package.json yarn.lock ./
+RUN yarn install --production --frozen-lockfile
 
 # Copy application code
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN yarn build
 
 # Expose port
 EXPOSE 1337
@@ -26,4 +26,4 @@ RUN chown -R strapi:nodejs /app
 USER strapi
 
 # Start the application
-CMD ["npm", "run", "start"]
+CMD ["yarn", "start"]
