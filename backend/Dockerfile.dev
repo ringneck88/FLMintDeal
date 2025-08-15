@@ -11,9 +11,6 @@ RUN yarn install --frozen-lockfile
 # Copy application code
 COPY . .
 
-# Build the application
-RUN yarn build
-
 # Expose port
 EXPOSE 1337
 
@@ -25,5 +22,5 @@ RUN adduser -S strapi -u 1001
 RUN chown -R strapi:nodejs /app
 USER strapi
 
-# Start the application in development mode
+# Start the application in development mode (no pre-build)
 CMD ["yarn", "develop"]

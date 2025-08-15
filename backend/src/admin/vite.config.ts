@@ -6,9 +6,7 @@ export default (config: UserConfig) => {
     server: {
       host: '0.0.0.0',
       allowedHosts: ['flmintdeal-dev.fly.dev', '.fly.dev'],
-      hmr: {
-        clientPort: 443,
-      },
+      hmr: false, // Disable HMR to prevent reload loops in production
     },
     resolve: {
       alias: {
