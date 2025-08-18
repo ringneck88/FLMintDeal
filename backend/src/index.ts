@@ -19,13 +19,21 @@ export default {
   async bootstrap({ strapi }) {
     try {
       console.log('🚀 Setting up admin user, Deal permissions and sample data...');
+      console.log('🗄️ Database client:', strapi.config.get('database.connection.client', 'sqlite'));
 
       // Wait a moment for all plugins to load
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       // Check if admin user exists, create one if not
-      const adminUsers = await strapi.db.query('admin::user.user').findMany();
-      console.log(`👤 Found ${adminUsers.length} admin users`);
+      let adminUsers = [];
+      try {
+        adminUsers = await strapi.db.query('admin::user.user').findMany();
+        console.log(`👤 Found ${adminUsers.length} admin users`);
+      } catch (error) {
+        console.log('⚠️ Could not query admin users:', error.message);
+        console.log('🔄 Database might still be initializing...');
+        return; // Skip bootstrap if database isn't ready
+      }
       
       if (adminUsers.length === 0) {
         console.log('🔧 Creating first admin user...');

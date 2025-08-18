@@ -16,7 +16,11 @@
       "Bash(flyctl mpg connect:*)",
       "Bash(flyctl mpg config show:*)",
       "Bash(flyctl mpg attach:*)",
-      "Bash(flyctl mpg destroy:*)"
+      "Bash(flyctl mpg destroy:*)",
+      "Bash(flyctl --app flmintdeal logs --limit 50)",
+      "Bash(flyctl:*)",
+      "WebFetch(domain:flmintdeal.fly.dev)",
+      "WebFetch(domain:flmintdeal-dev.fly.dev)"
     ],
     "deny": [],
     "ask": []

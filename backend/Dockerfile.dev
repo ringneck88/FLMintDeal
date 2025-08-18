@@ -20,6 +20,10 @@ RUN adduser -S strapi -u 1001
 
 # Change ownership to strapi user
 RUN chown -R strapi:nodejs /app
+
+# Create data directory and set permissions
+RUN mkdir -p /data && chown -R strapi:nodejs /data
+
 USER strapi
 
 # Start the application in development mode (no pre-build)

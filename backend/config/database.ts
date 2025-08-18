@@ -45,10 +45,12 @@ export default ({ env }) => {
     sqlite: {
       connection: {
         filename: path.join(
-          env('NODE_ENV') === 'production' ? '/data' : __dirname, 
-          env('NODE_ENV') === 'production' ? '' : '..', 
-          env('NODE_ENV') === 'production' ? '' : '..', 
-          env('DATABASE_FILENAME', env('NODE_ENV') === 'production' ? 'data.db' : '.tmp/data.db')
+          // Use persistent volume for both production and development on Fly.io
+          // Check for Fly.io environment variable to detect if running on Fly
+          process.env.FLY_APP_NAME ? '/data' : __dirname, 
+          process.env.FLY_APP_NAME ? '' : '..', 
+          process.env.FLY_APP_NAME ? '' : '..', 
+          env('DATABASE_FILENAME', process.env.FLY_APP_NAME ? 'data.db' : '.tmp/data.db')
         ),
       },
       useNullAsDefault: true,
