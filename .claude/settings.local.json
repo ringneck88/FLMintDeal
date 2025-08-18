@@ -8,7 +8,10 @@
       "Bash(flyctl logs:*)",
       "Bash(flyctl secrets show:*)",
       "Bash(flyctl secrets:*)",
-      "Bash(flyctl ssh console:*)"
+      "Bash(flyctl ssh console:*)",
+      "Bash(flyctl apps:*)",
+      "Bash(flyctl postgres create:*)",
+      "Bash(flyctl mpg create:*)"
     ],
     "deny": [],
     "ask": []

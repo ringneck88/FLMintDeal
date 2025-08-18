@@ -18,10 +18,38 @@ export default {
    */
   async bootstrap({ strapi }) {
     try {
-      console.log('🚀 Setting up Deal permissions and sample data...');
+      console.log('🚀 Setting up admin user, Deal permissions and sample data...');
 
       // Wait a moment for all plugins to load
       await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Check if admin user exists, create one if not
+      const adminUsers = await strapi.db.query('admin::user.user').findMany();
+      console.log(`👤 Found ${adminUsers.length} admin users`);
+      
+      if (adminUsers.length === 0) {
+        console.log('🔧 Creating first admin user...');
+        try {
+          const adminUser = await strapi.db.query('admin::user.user').create({
+            data: {
+              firstname: 'Kelly',
+              lastname: 'Sharp',
+              email: 'kelly@phiti.com',
+              password: await strapi.admin.services.auth.hashPassword('admin123'),
+              isActive: true,
+              blocked: false,
+              roles: [1] // Super Admin role ID
+            }
+          });
+          console.log('✅ Admin user created successfully!');
+          console.log('📧 Email: kelly@phiti.com');
+          console.log('🔑 Password: admin123');
+        } catch (error) {
+          console.log('⚠️ Admin user creation failed:', error.message);
+        }
+      } else {
+        console.log('✅ Admin users already exist');
+      }
 
       // Set up public permissions for Deal API
       const publicRole = await strapi.query('plugin::users-permissions.role').findOne({
