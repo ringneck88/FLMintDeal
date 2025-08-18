@@ -67,13 +67,14 @@ export default {
       if (dealCount === 0) {
         console.log('📦 Creating sample deals...');
         
+        // Your original deals data from SQLite migration
         const sampleDeals = [
           {
             title: 'Gaming Laptop Deal',
             description: 'High-performance gaming laptop with RTX graphics card',
             price: 899.99,
             originalPrice: 1299.99,
-            discount: 31,
+            discount: 30,
             category: 'Electronics',
             featured: true,
             publishedAt: new Date()

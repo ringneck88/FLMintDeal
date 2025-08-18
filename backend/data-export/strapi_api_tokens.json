@@ -1,0 +1,172 @@
+{
+  "tableName": "strapi_api_tokens",
+  "schema": [
+    {
+      "cid": 0,
+      "name": "id",
+      "type": "INTEGER",
+      "notnull": 1,
+      "dflt_value": null,
+      "pk": 1
+    },
+    {
+      "cid": 1,
+      "name": "document_id",
+      "type": "varchar(255)",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 2,
+      "name": "name",
+      "type": "varchar(255)",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 3,
+      "name": "description",
+      "type": "varchar(255)",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 4,
+      "name": "type",
+      "type": "varchar(255)",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 5,
+      "name": "access_key",
+      "type": "varchar(255)",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 6,
+      "name": "encrypted_key",
+      "type": "TEXT",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 7,
+      "name": "last_used_at",
+      "type": "datetime",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 8,
+      "name": "expires_at",
+      "type": "datetime",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 9,
+      "name": "lifespan",
+      "type": "bigint",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 10,
+      "name": "created_at",
+      "type": "datetime",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 11,
+      "name": "updated_at",
+      "type": "datetime",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 12,
+      "name": "published_at",
+      "type": "datetime",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 13,
+      "name": "created_by_id",
+      "type": "INTEGER",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 14,
+      "name": "updated_by_id",
+      "type": "INTEGER",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 15,
+      "name": "locale",
+      "type": "varchar(255)",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    }
+  ],
+  "data": [
+    {
+      "id": 1,
+      "document_id": "x7bwqy8lf70n60nndhqfj0e9",
+      "name": "Read Only",
+      "description": "A default API token with read-only permissions, only used for accessing resources",
+      "type": "read-only",
+      "access_key": "8ae9062c74cad1b8e37af6e3c7a6a298225d0a08f86faea393622d23fa919df3d90f743065fb1975f4a196ad0372fad57c711d128f9c70610404d97e1f5850de",
+      "encrypted_key": "v1:2f306dfb1ebe5edb5ab824d515179f76:3c02d7490d85c630015e609a28ff4223d68accd73feb9b65302955a77207bd3e0529acc043c7318341f4740cb00b5e4771c8ec1e306ae87e4ec912c8e00eb1aad5a08a5f7e8c1166693e015e62a4a0023558523ffe0364d2ddead577d94a4913f10e0467968be3ed55462c511a4c1dc56aa00ca5d01cf29d829621d6e966cdf440d4f5c79dcb0de095369e08bdf24834e1ad4645acc3fea9ca2fde20d9f0d2903ec97596ecfe27ae30772abe264faf0daeaa3885e7ad33d0a710f4a0cfda4f2d8cddfbca2344fb54f7a88336aee81b43b156274793a27a667b735f00ef29c4b25be7fc82085ad2247fe4a2cc7d479eb8c155fa0fe2868058c93b8adc33b13737:636a9ad77b086362fd2b2adb06cb136f",
+      "last_used_at": null,
+      "expires_at": null,
+      "lifespan": null,
+      "created_at": 1755219968708,
+      "updated_at": 1755219968708,
+      "published_at": 1755219968708,
+      "created_by_id": null,
+      "updated_by_id": null,
+      "locale": null
+    },
+    {
+      "id": 2,
+      "document_id": "gc9usr7kpmxta6posojrv3ij",
+      "name": "Full Access",
+      "description": "A default API token with full access permissions, used for accessing or modifying resources",
+      "type": "full-access",
+      "access_key": "60f50be4b3dd3bb9748d998969382aee8017de1894ac1374bd1ec34b46ac12e70ebfd417d0ad51c8d4d24598b15d290de90d0af000d8d0381f4868dad6019853",
+      "encrypted_key": "v1:1720b0bfd5bd4a77a47257dbbf6b03ef:3e9275ccb1631973976f2892ba86e9de91c18157ce5cbbe37f4514ae935d088b0a886b00e0dd7f95c0b8f86a97840972fae5d3f531ae239b305d7e23e1c874e2c640f3786a4707c33dd4f13cb715b6f5139f731c8d959e6a1689d0c640b5aaf56c74c91550dd24c9de3e831f94be35bc508df30cae35c7ac4ac51580794405fa72de40d455c82be0205c0d2384c5a00ea40edac05a65c051876348c080bad68dba422ed8a84cb45326de01b872c7724921e3f9aa7a51b21f0654e9e04b8d675045356bb4206e55775e944c654109d41aa2601ebe22bc0ed1fc602225dcb8e59f01f91488f16928face5bf03a8abfafa6fc72d8afb2a9f735619cb2ef3f235223:3c695f07f3f9eabd6b82b6131e6ef71a",
+      "last_used_at": null,
+      "expires_at": null,
+      "lifespan": null,
+      "created_at": 1755219968724,
+      "updated_at": 1755219968724,
+      "published_at": 1755219968724,
+      "created_by_id": null,
+      "updated_by_id": null,
+      "locale": null
+    }
+  ],
+  "recordCount": 2
+}

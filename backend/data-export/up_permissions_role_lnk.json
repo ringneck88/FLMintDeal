@@ -1,0 +1,244 @@
+{
+  "tableName": "up_permissions_role_lnk",
+  "schema": [
+    {
+      "cid": 0,
+      "name": "id",
+      "type": "INTEGER",
+      "notnull": 1,
+      "dflt_value": null,
+      "pk": 1
+    },
+    {
+      "cid": 1,
+      "name": "permission_id",
+      "type": "INTEGER",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 2,
+      "name": "role_id",
+      "type": "INTEGER",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 3,
+      "name": "permission_ord",
+      "type": "float",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    }
+  ],
+  "data": [
+    {
+      "id": 1,
+      "permission_id": 1,
+      "role_id": 1,
+      "permission_ord": 1
+    },
+    {
+      "id": 2,
+      "permission_id": 2,
+      "role_id": 1,
+      "permission_ord": 2
+    },
+    {
+      "id": 3,
+      "permission_id": 3,
+      "role_id": 2,
+      "permission_ord": 1
+    },
+    {
+      "id": 4,
+      "permission_id": 4,
+      "role_id": 2,
+      "permission_ord": 2
+    },
+    {
+      "id": 5,
+      "permission_id": 5,
+      "role_id": 2,
+      "permission_ord": 3
+    },
+    {
+      "id": 6,
+      "permission_id": 6,
+      "role_id": 2,
+      "permission_ord": 4
+    },
+    {
+      "id": 7,
+      "permission_id": 7,
+      "role_id": 2,
+      "permission_ord": 5
+    },
+    {
+      "id": 8,
+      "permission_id": 8,
+      "role_id": 2,
+      "permission_ord": 6
+    },
+    {
+      "id": 9,
+      "permission_id": 9,
+      "role_id": 2,
+      "permission_ord": 7
+    },
+    {
+      "id": 10,
+      "permission_id": 10,
+      "role_id": 2,
+      "permission_ord": 8
+    },
+    {
+      "id": 11,
+      "permission_id": 11,
+      "role_id": 2,
+      "permission_ord": 9
+    },
+    {
+      "id": 12,
+      "permission_id": 12,
+      "role_id": 2,
+      "permission_ord": 10
+    },
+    {
+      "id": 13,
+      "permission_id": 13,
+      "role_id": 2,
+      "permission_ord": 11
+    },
+    {
+      "id": 14,
+      "permission_id": 14,
+      "role_id": 2,
+      "permission_ord": 12
+    },
+    {
+      "id": 15,
+      "permission_id": 15,
+      "role_id": 2,
+      "permission_ord": 13
+    },
+    {
+      "id": 16,
+      "permission_id": 16,
+      "role_id": 2,
+      "permission_ord": 14
+    },
+    {
+      "id": 17,
+      "permission_id": 17,
+      "role_id": 2,
+      "permission_ord": 15
+    },
+    {
+      "id": 18,
+      "permission_id": 18,
+      "role_id": 2,
+      "permission_ord": 16
+    },
+    {
+      "id": 19,
+      "permission_id": 19,
+      "role_id": 2,
+      "permission_ord": 17
+    },
+    {
+      "id": 20,
+      "permission_id": 20,
+      "role_id": 2,
+      "permission_ord": 18
+    },
+    {
+      "id": 21,
+      "permission_id": 21,
+      "role_id": 2,
+      "permission_ord": 19
+    },
+    {
+      "id": 22,
+      "permission_id": 22,
+      "role_id": 2,
+      "permission_ord": 20
+    },
+    {
+      "id": 23,
+      "permission_id": 23,
+      "role_id": 2,
+      "permission_ord": 21
+    },
+    {
+      "id": 24,
+      "permission_id": 24,
+      "role_id": 2,
+      "permission_ord": 22
+    },
+    {
+      "id": 25,
+      "permission_id": 25,
+      "role_id": 2,
+      "permission_ord": 23
+    },
+    {
+      "id": 26,
+      "permission_id": 26,
+      "role_id": 2,
+      "permission_ord": 24
+    },
+    {
+      "id": 27,
+      "permission_id": 27,
+      "role_id": 2,
+      "permission_ord": 25
+    },
+    {
+      "id": 28,
+      "permission_id": 28,
+      "role_id": 2,
+      "permission_ord": 26
+    },
+    {
+      "id": 29,
+      "permission_id": 29,
+      "role_id": 2,
+      "permission_ord": 27
+    },
+    {
+      "id": 30,
+      "permission_id": 30,
+      "role_id": 2,
+      "permission_ord": 28
+    },
+    {
+      "id": 31,
+      "permission_id": 31,
+      "role_id": 2,
+      "permission_ord": 29
+    },
+    {
+      "id": 32,
+      "permission_id": 32,
+      "role_id": 2,
+      "permission_ord": 30
+    },
+    {
+      "id": 43,
+      "permission_id": 43,
+      "role_id": 2,
+      "permission_ord": 31
+    },
+    {
+      "id": 44,
+      "permission_id": 44,
+      "role_id": 2,
+      "permission_ord": 32
+    }
+  ],
+  "recordCount": 34
+}

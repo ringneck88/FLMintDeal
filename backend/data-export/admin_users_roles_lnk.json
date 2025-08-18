@@ -1,0 +1,55 @@
+{
+  "tableName": "admin_users_roles_lnk",
+  "schema": [
+    {
+      "cid": 0,
+      "name": "id",
+      "type": "INTEGER",
+      "notnull": 1,
+      "dflt_value": null,
+      "pk": 1
+    },
+    {
+      "cid": 1,
+      "name": "user_id",
+      "type": "INTEGER",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 2,
+      "name": "role_id",
+      "type": "INTEGER",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 3,
+      "name": "role_ord",
+      "type": "float",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 4,
+      "name": "user_ord",
+      "type": "float",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    }
+  ],
+  "data": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "role_id": 1,
+      "role_ord": 1,
+      "user_ord": 1
+    }
+  ],
+  "recordCount": 1
+}

@@ -1,0 +1,244 @@
+{
+  "tableName": "deals",
+  "schema": [
+    {
+      "cid": 0,
+      "name": "id",
+      "type": "INTEGER",
+      "notnull": 1,
+      "dflt_value": null,
+      "pk": 1
+    },
+    {
+      "cid": 1,
+      "name": "document_id",
+      "type": "varchar(255)",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 2,
+      "name": "title",
+      "type": "varchar(255)",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 3,
+      "name": "description",
+      "type": "TEXT",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 4,
+      "name": "price",
+      "type": "float",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 5,
+      "name": "original_price",
+      "type": "float",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 6,
+      "name": "discount",
+      "type": "INTEGER",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 7,
+      "name": "category",
+      "type": "varchar(255)",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 8,
+      "name": "featured",
+      "type": "boolean",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 9,
+      "name": "slug",
+      "type": "varchar(255)",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 10,
+      "name": "created_at",
+      "type": "datetime",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 11,
+      "name": "updated_at",
+      "type": "datetime",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 12,
+      "name": "published_at",
+      "type": "datetime",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 13,
+      "name": "created_by_id",
+      "type": "INTEGER",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 14,
+      "name": "updated_by_id",
+      "type": "INTEGER",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 15,
+      "name": "locale",
+      "type": "varchar(255)",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    }
+  ],
+  "data": [
+    {
+      "id": 1,
+      "document_id": "u9enk9onkgyvksrjxpejq43g",
+      "title": "Gaming Laptop Deal",
+      "description": "High-performance gaming laptop with RTX graphics card",
+      "price": 899.99,
+      "original_price": 1299.99,
+      "discount": 30,
+      "category": "Electronics",
+      "featured": 1,
+      "slug": null,
+      "created_at": 1755278678533,
+      "updated_at": 1755280377690,
+      "published_at": null,
+      "created_by_id": null,
+      "updated_by_id": 1,
+      "locale": null
+    },
+    {
+      "id": 3,
+      "document_id": "k9c3ft6lmzrau50r7suqu01u",
+      "title": "Wireless Headphones",
+      "description": "Premium noise-canceling wireless headphones",
+      "price": 149.99,
+      "original_price": 249.99,
+      "discount": 40,
+      "category": "Electronics",
+      "featured": 0,
+      "slug": null,
+      "created_at": 1755278678566,
+      "updated_at": 1755278678566,
+      "published_at": null,
+      "created_by_id": null,
+      "updated_by_id": null,
+      "locale": null
+    },
+    {
+      "id": 4,
+      "document_id": "k9c3ft6lmzrau50r7suqu01u",
+      "title": "Wireless Headphones",
+      "description": "Premium noise-canceling wireless headphones",
+      "price": 149.99,
+      "original_price": 249.99,
+      "discount": 40,
+      "category": "Electronics",
+      "featured": 0,
+      "slug": null,
+      "created_at": 1755278678566,
+      "updated_at": 1755278678566,
+      "published_at": 1755278678576,
+      "created_by_id": null,
+      "updated_by_id": null,
+      "locale": null
+    },
+    {
+      "id": 5,
+      "document_id": "urrzoy1wq1nsbesdc5inyov5",
+      "title": "Smart Watch",
+      "description": "Fitness tracking smart watch with heart rate monitor",
+      "price": 199.99,
+      "original_price": 299.99,
+      "discount": 33,
+      "category": "Electronics",
+      "featured": 1,
+      "slug": null,
+      "created_at": 1755278678596,
+      "updated_at": 1755278678596,
+      "published_at": null,
+      "created_by_id": null,
+      "updated_by_id": null,
+      "locale": null
+    },
+    {
+      "id": 6,
+      "document_id": "urrzoy1wq1nsbesdc5inyov5",
+      "title": "Smart Watch",
+      "description": "Fitness tracking smart watch with heart rate monitor",
+      "price": 199.99,
+      "original_price": 299.99,
+      "discount": 33,
+      "category": "Electronics",
+      "featured": 1,
+      "slug": null,
+      "created_at": 1755278678596,
+      "updated_at": 1755278678596,
+      "published_at": 1755278678604,
+      "created_by_id": null,
+      "updated_by_id": null,
+      "locale": null
+    },
+    {
+      "id": 7,
+      "document_id": "u9enk9onkgyvksrjxpejq43g",
+      "title": "Gaming Laptop Deal",
+      "description": "High-performance gaming laptop with RTX graphics card",
+      "price": 899.99,
+      "original_price": 1299.99,
+      "discount": 30,
+      "category": "Electronics",
+      "featured": 1,
+      "slug": null,
+      "created_at": 1755278678533,
+      "updated_at": 1755280377690,
+      "published_at": 1755280377700,
+      "created_by_id": null,
+      "updated_by_id": 1,
+      "locale": null
+    }
+  ],
+  "recordCount": 6
+}

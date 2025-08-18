@@ -1,0 +1,62 @@
+{
+  "tableName": "strapi_migrations_internal",
+  "schema": [
+    {
+      "cid": 0,
+      "name": "id",
+      "type": "INTEGER",
+      "notnull": 1,
+      "dflt_value": null,
+      "pk": 1
+    },
+    {
+      "cid": 1,
+      "name": "name",
+      "type": "varchar(255)",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    },
+    {
+      "cid": 2,
+      "name": "time",
+      "type": "datetime",
+      "notnull": 0,
+      "dflt_value": null,
+      "pk": 0
+    }
+  ],
+  "data": [
+    {
+      "id": 1,
+      "name": "5.0.0-rename-identifiers-longer-than-max-length",
+      "time": 1755219964614
+    },
+    {
+      "id": 2,
+      "name": "5.0.0-02-created-document-id",
+      "time": 1755219964639
+    },
+    {
+      "id": 3,
+      "name": "5.0.0-03-created-locale",
+      "time": 1755219964657
+    },
+    {
+      "id": 4,
+      "name": "5.0.0-04-created-published-at",
+      "time": 1755219964677
+    },
+    {
+      "id": 5,
+      "name": "5.0.0-05-drop-slug-fields-index",
+      "time": 1755219964696
+    },
+    {
+      "id": 6,
+      "name": "core::5.0.0-discard-drafts",
+      "time": 1755219964713
+    }
+  ],
+  "recordCount": 6
+}

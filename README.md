@@ -36,3 +36,34 @@
   replace the sample data with real Strapi content      
   by updating the API calls in the frontmatter
   section (lines 1-63).
+
+
+
+## ● Perfect! Now the Swagger documentation should be available. Try these URLs:
+
+  Development API Documentation:
+  https://flmintdeal-dev.fly.dev/documentation
+
+  Available API endpoints you'll see:
+  - GET /api/deals - List all deals
+  - GET /api/deals/:id - Get specific deal
+  - POST /api/deals - Create new deal (requires auth)
+  - PUT /api/deals/:id - Update deal (requires auth)
+  - DELETE /api/deals/:id - Delete deal (requires auth)
+  - GET /api/users-permissions/users/me - Get current user
+  - Authentication endpoints for login/register
+
+  The documentation will show:
+  - Interactive API testing interface
+  - Request/response schemas
+  - Authentication requirements
+  - Field definitions for your content types
+  - Example requests and responses
+
+  To also enable it on production:
+  cd backend && flyctl deploy
+
+  This will deploy the documentation plugin to your production environment as well.        
+
+  The Swagger UI will automatically update when you add new content types using the        
+  Content Type Builder in the development admin panel!

@@ -1,7 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(flyctl apps open:*)"
+      "Bash(flyctl apps open:*)",
+      "Bash(flyctl secrets set:*)",
+      "Bash(flyctl deploy:*)",
+      "Bash(rm:*)",
+      "Bash(flyctl logs:*)",
+      "Bash(flyctl secrets show:*)",
+      "Bash(flyctl secrets:*)",
+      "Bash(flyctl ssh console:*)"
     ],
     "deny": [],
     "ask": []
