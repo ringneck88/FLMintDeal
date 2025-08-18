@@ -15,7 +15,8 @@
       "Bash(flyctl mpg status:*)",
       "Bash(flyctl mpg connect:*)",
       "Bash(flyctl mpg config show:*)",
-      "Bash(flyctl mpg attach:*)"
+      "Bash(flyctl mpg attach:*)",
+      "Bash(flyctl mpg destroy:*)"
     ],
     "deny": [],
     "ask": []
