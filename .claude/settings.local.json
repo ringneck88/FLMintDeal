@@ -11,7 +11,11 @@
       "Bash(flyctl ssh console:*)",
       "Bash(flyctl apps:*)",
       "Bash(flyctl postgres create:*)",
-      "Bash(flyctl mpg create:*)"
+      "Bash(flyctl mpg create:*)",
+      "Bash(flyctl mpg status:*)",
+      "Bash(flyctl mpg connect:*)",
+      "Bash(flyctl mpg config show:*)",
+      "Bash(flyctl mpg attach:*)"
     ],
     "deny": [],
     "ask": []
