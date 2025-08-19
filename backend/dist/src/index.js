@@ -18,9 +18,46 @@ exports.default = {
      */
     async bootstrap({ strapi }) {
         try {
-            console.log('🚀 Setting up Deal permissions and sample data...');
+            console.log('🚀 Setting up admin user, Deal permissions and sample data...');
+            console.log('🗄️ Database client:', strapi.config.get('database.connection.client', 'sqlite'));
             // Wait a moment for all plugins to load
             await new Promise(resolve => setTimeout(resolve, 1000));
+            // Check if admin user exists, create one if not
+            let adminUsers = [];
+            try {
+                adminUsers = await strapi.db.query('admin::user.user').findMany();
+                console.log(`👤 Found ${adminUsers.length} admin users`);
+            }
+            catch (error) {
+                console.log('⚠️ Could not query admin users:', error.message);
+                console.log('🔄 Database might still be initializing...');
+                return; // Skip bootstrap if database isn't ready
+            }
+            if (adminUsers.length === 0) {
+                console.log('🔧 Creating first admin user...');
+                try {
+                    const adminUser = await strapi.db.query('admin::user.user').create({
+                        data: {
+                            firstname: 'Kelly',
+                            lastname: 'Sharp',
+                            email: 'kelly@phiti.com',
+                            password: await strapi.admin.services.auth.hashPassword('admin123'),
+                            isActive: true,
+                            blocked: false,
+                            roles: [1] // Super Admin role ID
+                        }
+                    });
+                    console.log('✅ Admin user created successfully!');
+                    console.log('📧 Email: kelly@phiti.com');
+                    console.log('🔑 Password: admin123');
+                }
+                catch (error) {
+                    console.log('⚠️ Admin user creation failed:', error.message);
+                }
+            }
+            else {
+                console.log('✅ Admin users already exist');
+            }
             // Set up public permissions for Deal API
             const publicRole = await strapi.query('plugin::users-permissions.role').findOne({
                 where: { type: 'public' }
@@ -59,13 +96,14 @@ exports.default = {
             const dealCount = await strapi.entityService.count('api::deal.deal');
             if (dealCount === 0) {
                 console.log('📦 Creating sample deals...');
+                // Your original deals data from SQLite migration
                 const sampleDeals = [
                     {
                         title: 'Gaming Laptop Deal',
                         description: 'High-performance gaming laptop with RTX graphics card',
                         price: 899.99,
                         originalPrice: 1299.99,
-                        discount: 31,
+                        discount: 30,
                         category: 'Electronics',
                         featured: true,
                         publishedAt: new Date()
