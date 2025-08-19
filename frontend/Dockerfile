@@ -16,6 +16,10 @@ COPY . .
 # Build the application
 RUN yarn build
 
+# Set environment variables
+ENV HOST=0.0.0.0
+ENV PORT=80
+
 # Expose port 80
 EXPOSE 80
 
