@@ -19,8 +19,8 @@ class StrapiAPI {
   private baseURL: string;
 
   constructor() {
-    // Use environment variable or default to production API for development
-    this.baseURL = import.meta.env.PUBLIC_STRAPI_URL || 'https://flmintdeal.fly.dev';
+    // Use environment variable or default to local development API
+    this.baseURL = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1338';
   }
 
   async get<T>(endpoint: string): Promise<T> {

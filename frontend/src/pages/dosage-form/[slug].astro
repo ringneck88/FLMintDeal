@@ -1,5 +1,5 @@
 ---
-export const prerender = false;
+export const prerender = TRUE;
 import Layout from '../../layouts/Layout.astro';
 import { strapi } from '../../lib/strapi';
 
@@ -7,7 +7,7 @@ import { strapi } from '../../lib/strapi';
 const { slug } = Astro.params;
 
 let dosageForm = null;
-let strapiUrl = import.meta.env.PUBLIC_STRAPI_URL || 'https://flmintdeal.fly.dev';
+let strapiUrl = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1338';
 let apiError = null;
 
 try {

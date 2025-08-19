@@ -12,24 +12,35 @@ let apiError = null;
 
 // Try to connect to Strapi and fetch deals
 try {
-  const initResponse = await fetch(`${strapiUrl}/admin/init`);
-  strapiStatus = 'Connected';
-  
-  // Fetch deals from Strapi API
-  const dealsResponse = await strapi.getMany('/deals');
-  if (dealsResponse && dealsResponse.length > 0) {
-    deals = dealsResponse.map(deal => ({
-      id: deal.id,
-      title: deal.title,
-      description: deal.description,
-      price: deal.price,
-      originalPrice: deal.originalPrice || deal.original_price,
-      discount: deal.discount,
-      category: deal.category,
-      featured: deal.featured,
-      slug: deal.slug || deal.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-      image: deal.image || `https://images.unsplash.com/photo-1560472355-536de3962603?w=400&h=300&fit=crop&q=80`
-    }));
+  // Test connection to Strapi
+  const healthResponse = await fetch(`${strapiUrl}/api/deals?pagination[limit]=1`);
+  if (healthResponse.ok) {
+    strapiStatus = 'Connected';
+    
+    // Fetch deals from Strapi API
+    const dealsResponse = await strapi.getMany('/deals', { 
+      'populate': '*',
+      'pagination[limit]': '100'
+    });
+    
+    if (dealsResponse && dealsResponse.data && dealsResponse.data.length > 0) {
+      deals = dealsResponse.data.map(deal => ({
+        id: deal.id,
+        documentId: deal.documentId,
+        title: deal.title,
+        description: deal.description,
+        price: deal.price,
+        originalPrice: deal.originalPrice,
+        discount: deal.discount,
+        category: deal.category,
+        featured: deal.featured,
+        slug: deal.slug || deal.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        image: deal.image?.url || `https://images.unsplash.com/photo-1560472355-536de3962603?w=400&h=300&fit=crop&q=80`,
+        publishedAt: deal.publishedAt
+      })).filter(deal => deal.publishedAt); // Only show published deals
+    }
+  } else {
+    throw new Error(`HTTP ${healthResponse.status}`);
   }
 } catch (error) {
   strapiStatus = 'Disconnected - Start your Strapi backend';
