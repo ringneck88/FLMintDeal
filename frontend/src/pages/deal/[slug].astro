@@ -1,0 +1,251 @@
+---
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+import { strapi } from '../../lib/strapi';
+
+// Get the slug from the URL parameters
+const { slug } = Astro.params;
+
+// Sample deal data (replace with Strapi API call when backend is connected)
+const sampleDeals = [
+  {
+    id: 1,
+    title: "Gaming Laptop Deal",
+    description: "High-performance gaming laptop with RTX graphics card, perfect for gaming and creative work. Features include 16GB RAM, 1TB SSD, and a 144Hz display for smooth gameplay.",
+    price: 899.99,
+    originalPrice: 1299.99,
+    discount: 31,
+    category: "Electronics",
+    featured: true,
+    slug: "gaming-laptop-deal",
+    image: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=800&h=600&fit=crop",
+    specs: [
+      "Intel Core i7 Processor",
+      "NVIDIA RTX 4060 Graphics",
+      "16GB DDR4 RAM",
+      "1TB NVMe SSD",
+      "15.6\" 144Hz Display",
+      "RGB Backlit Keyboard"
+    ],
+    availability: "In Stock",
+    shipping: "Free 2-day shipping"
+  },
+  {
+    id: 2,
+    title: "Wireless Headphones",
+    description: "Premium noise-canceling wireless headphones with superior sound quality and comfort.",
+    price: 149.99,
+    originalPrice: 249.99,
+    discount: 40,
+    category: "Audio",
+    featured: false,
+    slug: "wireless-headphones",
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&h=600&fit=crop",
+    specs: [
+      "Active Noise Cancellation",
+      "30-hour Battery Life",
+      "Quick Charge (5 min = 3 hours)",
+      "Premium Leather Padding",
+      "Hi-Res Audio Certified",
+      "Voice Assistant Compatible"
+    ],
+    availability: "In Stock",
+    shipping: "Free shipping"
+  },
+  {
+    id: 3,
+    title: "Smart Watch Pro",
+    description: "Advanced fitness tracking smart watch with heart rate monitor and GPS functionality.",
+    price: 199.99,
+    originalPrice: 299.99,
+    discount: 33,
+    category: "Wearables",
+    featured: true,
+    slug: "smart-watch-pro",
+    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&h=600&fit=crop",
+    specs: [
+      "GPS + Cellular",
+      "Heart Rate Monitor",
+      "Sleep Tracking",
+      "Water Resistant (50m)",
+      "7-day Battery Life",
+      "Always-on Display"
+    ],
+    availability: "In Stock",
+    shipping: "Free shipping"
+  }
+];
+
+// Find the deal by slug
+const deal = sampleDeals.find(d => d.slug === slug);
+
+// If deal not found, return 404
+if (!deal) {
+  return Astro.redirect('/404');
+}
+
+// Calculate savings
+const savings = deal.originalPrice - deal.price;
+---
+
+<Layout title={`${deal.title} - FLMintDeals`}>
+  <!-- Breadcrumb -->
+  <div class="bg-gray-50 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex" aria-label="Breadcrumb">
+        <ol class="flex items-center space-x-2">
+          <li>
+            <a href="/" class="text-blue-600 hover:text-blue-800">Home</a>
+          </li>
+          <li>
+            <span class="text-gray-500">/</span>
+          </li>
+          <li>
+            <span class="text-gray-500">{deal.category}</span>
+          </li>
+          <li>
+            <span class="text-gray-500">/</span>
+          </li>
+          <li>
+            <span class="text-gray-900 font-medium">{deal.title}</span>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Product Detail -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+      <!-- Product Image -->
+      <div class="aspect-square">
+        <img 
+          src={deal.image} 
+          alt={deal.title}
+          class="w-full h-full object-cover rounded-lg shadow-lg"
+        />
+      </div>
+
+      <!-- Product Details -->
+      <div class="space-y-6">
+        <!-- Header -->
+        <div>
+          <div class="flex items-center space-x-2 mb-2">
+            <span class="inline-block bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full font-semibold">
+              {deal.category}
+            </span>
+            <span class="bg-red-500 text-white text-sm font-bold px-3 py-1 rounded">
+              -{deal.discount}% OFF
+            </span>
+          </div>
+          <h1 class="text-3xl font-bold text-gray-900 mb-4">{deal.title}</h1>
+        </div>
+
+        <!-- Pricing -->
+        <div class="border-t border-b py-6">
+          <div class="flex items-baseline space-x-4">
+            <span class="text-4xl font-bold text-blue-600">${deal.price}</span>
+            <span class="text-2xl text-gray-500 line-through">${deal.originalPrice}</span>
+          </div>
+          <p class="text-lg text-green-600 font-medium mt-2">
+            You save ${savings.toFixed(2)} ({deal.discount}% off)
+          </p>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Description</h3>
+          <p class="text-gray-600 leading-relaxed">{deal.description}</p>
+        </div>
+
+        <!-- Specifications -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-3">Key Features</h3>
+          <ul class="space-y-2">
+            {deal.specs.map(spec => (
+              <li class="flex items-center">
+                <svg class="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">{spec}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- Availability & Shipping -->
+        <div class="space-y-3">
+          <div class="flex items-center">
+            <div class="w-3 h-3 bg-green-400 rounded-full mr-3"></div>
+            <span class="text-gray-700 font-medium">{deal.availability}</span>
+          </div>
+          <div class="flex items-center">
+            <svg class="w-5 h-5 text-blue-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <span class="text-gray-700">{deal.shipping}</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="space-y-4 pt-6">
+          <button class="w-full bg-blue-600 text-white py-4 px-6 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors duration-200 shadow-lg">
+            Get This Deal
+          </button>
+          <button class="w-full border-2 border-gray-300 text-gray-700 py-3 px-6 rounded-lg font-medium hover:border-gray-400 transition-colors duration-200">
+            Add to Wishlist
+          </button>
+        </div>
+
+        <!-- Share -->
+        <div class="pt-4 border-t">
+          <span class="text-sm text-gray-500 block mb-3">Share this deal:</span>
+          <div class="flex space-x-3">
+            <button class="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+            </button>
+            <button class="p-2 bg-blue-800 text-white rounded-lg hover:bg-blue-900">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Deals -->
+    <div class="mt-16">
+      <h2 class="text-2xl font-bold text-gray-900 mb-8">You Might Also Like</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {sampleDeals.filter(d => d.id !== deal.id && d.category === deal.category).slice(0, 3).map(relatedDeal => (
+          <a href={`/deal/${relatedDeal.slug}`} class="group">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+              <img 
+                src={relatedDeal.image} 
+                alt={relatedDeal.title}
+                class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+              />
+              <div class="p-4">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded font-medium">
+                    {relatedDeal.category}
+                  </span>
+                  <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                    -{relatedDeal.discount}%
+                  </span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600">
+                  {relatedDeal.title}
+                </h3>
+                <div class="flex items-center space-x-2">
+                  <span class="text-lg font-bold text-blue-600">${relatedDeal.price}</span>
+                  <span class="text-sm text-gray-500 line-through">${relatedDeal.originalPrice}</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dosage_forms",
+  "info": {
+    "singularName": "dosage-form",
+    "pluralName": "dosage-forms",
+    "displayName": "dosage-form"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Discription": {
+      "type": "text"
+    }
+  }
+}

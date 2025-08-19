@@ -2,63 +2,40 @@
 import Layout from '../layouts/Layout.astro';
 import { strapi } from '../lib/strapi';
 
-// Sample deals data to display (replace with Strapi API when working)
-const sampleDeals = [
-  {
-    id: 1,
-    title: "Gaming Laptop Deal",
-    description: "High-performance gaming laptop with RTX graphics card, perfect for gaming and creative work.",
-    price: 899.99,
-    originalPrice: 1299.99,
-    discount: 31,
-    category: "Electronics",
-    featured: true,
-    image: "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=400&h=300&fit=crop"
-  },
-  {
-    id: 2,
-    title: "Wireless Headphones",
-    description: "Premium noise-canceling wireless headphones with superior sound quality and comfort.",
-    price: 149.99,
-    originalPrice: 249.99,
-    discount: 40,
-    category: "Audio",
-    featured: false,
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop"
-  },
-  {
-    id: 3,
-    title: "Smart Watch Pro",
-    description: "Advanced fitness tracking smart watch with heart rate monitor and GPS functionality.",
-    price: 199.99,
-    originalPrice: 299.99,
-    discount: 33,
-    category: "Wearables",
-    featured: true,
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop"
-  },
-  {
-    id: 4,
-    title: "4K Webcam",
-    description: "Crystal clear 4K webcam perfect for streaming, video calls, and content creation.",
-    price: 89.99,
-    originalPrice: 149.99,
-    discount: 40,
-    category: "Accessories",
-    featured: false,
-    image: "https://images.unsplash.com/photo-1588421357574-87938a86fa28?w=400&h=300&fit=crop"
-  }
-];
 
 let strapiStatus = 'Not connected';
 let strapiUrl = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1338';
 
-// Try to connect to Strapi to check status
+// Fetch real deals from Strapi
+let deals = [];
+let apiError = null;
+
+// Try to connect to Strapi and fetch deals
 try {
-  await fetch(`${strapiUrl}/admin/init`);
+  const initResponse = await fetch(`${strapiUrl}/admin/init`);
   strapiStatus = 'Connected';
+  
+  // Fetch deals from Strapi API
+  const dealsResponse = await strapi.getMany('/deals');
+  if (dealsResponse && dealsResponse.length > 0) {
+    deals = dealsResponse.map(deal => ({
+      id: deal.id,
+      title: deal.title,
+      description: deal.description,
+      price: deal.price,
+      originalPrice: deal.originalPrice || deal.original_price,
+      discount: deal.discount,
+      category: deal.category,
+      featured: deal.featured,
+      slug: deal.slug || deal.title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      image: deal.image || `https://images.unsplash.com/photo-1560472355-536de3962603?w=400&h=300&fit=crop&q=80`
+    }));
+  }
 } catch (error) {
   strapiStatus = 'Disconnected - Start your Strapi backend';
+  apiError = error.message;
+  // Fallback to sample data if API fails
+  deals = [];
 }
 ---
 
@@ -116,40 +93,56 @@ try {
       </div>
 
       <!-- Deals Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-        {sampleDeals.filter(deal => deal.featured).map(deal => (
-          <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-            <div class="aspect-w-16 aspect-h-9">
-              <img 
-                src={deal.image} 
-                alt={deal.title}
-                class="w-full h-48 object-cover"
-              />
-            </div>
-            <div class="p-6">
-              <div class="flex items-center justify-between mb-2">
-                <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-semibold">
-                  {deal.category}
-                </span>
-                <span class="bg-red-500 text-white text-sm font-bold px-2 py-1 rounded">
-                  -{deal.discount}%
-                </span>
-              </div>
-              <h3 class="text-xl font-bold text-gray-900 mb-2">{deal.title}</h3>
-              <p class="text-gray-600 mb-4">{deal.description}</p>
-              <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                  <span class="text-2xl font-bold text-blue-600">${deal.price}</span>
-                  <span class="text-lg text-gray-500 line-through">${deal.originalPrice}</span>
+      {deals.filter(deal => deal.featured).length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {deals.filter(deal => deal.featured).map(deal => (
+            <a href={`/deal/${deal.slug}`} class="group">
+              <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div class="aspect-w-16 aspect-h-9">
+                  <img 
+                    src={deal.image} 
+                    alt={deal.title}
+                    class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium">
-                  View Deal
-                </button>
+                <div class="p-6">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-semibold">
+                      {deal.category}
+                    </span>
+                    <span class="bg-red-500 text-white text-sm font-bold px-2 py-1 rounded">
+                      -{deal.discount}%
+                    </span>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600">{deal.title}</h3>
+                  <p class="text-gray-600 mb-4">{deal.description}</p>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                      <span class="text-2xl font-bold text-blue-600">${deal.price}</span>
+                      <span class="text-lg text-gray-500 line-through">${deal.originalPrice}</span>
+                    </div>
+                    <span class="bg-blue-600 text-white px-4 py-2 rounded-lg group-hover:bg-blue-700 transition-colors duration-200 font-medium">
+                      View Deal
+                    </span>
+                  </div>
+                </div>
               </div>
-            </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-12">
+          <div class="bg-gray-100 rounded-lg p-8 max-w-md mx-auto">
+            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2M4 13h2m13-8l-2-2m0 0l-2 2m2-2v6"></path>
+            </svg>
+            <h3 class="text-lg font-medium text-gray-900 mb-2">No Featured Deals Available</h3>
+            <p class="text-gray-600">
+              {strapiStatus === 'Connected' ? 'Add some deals in your Strapi admin panel.' : 'Connect to Strapi backend to load deals.'}
+            </p>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   </div>
 
@@ -163,36 +156,38 @@ try {
 
       <!-- Deals Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-        {sampleDeals.map(deal => (
-          <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-            <div class="aspect-w-16 aspect-h-9">
-              <img 
-                src={deal.image} 
-                alt={deal.title}
-                class="w-full h-32 object-cover"
-              />
-            </div>
-            <div class="p-4">
-              <div class="flex items-center justify-between mb-2">
-                <span class="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded font-medium">
-                  {deal.category}
-                </span>
-                <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                  -{deal.discount}%
-                </span>
+        {deals.map(deal => (
+          <a href={`/deal/${deal.slug}`} class="group">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+              <div class="aspect-w-16 aspect-h-9">
+                <img 
+                  src={deal.image} 
+                  alt={deal.title}
+                  class="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300"
+                />
               </div>
-              <h3 class="text-lg font-semibold text-gray-900 mb-2 truncate">{deal.title}</h3>
-              <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-1">
-                  <span class="text-lg font-bold text-blue-600">${deal.price}</span>
-                  <span class="text-sm text-gray-500 line-through">${deal.originalPrice}</span>
+              <div class="p-4">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="inline-block bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded font-medium">
+                    {deal.category}
+                  </span>
+                  <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
+                    -{deal.discount}%
+                  </span>
                 </div>
-                <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors duration-200">
-                  View
-                </button>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2 truncate group-hover:text-blue-600">{deal.title}</h3>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-1">
+                    <span class="text-lg font-bold text-blue-600">${deal.price}</span>
+                    <span class="text-sm text-gray-500 line-through">${deal.originalPrice}</span>
+                  </div>
+                  <span class="bg-blue-600 text-white px-3 py-1 rounded text-sm group-hover:bg-blue-700 transition-colors duration-200">
+                    View
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>
