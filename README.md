@@ -1,3 +1,20 @@
+
+ Production:
+  - Frontend: https://flmintdeals-frontend.fly.dev
+  - Backend API: https://flmintdeals-backend.fly.dev
+  - Strapi Admin: https://flmintdeals-backend.fly.dev/admin
+
+  Local Development:
+  - Frontend: http://localhost:4321
+  - Backend API: http://localhost:1338
+  - Strapi Admin: http://localhost:1338/admin
+
+
+
+
+
+
+
 ● To edit the frontend home page in Astro, you'll
   make changes in:
 
