@@ -8,7 +8,7 @@ echo "🚀 Deploying FLMintDeals to Fly.io..."
 # Deploy backend first
 echo "📦 Deploying Strapi backend..."
 cd backend
-fly deploy --app flmintdeals-backend
+flyctl deploy --app flmintdeal
 if [ $? -eq 0 ]; then
     echo "✅ Backend deployed successfully"
 else
@@ -19,12 +19,12 @@ fi
 # Deploy frontend
 echo "🎨 Deploying Astro frontend..."
 cd ../frontend
-fly deploy --app flmintdeals-frontend
+flyctl deploy --app flmintdeal-frontend
 if [ $? -eq 0 ]; then
     echo "✅ Frontend deployed successfully"
     echo "🎉 Deployment complete!"
-    echo "Frontend: https://flmintdeals-frontend.fly.dev"
-    echo "Backend: https://flmintdeals-backend.fly.dev"
+    echo "Frontend: https://flmintdeal-frontend.fly.dev"
+    echo "Backend: https://flmintdeal.fly.dev"
 else
     echo "❌ Frontend deployment failed"
     exit 1

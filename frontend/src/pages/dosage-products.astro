@@ -3,34 +3,77 @@ import Layout from '../layouts/Layout.astro';
 import { strapi } from '../lib/strapi';
 
 let strapiStatus = 'Not connected';
-let strapiUrl = import.meta.env.PUBLIC_STRAPI_URL || 'https://flmintdeal.fly.dev';
+let strapiUrl = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1338';
 
 // Fetch dosage forms from Strapi
 let dosageForms = [];
 let apiError = null;
 
 try {
-  const initResponse = await fetch(`${strapiUrl}/admin/init`);
-  strapiStatus = 'Connected';
-  
-  // Fetch dosage forms from Strapi API
-  const dosageResponse = await strapi.getMany('/dosage-forms');
-  if (dosageResponse && dosageResponse.data && dosageResponse.data.length > 0) {
-    dosageForms = dosageResponse.data.map(form => ({
-      id: form.id,
-      name: form.Name || form.name,
-      description: form.Description || form.Discription || form.description,
-      slug: form.slug || form.Name?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `form-${form.id}`,
-      image: `https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop&q=80`,
-      createdAt: form.createdAt,
-      updatedAt: form.updatedAt,
-      publishedAt: form.publishedAt
-    }));
+  // Test connection to Strapi
+  const healthResponse = await fetch(`${strapiUrl}/api/dosage-forms?pagination[limit]=1`);
+  if (healthResponse.ok) {
+    strapiStatus = 'Connected';
+    
+    // Fetch dosage forms from Strapi API
+    const dosageResponse = await strapi.getMany('/dosage-forms', { 
+      'populate': '*',
+      'pagination[limit]': '100'
+    });
+    
+    if (dosageResponse && dosageResponse.data && dosageResponse.data.length > 0) {
+      dosageForms = dosageResponse.data.map(form => ({
+        id: form.id,
+        documentId: form.documentId,
+        name: form.Name || form.name || 'Unnamed Form',
+        description: form.Description || form.Discription || form.description || 'No description available',
+        slug: form.slug || form.Name?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `form-${form.id}`,
+        image: form.image?.url || `https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop&q=80`,
+        createdAt: form.createdAt,
+        updatedAt: form.updatedAt,
+        publishedAt: form.publishedAt
+      })).filter(form => form.publishedAt); // Only show published forms
+    }
+  } else {
+    throw new Error(`HTTP ${healthResponse.status}`);
   }
 } catch (error) {
   strapiStatus = 'Disconnected - Cannot connect to backend';
   apiError = error.message;
-  dosageForms = [];
+  
+  // Fallback sample data for development
+  dosageForms = [
+    {
+      id: 1,
+      name: 'Tablet',
+      description: 'Solid dosage form containing active pharmaceutical ingredients with or without suitable excipients.',
+      slug: 'tablet',
+      image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      publishedAt: new Date().toISOString()
+    },
+    {
+      id: 2,
+      name: 'Capsule',
+      description: 'Solid dosage form in which the drug substance is enclosed within either a hard or soft shell.',
+      slug: 'capsule',
+      image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop&q=80',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      publishedAt: new Date().toISOString()
+    },
+    {
+      id: 3,
+      name: 'Liquid Suspension',
+      description: 'Liquid dosage form containing finely divided drug particles distributed throughout a liquid vehicle.',
+      slug: 'liquid-suspension',
+      image: 'https://images.unsplash.com/photo-1563213126-a4273aed2016?w=400&h=300&fit=crop&q=80',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      publishedAt: new Date().toISOString()
+    }
+  ];
 }
 ---
 
