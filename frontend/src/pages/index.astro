@@ -4,7 +4,7 @@ import { strapi } from '../lib/strapi';
 
 
 let strapiStatus = 'Not connected';
-let strapiUrl = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1338';
+let strapiUrl = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1337';
 
 // Fetch real deals from Strapi
 let deals = [];
@@ -12,8 +12,15 @@ let apiError = null;
 
 // Try to connect to Strapi and fetch deals
 try {
-  // Test connection to Strapi
-  const healthResponse = await fetch(`${strapiUrl}/api/deals?pagination[limit]=1`);
+  // Test connection to Strapi with a short timeout
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+  
+  const healthResponse = await fetch(`${strapiUrl}/api/deals?pagination[limit]=1`, {
+    signal: controller.signal
+  });
+  clearTimeout(timeoutId);
+  
   if (healthResponse.ok) {
     strapiStatus = 'Connected';
     
@@ -44,7 +51,7 @@ try {
   }
 } catch (error) {
   strapiStatus = 'Disconnected - Start your Strapi backend';
-  apiError = error.message;
+  apiError = error.name === 'AbortError' ? 'Connection timeout' : error.message;
   // Fallback to sample data if API fails
   deals = [];
 }

@@ -1,45 +1,50 @@
 ---
-export const prerender = TRUE;
+export const prerender = true;
 import Layout from '../../layouts/Layout.astro';
 import { strapi } from '../../lib/strapi';
 
-// Get the slug from the URL parameters
-const { slug } = Astro.params;
-
-let dosageForm = null;
-let strapiUrl = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1338';
-let apiError = null;
-
-try {
-  // Fetch all dosage forms and find the one with matching slug
-  const dosageResponse = await strapi.getMany('/dosage-forms');
-  if (dosageResponse && dosageResponse.data && dosageResponse.data.length > 0) {
-    const foundForm = dosageResponse.data.find(f => {
-      const formSlug = f.slug || f.Name?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `form-${f.id}`;
-      return formSlug === slug;
-    });
+// Generate static paths for all dosage forms
+export async function getStaticPaths() {
+  try {
+    // Fetch all dosage forms from Strapi with timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
     
-    if (foundForm) {
-      dosageForm = {
-        id: foundForm.id,
-        name: foundForm.Name || foundForm.name,
-        description: foundForm.Description || foundForm.Discription || foundForm.description,
-        slug: foundForm.slug || foundForm.Name?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `form-${foundForm.id}`,
-        image: `https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=600&fit=crop&q=80`,
-        createdAt: foundForm.createdAt,
-        updatedAt: foundForm.updatedAt,
-        publishedAt: foundForm.publishedAt
-      };
+    const dosageResponse = await strapi.getMany('/dosage-forms');
+    clearTimeout(timeoutId);
+    
+    if (dosageResponse && dosageResponse.data) {
+      const paths = dosageResponse.data
+        .filter(form => form.publishedAt || !form.publishedAt) // Include all for now
+        .map(form => ({
+          params: { 
+            slug: form.slug || form.Name?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `form-${form.id}`
+          },
+          props: { 
+            dosageForm: {
+              id: form.id,
+              name: form.Name || form.name,
+              description: form.Description || form.Discription || form.description,
+              slug: form.slug || form.Name?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `form-${form.id}`,
+              image: `https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&h=600&fit=crop&q=80`,
+              createdAt: form.createdAt,
+              updatedAt: form.updatedAt,
+              publishedAt: form.publishedAt
+            }
+          }
+        }));
+      return paths;
     }
+  } catch (error) {
+    console.warn('Failed to fetch dosage forms for static generation:', error.message);
   }
-} catch (error) {
-  apiError = error.message;
+  
+  // Return empty array if no forms found or error occurred
+  return [];
 }
 
-// If form not found, return 404
-if (!dosageForm) {
-  return Astro.redirect('/404');
-}
+// Get the dosage form from props (passed from getStaticPaths)
+const { dosageForm } = Astro.props;
 ---
 
 <Layout title={`${dosageForm.name} - Dosage Form - FLMintDeals`}>

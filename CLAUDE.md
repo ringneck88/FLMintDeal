@@ -9,7 +9,7 @@ FLMintDeals is a full-stack deals/commerce website built with:
 - **Frontend**: Astro v5.13.0 (static site generator)
 - **Styling**: Tailwind CSS
 - **Database**: SQLite (development), configurable for PostgreSQL (production)
-- **Deployment**: Fly.io
+- **Deployment**: Backend on Fly.io, Frontend on Cloudflare Pages
 - **Language**: TypeScript throughout
 
 ## Project Structure
@@ -27,9 +27,8 @@ FLMintDeal/
 │   │   ├── layouts/         # Astro layout components
 │   │   ├── lib/             # Utilities (Strapi API client)
 │   │   └── pages/           # Site pages
-│   ├── Dockerfile           # Frontend Docker configuration
-│   ├── fly.toml            # Fly.io frontend deployment config
-│   ├── nginx.conf          # Nginx configuration for production
+│   ├── public/              # Static assets and routing config
+│   ├── wrangler.toml       # Cloudflare Pages configuration
 │   └── tailwind.config.mjs # Tailwind CSS configuration
 ├── deploy.sh               # Deployment script
 ├── fly-setup.sh           # Fly.io initial setup script
@@ -96,7 +95,12 @@ PUBLIC_URL=                    # Set to your domain in production
 IS_PROXIED=true               # Set to true when behind a proxy
 ```
 
-**Frontend**: Set `PUBLIC_STRAPI_URL` to point to your Strapi instance.
+**Frontend (.env)**:
+```bash
+# Strapi API URL
+PUBLIC_STRAPI_URL=http://localhost:1337  # Development
+# PUBLIC_STRAPI_URL=https://flmintdeal.fly.dev  # Production
+```
 
 ### API Integration
 
@@ -112,32 +116,48 @@ const deals = await strapi.getMany('/deals');
 const deal = await strapi.getOne('/deals', id);
 ```
 
-## Deployment to Fly.io
+## Deployment
 
-### First-time Setup
+### Backend Deployment (Fly.io)
+
+#### First-time Setup
 1. Install Fly CLI: `https://fly.io/docs/hands-on/install-flyctl/`
 2. Login: `fly auth login`
-3. Run setup script: `./fly-setup.sh`
-4. Set backend secrets (commands provided by setup script)
+3. Deploy backend: `cd backend && fly deploy --app flmintdeal`
+4. Set backend secrets (see backend/.env.example)
 
-### Deploy Both Apps
+#### Deploy Backend
 ```bash
-./deploy.sh
+cd backend && fly deploy --app flmintdeal
 ```
 
-### Manual Deployment
-```bash
-# Deploy backend
-cd backend && fly deploy --app flmintdeals-backend
+### Frontend Deployment (Cloudflare Pages)
 
-# Deploy frontend  
-cd frontend && fly deploy --app flmintdeals-frontend
+#### First-time Setup
+1. Install Wrangler CLI: `npm install -g wrangler`
+2. Login: `wrangler login`
+3. Create Pages project: `wrangler pages project create flmintdeal-frontend`
+
+#### Deploy Frontend
+```bash
+cd frontend
+npm run build
+wrangler pages publish dist
 ```
+
+#### Auto-deployment via Git
+Connect your GitHub repository to Cloudflare Pages for automatic deployments:
+1. Go to Cloudflare Dashboard > Pages
+2. Connect to your GitHub repository
+3. Set build settings:
+   - Build command: `npm run build`
+   - Build output directory: `dist`
+   - Environment variable: `PUBLIC_STRAPI_URL=https://flmintdeal.fly.dev`
 
 ### Production URLs
-- Frontend: `https://flmintdeals-frontend.fly.dev`
-- Backend: `https://flmintdeals-backend.fly.dev`
-- Strapi Admin: `https://flmintdeals-backend.fly.dev/admin`
+- Frontend: `https://flmintdeal-frontend.pages.dev` (or custom domain)
+- Backend: `https://flmintdeal.fly.dev`
+- Strapi Admin: `https://flmintdeal.fly.dev/admin`
 
 ## Development Workflow
 
@@ -145,7 +165,7 @@ cd frontend && fly deploy --app flmintdeals-frontend
 2. **Create Content Types**: Access Strapi admin at `http://localhost:1337/admin`
 3. **Start Frontend**: `cd frontend && npm run dev`
 4. **Build Frontend API Integration**: Update `frontend/src/lib/strapi.ts` calls
-5. **Deploy**: Run `./deploy.sh`
+5. **Deploy**: Deploy backend to Fly.io and frontend to Cloudflare Pages
 
 ## Common Tasks
 
@@ -169,7 +189,7 @@ cd frontend && fly deploy --app flmintdeals-frontend
 ## Architecture Notes
 
 - **Backend Port**: 1337 (development), 8080 (production on Fly.io)
-- **Frontend Port**: 4321 (development), 80 (production)
+- **Frontend Port**: 4321 (development), served via Cloudflare Pages (production)
 - **Database**: SQLite for development, easily configurable for PostgreSQL
-- **Static Assets**: Served by Nginx in production
+- **Static Assets**: Served by Cloudflare Pages global CDN
 - **API Calls**: Made at build time (SSG) and runtime via fetch

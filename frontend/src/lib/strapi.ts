@@ -20,7 +20,7 @@ class StrapiAPI {
 
   constructor() {
     // Use environment variable or default to local development API
-    this.baseURL = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1338';
+    this.baseURL = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1337';
   }
 
   async get<T>(endpoint: string): Promise<T> {
