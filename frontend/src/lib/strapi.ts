@@ -21,10 +21,13 @@ class StrapiAPI {
   constructor() {
     // Use environment variable or default to local development API
     this.baseURL = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1337';
+    console.log('🔧 STRAPI CLIENT DEBUG: baseURL set to:', this.baseURL);
+    console.log('🔧 STRAPI CLIENT DEBUG: PUBLIC_STRAPI_URL from env:', import.meta.env.PUBLIC_STRAPI_URL);
   }
 
   async get<T>(endpoint: string): Promise<T> {
     const url = `${this.baseURL}/api${endpoint}`;
+    console.log('🌐 STRAPI CLIENT DEBUG: Making request to:', url);
     
     try {
       const response = await fetch(url, {
@@ -32,6 +35,8 @@ class StrapiAPI {
           'Content-Type': 'application/json',
         },
       });
+      
+      console.log('📡 STRAPI CLIENT DEBUG: Response status:', response.status);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);

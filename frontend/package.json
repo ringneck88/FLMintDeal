@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@astrojs/tailwind": "^5.1.0",
+    "@strapi/plugin-graphql": "^5.23.0",
+    "@strapi/plugin-seo": "^2.0.8",
     "astro": "^5.13.0",
     "tailwindcss": "^3.4.1"
   },
