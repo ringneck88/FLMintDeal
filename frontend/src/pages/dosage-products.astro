@@ -101,51 +101,76 @@ try {
   strapiStatus = 'Disconnected - Cannot connect to backend';
   apiError = error.name === 'AbortError' ? 'Connection timeout' : error.message;
   
-  // Fallback sample data for development
-  console.log('🔄 DEBUG: Using fallback sample data');
+  // Fallback data - your real cannabis products from dev backup
+  console.log('🔄 DEBUG: Using real cannabis product data from backup');
   dosageProducts = [
     {
-      id: 1,
-      name: 'Ibuprofen 200mg Tablets',
-      description: 'Pain relief and anti-inflammatory medication in tablet form.',
-      slug: 'ibuprofen-200mg-tablets',
+      id: 16,
+      name: 'All in One - Distillate',
+      description: 'All in One - Distillate',
+      slug: 'all-in-one-distillate',
       image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80',
-      dosageForm: 'Tablet',
-      category: 'Pain Relief',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      publishedAt: new Date().toISOString()
+      dosageForm: 'Inhalation',
+      category: 'Concentrate',
+      createdAt: '2025-08-26T17:39:09.534Z',
+      updatedAt: '2025-08-26T23:28:01.391Z',
+      publishedAt: '2025-08-26T23:28:01.419Z'
     },
     {
-      id: 2,
-      name: 'Vitamin D3 Capsules',
-      description: 'Essential vitamin supplement in easy-to-swallow capsule form.',
-      slug: 'vitamin-d3-capsules',
+      id: 17,
+      name: 'Bubble Hash',
+      description: 'Bubble Hash',
+      slug: 'bubble-hash',
+      image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Inhalation',
+      category: 'Concentrate',
+      createdAt: '2025-08-26T17:16:23.142Z',
+      updatedAt: '2025-08-26T23:45:52.043Z',
+      publishedAt: '2025-08-26T23:45:52.085Z'
+    },
+    {
+      id: 18,
+      name: 'Preroll - 1g',
+      description: 'Preroll - 1g',
+      slug: 'preroll-1g',
+      image: `${strapiUrl}/uploads/download_6c6a685ff9.jpg`,
+      dosageForm: 'Inhalation',
+      category: 'Flower',
+      createdAt: '2025-08-25T20:52:17.350Z',
+      updatedAt: '2025-08-26T23:46:18.704Z',
+      publishedAt: '2025-08-26T23:46:18.730Z'
+    },
+    {
+      id: 19,
+      name: 'Rosin Sauce',
+      description: 'Rosin Sauce',
+      slug: 'rosin-sauce',
+      image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Inhalation',
+      category: 'Concentrate',
+      createdAt: '2025-08-18T22:04:01.923Z',
+      updatedAt: '2025-08-26T23:47:47.752Z',
+      publishedAt: '2025-08-26T23:47:47.774Z'
+    },
+    {
+      id: 21,
+      name: 'THC Capsules 30 Capsules',
+      description: 'THC Capsules 30 Capsules',
+      slug: 'thc-capsules-30-capsules',
       image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop&q=80',
-      dosageForm: 'Capsule',
-      category: 'Vitamins',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      publishedAt: new Date().toISOString()
-    },
-    {
-      id: 3,
-      name: 'Children\'s Cough Syrup',
-      description: 'Gentle liquid medication for children\'s cough relief.',
-      slug: 'childrens-cough-syrup',
-      image: 'https://images.unsplash.com/photo-1563213126-a4273aed2016?w=400&h=300&fit=crop&q=80',
-      dosageForm: 'Liquid',
-      category: 'Pediatric',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      publishedAt: new Date().toISOString()
+      dosageForm: 'Oral Capsule',
+      category: 'Capsule',
+      createdAt: '2025-08-26T23:50:47.287Z',
+      updatedAt: '2025-08-26T23:50:47.287Z',
+      publishedAt: '2025-08-26T23:50:47.307Z'
     }
   ];
   
   dosageForms = [
-    { id: 1, name: 'Tablet', slug: 'tablet', publishedAt: new Date().toISOString() },
-    { id: 2, name: 'Capsule', slug: 'capsule', publishedAt: new Date().toISOString() },
-    { id: 3, name: 'Liquid', slug: 'liquid', publishedAt: new Date().toISOString() }
+    { id: 7, name: 'Inhalation', slug: 'inhalation', publishedAt: '2025-08-25T21:03:08.240Z' },
+    { id: 11, name: 'Oral Capsule', slug: 'oral-capsule', publishedAt: '2025-08-26T17:19:19.769Z' },
+    { id: 9, name: 'Sublingual', slug: 'sublingual', publishedAt: '2025-08-26T17:18:04.519Z' },
+    { id: 13, name: 'Edibles', slug: 'edibles', publishedAt: '2025-08-26T17:20:13.643Z' }
   ];
 }
 
