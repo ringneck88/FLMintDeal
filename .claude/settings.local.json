@@ -21,7 +21,8 @@
       "Bash(flyctl:*)",
       "WebFetch(domain:flmintdeal.fly.dev)",
       "WebFetch(domain:flmintdeal-dev.fly.dev)",
-      "Bash(ping:*)"
+      "Bash(ping:*)",
+      "Bash(yarn deploy)"
     ],
     "deny": [],
     "ask": []
