@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "dosage_forms",
+  "collectionName": "cannaboid_types",
   "info": {
-    "singularName": "dosage-form",
-    "pluralName": "dosage-forms",
-    "displayName": "Dosage Form",
-    "description": "Methods of cannabis product delivery"
+    "singularName": "cannaboid-type",
+    "pluralName": "cannaboid-types",
+    "displayName": "Cannaboid Type",
+    "description": "Types of cannaboids (THC, CBD, etc.)"
   },
   "options": {
     "draftAndPublish": true
@@ -14,26 +14,21 @@
   "attributes": {
     "Title": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": true
     },
     "Description": {
       "type": "text"
     },
-    "SEO_Title_Slug": {
+    "slug": {
       "type": "string",
       "unique": true
-    },
-    "Form_Image": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": ["images"]
     },
     "dosage_products": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::dosage-product.dosage-product",
-      "mappedBy": "dosage_form"
+      "mappedBy": "cannaboid_type"
     }
   }
 }
