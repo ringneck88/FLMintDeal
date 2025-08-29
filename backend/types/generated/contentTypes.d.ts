@@ -373,6 +373,44 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCannaboidTypeCannaboidType
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'cannaboid_types';
+  info: {
+    description: 'Types of cannaboids (THC, CBD, etc.)';
+    displayName: 'Cannaboid Type';
+    pluralName: 'cannaboid-types';
+    singularName: 'cannaboid-type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Description: Schema.Attribute.Text;
+    dosage_products: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::dosage-product.dosage-product'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cannaboid-type.cannaboid-type'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.String & Schema.Attribute.Unique;
+    Title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiDealDeal extends Struct.CollectionTypeSchema {
   collectionName: 'deals';
   info: {
@@ -409,7 +447,8 @@ export interface ApiDealDeal extends Struct.CollectionTypeSchema {
 export interface ApiDosageFormDosageForm extends Struct.CollectionTypeSchema {
   collectionName: 'dosage_forms';
   info: {
-    displayName: 'dosage-form';
+    description: 'Methods of cannabis product delivery';
+    displayName: 'Dosage Form';
     pluralName: 'dosage-forms';
     singularName: 'dosage-form';
   };
@@ -420,15 +459,140 @@ export interface ApiDosageFormDosageForm extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Discription: Schema.Attribute.Text;
+    Description: Schema.Attribute.Text;
+    dosage_products: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::dosage-product.dosage-product'
+    >;
+    Form_Image: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::dosage-form.dosage-form'
     > &
       Schema.Attribute.Private;
-    Name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    SEO_Title_Slug: Schema.Attribute.String & Schema.Attribute.Unique;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiDosageProductDosageProduct
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'dosage_products';
+  info: {
+    description: 'Cannabis products with dosage information';
+    displayName: 'Dosage Product';
+    pluralName: 'dosage-products';
+    singularName: 'dosage-product';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    cannaboid_type: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::cannaboid-type.cannaboid-type'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Description: Schema.Attribute.Text;
+    dosage_form: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::dosage-form.dosage-form'
+    >;
+    image: Schema.Attribute.Media<'images'>;
+    ingredients: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::ingredient.ingredient'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::dosage-product.dosage-product'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    Quanity: Schema.Attribute.Decimal;
+    unit_type: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::unit-type.unit-type'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
+  collectionName: 'ingredients';
+  info: {
+    description: 'Ingredients used in cannabis products';
+    displayName: 'Ingredient';
+    pluralName: 'ingredients';
+    singularName: 'ingredient';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Description: Schema.Attribute.Text;
+    dosage_products: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::dosage-product.dosage-product'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ingredient.ingredient'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.String & Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiUnitTypeUnitType extends Struct.CollectionTypeSchema {
+  collectionName: 'unit_types';
+  info: {
+    description: 'Units of measurement for cannabis products';
+    displayName: 'Unit Type';
+    pluralName: 'unit-types';
+    singularName: 'unit-type';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    dosage_products: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::dosage-product.dosage-product'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::unit-type.unit-type'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    unitType: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -669,6 +833,43 @@ export interface PluginReviewWorkflowsWorkflowStage
       'manyToOne',
       'plugin::review-workflows.workflow'
     >;
+  };
+}
+
+export interface PluginSuperfieldsColor extends Struct.CollectionTypeSchema {
+  collectionName: 'colors';
+  info: {
+    displayName: 'color';
+    pluralName: 'colors';
+    singularName: 'color';
+  };
+  options: {
+    comment: '';
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    hex: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::superfields.color'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -944,13 +1145,18 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::cannaboid-type.cannaboid-type': ApiCannaboidTypeCannaboidType;
       'api::deal.deal': ApiDealDeal;
       'api::dosage-form.dosage-form': ApiDosageFormDosageForm;
+      'api::dosage-product.dosage-product': ApiDosageProductDosageProduct;
+      'api::ingredient.ingredient': ApiIngredientIngredient;
+      'api::unit-type.unit-type': ApiUnitTypeUnitType;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::review-workflows.workflow': PluginReviewWorkflowsWorkflow;
       'plugin::review-workflows.workflow-stage': PluginReviewWorkflowsWorkflowStage;
+      'plugin::superfields.color': PluginSuperfieldsColor;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;

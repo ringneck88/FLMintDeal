@@ -14,7 +14,7 @@
             "name": "Apache 2.0",
             "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
         },
-        "x-generation-date": "2025-08-19T23:17:48.691Z"
+        "x-generation-date": "2025-08-29T20:01:31.962Z"
     },
     "x-strapi-config": {
         "plugins": [
@@ -2004,13 +2004,44 @@
                 ],
                 "properties": {
                     "data": {
+                        "required": [
+                            "Title"
+                        ],
                         "type": "object",
                         "properties": {
-                            "Name": {
+                            "Title": {
                                 "type": "string"
                             },
-                            "Discription": {
+                            "Description": {
                                 "type": "string"
+                            },
+                            "SEO_Title_Slug": {
+                                "type": "string"
+                            },
+                            "Form_Image": {
+                                "oneOf": [
+                                    {
+                                        "type": "integer"
+                                    },
+                                    {
+                                        "type": "string"
+                                    }
+                                ],
+                                "example": "string or id"
+                            },
+                            "dosage_products": {
+                                "type": "array",
+                                "items": {
+                                    "oneOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "example": "string or id"
+                                }
                             },
                             "locale": {
                                 "type": "string"
@@ -2070,6 +2101,9 @@
             },
             "DosageForm": {
                 "type": "object",
+                "required": [
+                    "Title"
+                ],
                 "properties": {
                     "id": {
                         "type": "number"
@@ -2077,25 +2111,16 @@
                     "documentId": {
                         "type": "string"
                     },
-                    "Name": {
+                    "Title": {
                         "type": "string"
                     },
-                    "Discription": {
+                    "Description": {
                         "type": "string"
                     },
-                    "createdAt": {
-                        "type": "string",
-                        "format": "date-time"
+                    "SEO_Title_Slug": {
+                        "type": "string"
                     },
-                    "updatedAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "publishedAt": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "createdBy": {
+                    "Form_Image": {
                         "type": "object",
                         "properties": {
                             "id": {
@@ -2104,29 +2129,46 @@
                             "documentId": {
                                 "type": "string"
                             },
-                            "firstname": {
+                            "name": {
                                 "type": "string"
                             },
-                            "lastname": {
+                            "alternativeText": {
                                 "type": "string"
                             },
-                            "username": {
+                            "caption": {
                                 "type": "string"
                             },
-                            "email": {
-                                "type": "string",
-                                "format": "email"
+                            "width": {
+                                "type": "integer"
                             },
-                            "resetPasswordToken": {
+                            "height": {
+                                "type": "integer"
+                            },
+                            "formats": {},
+                            "hash": {
                                 "type": "string"
                             },
-                            "registrationToken": {
+                            "ext": {
                                 "type": "string"
                             },
-                            "isActive": {
-                                "type": "boolean"
+                            "mime": {
+                                "type": "string"
                             },
-                            "roles": {
+                            "size": {
+                                "type": "number",
+                                "format": "float"
+                            },
+                            "url": {
+                                "type": "string"
+                            },
+                            "previewUrl": {
+                                "type": "string"
+                            },
+                            "provider": {
+                                "type": "string"
+                            },
+                            "provider_metadata": {},
+                            "related": {
                                 "type": "array",
                                 "items": {
                                     "type": "object",
@@ -2136,51 +2178,103 @@
                                         },
                                         "documentId": {
                                             "type": "string"
-                                        },
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "code": {
-                                            "type": "string"
-                                        },
-                                        "description": {
-                                            "type": "string"
-                                        },
-                                        "users": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "number"
-                                                    },
-                                                    "documentId": {
-                                                        "type": "string"
-                                                    }
+                                        }
+                                    }
+                                }
+                            },
+                            "folder": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    },
+                                    "documentId": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "pathId": {
+                                        "type": "integer"
+                                    },
+                                    "parent": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "number"
+                                            },
+                                            "documentId": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "children": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "documentId": {
+                                                    "type": "string"
                                                 }
                                             }
-                                        },
-                                        "permissions": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "id": {
-                                                        "type": "number"
-                                                    },
-                                                    "documentId": {
-                                                        "type": "string"
-                                                    },
-                                                    "action": {
-                                                        "type": "string"
-                                                    },
-                                                    "actionParameters": {},
-                                                    "subject": {
-                                                        "type": "string"
-                                                    },
-                                                    "properties": {},
-                                                    "conditions": {},
-                                                    "role": {
+                                        }
+                                    },
+                                    "files": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "documentId": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "alternativeText": {
+                                                    "type": "string"
+                                                },
+                                                "caption": {
+                                                    "type": "string"
+                                                },
+                                                "width": {
+                                                    "type": "integer"
+                                                },
+                                                "height": {
+                                                    "type": "integer"
+                                                },
+                                                "formats": {},
+                                                "hash": {
+                                                    "type": "string"
+                                                },
+                                                "ext": {
+                                                    "type": "string"
+                                                },
+                                                "mime": {
+                                                    "type": "string"
+                                                },
+                                                "size": {
+                                                    "type": "number",
+                                                    "format": "float"
+                                                },
+                                                "url": {
+                                                    "type": "string"
+                                                },
+                                                "previewUrl": {
+                                                    "type": "string"
+                                                },
+                                                "provider": {
+                                                    "type": "string"
+                                                },
+                                                "provider_metadata": {},
+                                                "related": {
+                                                    "type": "array",
+                                                    "items": {
                                                         "type": "object",
                                                         "properties": {
                                                             "id": {
@@ -2190,47 +2284,257 @@
                                                                 "type": "string"
                                                             }
                                                         }
-                                                    },
-                                                    "createdAt": {
-                                                        "type": "string",
-                                                        "format": "date-time"
-                                                    },
-                                                    "updatedAt": {
-                                                        "type": "string",
-                                                        "format": "date-time"
-                                                    },
-                                                    "publishedAt": {
-                                                        "type": "string",
-                                                        "format": "date-time"
-                                                    },
-                                                    "createdBy": {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "number"
-                                                            },
-                                                            "documentId": {
-                                                                "type": "string"
-                                                            }
+                                                    }
+                                                },
+                                                "folder": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number"
+                                                        },
+                                                        "documentId": {
+                                                            "type": "string"
                                                         }
-                                                    },
-                                                    "updatedBy": {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "number"
-                                                            },
-                                                            "documentId": {
-                                                                "type": "string"
+                                                    }
+                                                },
+                                                "folderPath": {
+                                                    "type": "string"
+                                                },
+                                                "createdAt": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updatedAt": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "publishedAt": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "createdBy": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number"
+                                                        },
+                                                        "documentId": {
+                                                            "type": "string"
+                                                        },
+                                                        "firstname": {
+                                                            "type": "string"
+                                                        },
+                                                        "lastname": {
+                                                            "type": "string"
+                                                        },
+                                                        "username": {
+                                                            "type": "string"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "format": "email"
+                                                        },
+                                                        "resetPasswordToken": {
+                                                            "type": "string"
+                                                        },
+                                                        "registrationToken": {
+                                                            "type": "string"
+                                                        },
+                                                        "isActive": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "roles": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "number"
+                                                                    },
+                                                                    "documentId": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "code": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "description": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "users": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "id": {
+                                                                                    "type": "number"
+                                                                                },
+                                                                                "documentId": {
+                                                                                    "type": "string"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "permissions": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "id": {
+                                                                                    "type": "number"
+                                                                                },
+                                                                                "documentId": {
+                                                                                    "type": "string"
+                                                                                },
+                                                                                "action": {
+                                                                                    "type": "string"
+                                                                                },
+                                                                                "actionParameters": {},
+                                                                                "subject": {
+                                                                                    "type": "string"
+                                                                                },
+                                                                                "properties": {},
+                                                                                "conditions": {},
+                                                                                "role": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "id": {
+                                                                                            "type": "number"
+                                                                                        },
+                                                                                        "documentId": {
+                                                                                            "type": "string"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "createdAt": {
+                                                                                    "type": "string",
+                                                                                    "format": "date-time"
+                                                                                },
+                                                                                "updatedAt": {
+                                                                                    "type": "string",
+                                                                                    "format": "date-time"
+                                                                                },
+                                                                                "publishedAt": {
+                                                                                    "type": "string",
+                                                                                    "format": "date-time"
+                                                                                },
+                                                                                "createdBy": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "id": {
+                                                                                            "type": "number"
+                                                                                        },
+                                                                                        "documentId": {
+                                                                                            "type": "string"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "updatedBy": {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "id": {
+                                                                                            "type": "number"
+                                                                                        },
+                                                                                        "documentId": {
+                                                                                            "type": "string"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "locale": {
+                                                                                    "type": "string"
+                                                                                },
+                                                                                "localizations": {
+                                                                                    "type": "array",
+                                                                                    "items": {
+                                                                                        "type": "object",
+                                                                                        "properties": {
+                                                                                            "id": {
+                                                                                                "type": "number"
+                                                                                            },
+                                                                                            "documentId": {
+                                                                                                "type": "string"
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "createdAt": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "updatedAt": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "publishedAt": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
+                                                                    },
+                                                                    "createdBy": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "documentId": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "updatedBy": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "documentId": {
+                                                                                "type": "string"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "locale": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "localizations": {
+                                                                        "type": "array",
+                                                                        "items": {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "id": {
+                                                                                    "type": "number"
+                                                                                },
+                                                                                "documentId": {
+                                                                                    "type": "string"
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
                                                             }
-                                                        }
-                                                    },
-                                                    "locale": {
-                                                        "type": "string"
-                                                    },
-                                                    "localizations": {
-                                                        "type": "array",
-                                                        "items": {
+                                                        },
+                                                        "blocked": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "preferedLanguage": {
+                                                            "type": "string"
+                                                        },
+                                                        "createdAt": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "updatedAt": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "publishedAt": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "createdBy": {
                                                             "type": "object",
                                                             "properties": {
                                                                 "id": {
@@ -2240,7 +2544,223 @@
                                                                     "type": "string"
                                                                 }
                                                             }
+                                                        },
+                                                        "updatedBy": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "number"
+                                                                },
+                                                                "documentId": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "locale": {
+                                                            "type": "string"
+                                                        },
+                                                        "localizations": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "number"
+                                                                    },
+                                                                    "documentId": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            }
                                                         }
+                                                    }
+                                                },
+                                                "updatedBy": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number"
+                                                        },
+                                                        "documentId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "locale": {
+                                                    "type": "string"
+                                                },
+                                                "localizations": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number"
+                                                            },
+                                                            "documentId": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "path": {
+                                        "type": "string"
+                                    },
+                                    "createdAt": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "updatedAt": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "publishedAt": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "createdBy": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "number"
+                                            },
+                                            "documentId": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "updatedBy": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "number"
+                                            },
+                                            "documentId": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "locale": {
+                                        "type": "string"
+                                    },
+                                    "localizations": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "documentId": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "folderPath": {
+                                "type": "string"
+                            },
+                            "createdAt": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "updatedAt": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "publishedAt": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "createdBy": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    },
+                                    "documentId": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "updatedBy": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    },
+                                    "documentId": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "locale": {
+                                "type": "string"
+                            },
+                            "localizations": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "number"
+                                        },
+                                        "documentId": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "dosage_products": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "number"
+                                },
+                                "documentId": {
+                                    "type": "string"
+                                },
+                                "Name": {
+                                    "type": "string"
+                                },
+                                "Description": {
+                                    "type": "string"
+                                },
+                                "Quanity": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "unit_type": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "number"
+                                        },
+                                        "documentId": {
+                                            "type": "string"
+                                        },
+                                        "unitType": {
+                                            "type": "string"
+                                        },
+                                        "dosage_products": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "documentId": {
+                                                        "type": "string"
                                                     }
                                                 }
                                             }
@@ -2297,54 +2817,8 @@
                                             }
                                         }
                                     }
-                                }
-                            },
-                            "blocked": {
-                                "type": "boolean"
-                            },
-                            "preferedLanguage": {
-                                "type": "string"
-                            },
-                            "createdAt": {
-                                "type": "string",
-                                "format": "date-time"
-                            },
-                            "updatedAt": {
-                                "type": "string",
-                                "format": "date-time"
-                            },
-                            "publishedAt": {
-                                "type": "string",
-                                "format": "date-time"
-                            },
-                            "createdBy": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "number"
-                                    },
-                                    "documentId": {
-                                        "type": "string"
-                                    }
-                                }
-                            },
-                            "updatedBy": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "number"
-                                    },
-                                    "documentId": {
-                                        "type": "string"
-                                    }
-                                }
-                            },
-                            "locale": {
-                                "type": "string"
-                            },
-                            "localizations": {
-                                "type": "array",
-                                "items": {
+                                },
+                                "cannaboid_type": {
                                     "type": "object",
                                     "properties": {
                                         "id": {
@@ -2352,42 +2826,513 @@
                                         },
                                         "documentId": {
                                             "type": "string"
+                                        },
+                                        "Title": {
+                                            "type": "string"
+                                        },
+                                        "Description": {
+                                            "type": "string"
+                                        },
+                                        "slug": {
+                                            "type": "string"
+                                        },
+                                        "dosage_products": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "documentId": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "createdAt": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updatedAt": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "publishedAt": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "createdBy": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "documentId": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "updatedBy": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "documentId": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "locale": {
+                                            "type": "string"
+                                        },
+                                        "localizations": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "documentId": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
-                        }
-                    },
-                    "updatedBy": {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "type": "number"
-                            },
-                            "documentId": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "locale": {
-                        "type": "string"
-                    },
-                    "localizations": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "id": {
-                                    "type": "number"
                                 },
-                                "documentId": {
-                                    "type": "string"
+                                "dosage_form": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "number"
+                                        },
+                                        "documentId": {
+                                            "type": "string"
+                                        },
+                                        "Title": {
+                                            "type": "string"
+                                        },
+                                        "Description": {
+                                            "type": "string"
+                                        },
+                                        "SEO_Title_Slug": {
+                                            "type": "string"
+                                        },
+                                        "Form_Image": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "documentId": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "alternativeText": {
+                                                    "type": "string"
+                                                },
+                                                "caption": {
+                                                    "type": "string"
+                                                },
+                                                "width": {
+                                                    "type": "integer"
+                                                },
+                                                "height": {
+                                                    "type": "integer"
+                                                },
+                                                "formats": {},
+                                                "hash": {
+                                                    "type": "string"
+                                                },
+                                                "ext": {
+                                                    "type": "string"
+                                                },
+                                                "mime": {
+                                                    "type": "string"
+                                                },
+                                                "size": {
+                                                    "type": "number",
+                                                    "format": "float"
+                                                },
+                                                "url": {
+                                                    "type": "string"
+                                                },
+                                                "previewUrl": {
+                                                    "type": "string"
+                                                },
+                                                "provider": {
+                                                    "type": "string"
+                                                },
+                                                "provider_metadata": {},
+                                                "related": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number"
+                                                            },
+                                                            "documentId": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "folder": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number"
+                                                        },
+                                                        "documentId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "folderPath": {
+                                                    "type": "string"
+                                                },
+                                                "createdAt": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updatedAt": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "publishedAt": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "createdBy": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number"
+                                                        },
+                                                        "documentId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "updatedBy": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number"
+                                                        },
+                                                        "documentId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "locale": {
+                                                    "type": "string"
+                                                },
+                                                "localizations": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number"
+                                                            },
+                                                            "documentId": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "dosage_products": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "documentId": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "createdAt": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updatedAt": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "publishedAt": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "createdBy": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "documentId": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "updatedBy": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "documentId": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "locale": {
+                                            "type": "string"
+                                        },
+                                        "localizations": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "documentId": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 },
-                                "Name": {
-                                    "type": "string"
+                                "ingredients": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "number"
+                                            },
+                                            "documentId": {
+                                                "type": "string"
+                                            },
+                                            "Name": {
+                                                "type": "string"
+                                            },
+                                            "slug": {
+                                                "type": "string"
+                                            },
+                                            "Description": {
+                                                "type": "string"
+                                            },
+                                            "dosage_products": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number"
+                                                        },
+                                                        "documentId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "createdAt": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updatedAt": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "publishedAt": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "createdBy": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "documentId": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "updatedBy": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "documentId": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "locale": {
+                                                "type": "string"
+                                            },
+                                            "localizations": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number"
+                                                        },
+                                                        "documentId": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 },
-                                "Discription": {
-                                    "type": "string"
+                                "image": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "number"
+                                        },
+                                        "documentId": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "alternativeText": {
+                                            "type": "string"
+                                        },
+                                        "caption": {
+                                            "type": "string"
+                                        },
+                                        "width": {
+                                            "type": "integer"
+                                        },
+                                        "height": {
+                                            "type": "integer"
+                                        },
+                                        "formats": {},
+                                        "hash": {
+                                            "type": "string"
+                                        },
+                                        "ext": {
+                                            "type": "string"
+                                        },
+                                        "mime": {
+                                            "type": "string"
+                                        },
+                                        "size": {
+                                            "type": "number",
+                                            "format": "float"
+                                        },
+                                        "url": {
+                                            "type": "string"
+                                        },
+                                        "previewUrl": {
+                                            "type": "string"
+                                        },
+                                        "provider": {
+                                            "type": "string"
+                                        },
+                                        "provider_metadata": {},
+                                        "related": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "documentId": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "folder": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "documentId": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "folderPath": {
+                                            "type": "string"
+                                        },
+                                        "createdAt": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "updatedAt": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "publishedAt": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        },
+                                        "createdBy": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "documentId": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "updatedBy": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number"
+                                                },
+                                                "documentId": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "locale": {
+                                            "type": "string"
+                                        },
+                                        "localizations": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "documentId": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 },
                                 "createdAt": {
                                     "type": "string",
@@ -2439,6 +3384,57 @@
                                             }
                                         }
                                     }
+                                }
+                            }
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "publishedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "number"
+                            },
+                            "documentId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "updatedBy": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "number"
+                            },
+                            "documentId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "locale": {
+                        "type": "string"
+                    },
+                    "localizations": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "number"
+                                },
+                                "documentId": {
+                                    "type": "string"
                                 }
                             }
                         }

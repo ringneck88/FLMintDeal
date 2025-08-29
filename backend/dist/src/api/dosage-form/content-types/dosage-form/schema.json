@@ -4,18 +4,36 @@
     "info": {
         "singularName": "dosage-form",
         "pluralName": "dosage-forms",
-        "displayName": "dosage-form"
+        "displayName": "Dosage Form",
+        "description": "Methods of cannabis product delivery"
     },
     "options": {
         "draftAndPublish": true
     },
     "pluginOptions": {},
     "attributes": {
-        "Name": {
-            "type": "string"
+        "Title": {
+            "type": "string",
+            "required": true
         },
-        "Discription": {
+        "Description": {
             "type": "text"
+        },
+        "SEO_Title_Slug": {
+            "type": "string",
+            "unique": true
+        },
+        "Form_Image": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": ["images"]
+        },
+        "dosage_products": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::dosage-product.dosage-product",
+            "mappedBy": "dosage_form"
         }
     }
 }
