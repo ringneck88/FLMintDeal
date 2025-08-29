@@ -32,6 +32,6 @@ primary_region = "iad"
   cpus = 2
 
 [mounts]
-  source = "data_restored"
+  source = "data"
   destination = "/data"
   initial_size = "1gb"

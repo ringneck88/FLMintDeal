@@ -17,10 +17,10 @@ async function createAdminUser() {
       // Create admin user
       const adminUser = await strapi.db.query('admin::user.user').create({
         data: {
-          firstname: 'Kelly',
-          lastname: 'Sharp',
-          email: 'kelly@phiti.com',
-          password: await strapi.admin.services.auth.hashPassword('admin123'),
+          firstname: 'Admin',
+          lastname: 'User',
+          email: 'admin@flmintdeal.com',
+          password: await strapi.admin.services.auth.hashPassword('FLMintDeal2024!'),
           isActive: true,
           blocked: false,
           roles: [1] // Super Admin role
@@ -29,8 +29,8 @@ async function createAdminUser() {
       
       console.log('✅ Admin user created:', adminUser.email);
       console.log('🔑 Login credentials:');
-      console.log('   Email: kelly@phiti.com');
-      console.log('   Password: admin123');
+      console.log('   Email: admin@flmintdeal.com');
+      console.log('   Password: FLMintDeal2024!');
     } else {
       console.log('👤 Existing admin users:');
       adminUsers.forEach(user => {

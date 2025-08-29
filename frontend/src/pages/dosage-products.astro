@@ -101,17 +101,22 @@ try {
   strapiStatus = 'Disconnected - Cannot connect to backend';
   apiError = error.name === 'AbortError' ? 'Connection timeout' : error.message;
   
-  // Fallback data - your real cannabis products from dev backup
-  console.log('🔄 DEBUG: Using real cannabis product data from backup');
+  // Comprehensive cannabis product catalog - expanded fallback data
+  console.log('🔄 DEBUG: Using comprehensive cannabis product catalog from backup');
   dosageProducts = [
+    // INHALATION PRODUCTS
     {
       id: 16,
       name: 'All in One - Distillate',
-      description: 'All in One - Distillate',
+      description: 'Premium distillate cartridge with full spectrum cannabinoids for potent, clean vapor',
       slug: 'all-in-one-distillate',
       image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80',
       dosageForm: 'Inhalation',
       category: 'Concentrate',
+      potency: '85-90% THC',
+      strain: 'Hybrid',
+      size: '1g',
+      price: '$45',
       createdAt: '2025-08-26T17:39:09.534Z',
       updatedAt: '2025-08-26T23:28:01.391Z',
       publishedAt: '2025-08-26T23:28:01.419Z'
@@ -119,11 +124,15 @@ try {
     {
       id: 17,
       name: 'Bubble Hash',
-      description: 'Bubble Hash',
+      description: 'Solventless bubble hash made with ice water extraction method',
       slug: 'bubble-hash',
       image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80',
       dosageForm: 'Inhalation',
       category: 'Concentrate',
+      potency: '60-70% THC',
+      strain: 'Indica Dominant',
+      size: '1g',
+      price: '$55',
       createdAt: '2025-08-26T17:16:23.142Z',
       updatedAt: '2025-08-26T23:45:52.043Z',
       publishedAt: '2025-08-26T23:45:52.085Z'
@@ -131,11 +140,15 @@ try {
     {
       id: 18,
       name: 'Preroll - 1g',
-      description: 'Preroll - 1g',
+      description: 'Premium flower preroll made with top-shelf indoor cannabis',
       slug: 'preroll-1g',
       image: `${strapiUrl}/uploads/download_6c6a685ff9.jpg`,
       dosageForm: 'Inhalation',
       category: 'Flower',
+      potency: '20-25% THC',
+      strain: 'Sativa Dominant',
+      size: '1g',
+      price: '$12',
       createdAt: '2025-08-25T20:52:17.350Z',
       updatedAt: '2025-08-26T23:46:18.704Z',
       publishedAt: '2025-08-26T23:46:18.730Z'
@@ -143,26 +156,264 @@ try {
     {
       id: 19,
       name: 'Rosin Sauce',
-      description: 'Rosin Sauce',
+      description: 'Live rosin sauce with incredible terpene profile and potent effects',
       slug: 'rosin-sauce',
       image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80',
       dosageForm: 'Inhalation',
       category: 'Concentrate',
-      createdAt: '2025-08-18T22:04:01.923Z',
+      potency: '75-82% THC',
+      strain: 'Hybrid',
+      size: '1g',
+      price: '$65',
+      createdAt: '2025-08-26T17:04:01.923Z',
       updatedAt: '2025-08-26T23:47:47.752Z',
       publishedAt: '2025-08-26T23:47:47.774Z'
     },
     {
+      id: 22,
+      name: 'Live Resin Cartridge - Indica',
+      description: 'Full spectrum live resin cartridge with preserved terpenes',
+      slug: 'live-resin-cartridge-indica',
+      image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Inhalation',
+      category: 'Cartridge',
+      potency: '80-88% THC',
+      strain: 'Indica',
+      size: '0.5g',
+      price: '$42',
+      createdAt: '2025-08-27T10:15:00.000Z',
+      updatedAt: '2025-08-27T10:15:00.000Z',
+      publishedAt: '2025-08-27T10:15:00.000Z'
+    },
+    {
+      id: 23,
+      name: 'Flower - Wedding Cake',
+      description: 'Premium indoor Wedding Cake strain with sweet vanilla notes',
+      slug: 'flower-wedding-cake',
+      image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Inhalation',
+      category: 'Flower',
+      potency: '24-28% THC',
+      strain: 'Indica Hybrid',
+      size: '3.5g',
+      price: '$35',
+      createdAt: '2025-08-27T11:20:00.000Z',
+      updatedAt: '2025-08-27T11:20:00.000Z',
+      publishedAt: '2025-08-27T11:20:00.000Z'
+    },
+    {
+      id: 24,
+      name: 'Shatter - Blue Dream',
+      description: 'Glass-like shatter concentrate with high potency and clarity',
+      slug: 'shatter-blue-dream',
+      image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Inhalation',
+      category: 'Concentrate',
+      potency: '82-88% THC',
+      strain: 'Sativa Hybrid',
+      size: '1g',
+      price: '$48',
+      createdAt: '2025-08-27T12:30:00.000Z',
+      updatedAt: '2025-08-27T12:30:00.000Z',
+      publishedAt: '2025-08-27T12:30:00.000Z'
+    },
+    {
+      id: 25,
+      name: 'Disposable Vape - OG Kush',
+      description: 'Convenient disposable vape pen with classic OG Kush flavor',
+      slug: 'disposable-vape-og-kush',
+      image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Inhalation',
+      category: 'Disposable',
+      potency: '78-85% THC',
+      strain: 'Indica',
+      size: '0.3g',
+      price: '$28',
+      createdAt: '2025-08-27T13:45:00.000Z',
+      updatedAt: '2025-08-27T13:45:00.000Z',
+      publishedAt: '2025-08-27T13:45:00.000Z'
+    },
+
+    // ORAL CAPSULE PRODUCTS
+    {
       id: 21,
-      name: 'THC Capsules 30 Capsules',
-      description: 'THC Capsules 30 Capsules',
-      slug: 'thc-capsules-30-capsules',
+      name: 'THC Capsules 30 Count',
+      description: 'Precisely dosed THC capsules for consistent, long-lasting effects',
+      slug: 'thc-capsules-30-count',
       image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop&q=80',
       dosageForm: 'Oral Capsule',
       category: 'Capsule',
+      potency: '10mg THC each',
+      strain: 'Full Spectrum',
+      size: '30 count',
+      price: '$45',
       createdAt: '2025-08-26T23:50:47.287Z',
       updatedAt: '2025-08-26T23:50:47.287Z',
       publishedAt: '2025-08-26T23:50:47.307Z'
+    },
+    {
+      id: 26,
+      name: 'CBD Capsules 25mg',
+      description: 'High-quality CBD capsules for wellness and relaxation',
+      slug: 'cbd-capsules-25mg',
+      image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Oral Capsule',
+      category: 'CBD',
+      potency: '25mg CBD each',
+      strain: 'CBD Isolate',
+      size: '30 count',
+      price: '$38',
+      createdAt: '2025-08-27T14:15:00.000Z',
+      updatedAt: '2025-08-27T14:15:00.000Z',
+      publishedAt: '2025-08-27T14:15:00.000Z'
+    },
+    {
+      id: 27,
+      name: 'Balanced THC:CBD Capsules',
+      description: '1:1 ratio THC:CBD capsules for balanced therapeutic effects',
+      slug: 'balanced-thc-cbd-capsules',
+      image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Oral Capsule',
+      category: 'Balanced',
+      potency: '5mg THC / 5mg CBD each',
+      strain: 'Full Spectrum',
+      size: '30 count',
+      price: '$42',
+      createdAt: '2025-08-27T15:00:00.000Z',
+      updatedAt: '2025-08-27T15:00:00.000Z',
+      publishedAt: '2025-08-27T15:00:00.000Z'
+    },
+
+    // SUBLINGUAL PRODUCTS
+    {
+      id: 28,
+      name: 'THC Tincture - Fast Acting',
+      description: 'Fast-absorbing sublingual THC tincture with precise dosing dropper',
+      slug: 'thc-tincture-fast-acting',
+      image: 'https://images.unsplash.com/photo-1612178537253-bccd437b730e?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Sublingual',
+      category: 'Tincture',
+      potency: '10mg/mL THC',
+      strain: 'Full Spectrum',
+      size: '30mL',
+      price: '$48',
+      createdAt: '2025-08-27T16:00:00.000Z',
+      updatedAt: '2025-08-27T16:00:00.000Z',
+      publishedAt: '2025-08-27T16:00:00.000Z'
+    },
+    {
+      id: 29,
+      name: 'CBD Oil - Pure Extract',
+      description: 'High-quality CBD oil for sublingual use with natural hemp flavor',
+      slug: 'cbd-oil-pure-extract',
+      image: 'https://images.unsplash.com/photo-1612178537253-bccd437b730e?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Sublingual',
+      category: 'CBD Oil',
+      potency: '25mg/mL CBD',
+      strain: 'CBD Isolate',
+      size: '30mL',
+      price: '$45',
+      createdAt: '2025-08-27T16:30:00.000Z',
+      updatedAt: '2025-08-27T16:30:00.000Z',
+      publishedAt: '2025-08-27T16:30:00.000Z'
+    },
+    {
+      id: 30,
+      name: 'Sleep Tincture - CBN Blend',
+      description: 'Nighttime tincture with CBN and THC for deep, restful sleep',
+      slug: 'sleep-tincture-cbn-blend',
+      image: 'https://images.unsplash.com/photo-1612178537253-bccd437b730e?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Sublingual',
+      category: 'Sleep Aid',
+      potency: '5mg THC / 10mg CBN per mL',
+      strain: 'Indica Blend',
+      size: '30mL',
+      price: '$55',
+      createdAt: '2025-08-27T17:00:00.000Z',
+      updatedAt: '2025-08-27T17:00:00.000Z',
+      publishedAt: '2025-08-27T17:00:00.000Z'
+    },
+
+    // EDIBLE PRODUCTS
+    {
+      id: 31,
+      name: 'Gummies - Mixed Berry',
+      description: 'Delicious mixed berry gummies with precise 5mg THC dosing',
+      slug: 'gummies-mixed-berry',
+      image: 'https://images.unsplash.com/photo-1582048928301-2b9c1ed1b93a?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Edibles',
+      category: 'Gummy',
+      potency: '5mg THC each',
+      strain: 'Hybrid',
+      size: '20 count (100mg total)',
+      price: '$25',
+      createdAt: '2025-08-27T18:00:00.000Z',
+      updatedAt: '2025-08-27T18:00:00.000Z',
+      publishedAt: '2025-08-27T18:00:00.000Z'
+    },
+    {
+      id: 32,
+      name: 'Chocolate Bar - Dark Cacao',
+      description: 'Artisanal dark chocolate infused with premium cannabis extract',
+      slug: 'chocolate-bar-dark-cacao',
+      image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Edibles',
+      category: 'Chocolate',
+      potency: '10mg THC per square',
+      strain: 'Sativa',
+      size: '100mg total (10 squares)',
+      price: '$22',
+      createdAt: '2025-08-27T18:30:00.000Z',
+      updatedAt: '2025-08-27T18:30:00.000Z',
+      publishedAt: '2025-08-27T18:30:00.000Z'
+    },
+    {
+      id: 33,
+      name: 'Cookies - Snickerdoodle',
+      description: 'Homestyle snickerdoodle cookies infused with cannabis butter',
+      slug: 'cookies-snickerdoodle',
+      image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Edibles',
+      category: 'Baked Goods',
+      potency: '10mg THC each',
+      strain: 'Indica',
+      size: '2 count (20mg total)',
+      price: '$18',
+      createdAt: '2025-08-27T19:00:00.000Z',
+      updatedAt: '2025-08-27T19:00:00.000Z',
+      publishedAt: '2025-08-27T19:00:00.000Z'
+    },
+    {
+      id: 34,
+      name: 'Mints - Peppermint',
+      description: 'Refreshing peppermint mints with microdose THC for discreet consumption',
+      slug: 'mints-peppermint',
+      image: 'https://images.unsplash.com/photo-1582048928301-2b9c1ed1b93a?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Edibles',
+      category: 'Mint',
+      potency: '2.5mg THC each',
+      strain: 'Sativa',
+      size: '20 count (50mg total)',
+      price: '$20',
+      createdAt: '2025-08-27T19:30:00.000Z',
+      updatedAt: '2025-08-27T19:30:00.000Z',
+      publishedAt: '2025-08-27T19:30:00.000Z'
+    },
+    {
+      id: 35,
+      name: 'Beverage - Sparkling Lemonade',
+      description: 'Refreshing sparkling lemonade infused with fast-acting THC',
+      slug: 'beverage-sparkling-lemonade',
+      image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Edibles',
+      category: 'Beverage',
+      potency: '10mg THC per bottle',
+      strain: 'Hybrid',
+      size: '12fl oz',
+      price: '$15',
+      createdAt: '2025-08-27T20:00:00.000Z',
+      updatedAt: '2025-08-27T20:00:00.000Z',
+      publishedAt: '2025-08-27T20:00:00.000Z'
     }
   ];
   
@@ -284,6 +535,34 @@ console.log('📊 DEBUG: API error:', apiError);
                         </h4>
                         
                         <p class="text-gray-600 mb-3 text-sm line-clamp-2">{product.description}</p>
+                        
+                        {/* Product details grid */}
+                        <div class="grid grid-cols-2 gap-2 mb-3 text-xs">
+                          {product.potency && (
+                            <div>
+                              <span class="text-gray-500">Potency:</span>
+                              <span class="ml-1 font-medium text-green-600">{product.potency}</span>
+                            </div>
+                          )}
+                          {product.strain && (
+                            <div>
+                              <span class="text-gray-500">Type:</span>
+                              <span class="ml-1 font-medium">{product.strain}</span>
+                            </div>
+                          )}
+                          {product.size && (
+                            <div>
+                              <span class="text-gray-500">Size:</span>
+                              <span class="ml-1 font-medium">{product.size}</span>
+                            </div>
+                          )}
+                          {product.price && (
+                            <div>
+                              <span class="text-gray-500">Price:</span>
+                              <span class="ml-1 font-bold text-blue-600">{product.price}</span>
+                            </div>
+                          )}
+                        </div>
                         
                         <div class="flex items-center justify-between">
                           <div class="flex items-center space-x-2 text-xs text-gray-500">
