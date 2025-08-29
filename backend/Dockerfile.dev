@@ -11,6 +11,9 @@ RUN yarn install --frozen-lockfile
 # Copy application code
 COPY . .
 
+# Build the application and plugins in development
+RUN yarn build
+
 # Expose port
 EXPOSE 1337
 
