@@ -1,28 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(flyctl apps open:*)",
-      "Bash(flyctl secrets set:*)",
-      "Bash(flyctl deploy:*)",
-      "Bash(rm:*)",
-      "Bash(flyctl logs:*)",
-      "Bash(flyctl secrets show:*)",
-      "Bash(flyctl secrets:*)",
-      "Bash(flyctl ssh console:*)",
-      "Bash(flyctl apps:*)",
-      "Bash(flyctl postgres create:*)",
-      "Bash(flyctl mpg create:*)",
-      "Bash(flyctl mpg status:*)",
-      "Bash(flyctl mpg connect:*)",
-      "Bash(flyctl mpg config show:*)",
-      "Bash(flyctl mpg attach:*)",
-      "Bash(flyctl mpg destroy:*)",
-      "Bash(flyctl --app flmintdeal logs --limit 50)",
-      "Bash(flyctl:*)",
-      "WebFetch(domain:flmintdeal.fly.dev)",
-      "WebFetch(domain:flmintdeal-dev.fly.dev)",
-      "Bash(ping:*)",
-      "Bash(yarn deploy)"
+      "Bash(node:*)",
+      "Bash(npm:*)"
     ],
     "deny": [],
     "ask": []

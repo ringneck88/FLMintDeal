@@ -1,86 +1,115 @@
+# FLMintDeals - Full-Stack Cannabis Deals Platform
 
- Production:
-  - Frontend: https://flmintdeals-frontend.fly.dev
-  - Backend API: https://flmintdeals-backend.fly.dev
-  - Strapi Admin: https://flmintdeals-backend.fly.dev/admin
+A modern full-stack deals/commerce website built with Strapi (headless CMS) and Astro (static site generator).
 
-  Local Development:
-  - Frontend: http://localhost:4321
-  - Backend API: http://localhost:1338
-  - Strapi Admin: http://localhost:1338/admin
+## 🌐 Live Deployment URLs
 
+### Current Production URLs
+- **Frontend (Main Site)**: https://flmintdeal-frontend.pages.dev
+- **Backend API**: https://flmintdeal-dev.fly.dev/api/*
+- **Admin Panel**: https://flmintdeal-dev.fly.dev/admin
+- **API Documentation**: https://flmintdeal-dev.fly.dev/documentation
 
+### Local Development URLs
+- **Frontend**: http://localhost:4321
+- **Backend API**: http://localhost:1337/api/*
+- **Admin Panel**: http://localhost:1337/admin
 
+## 🏗️ Project Structure
 
+```
+FLMintDeal/
+├── backend/                   # Strapi v5.22.0 CMS backend
+│   ├── config/               # Strapi configuration
+│   ├── src/                  # API endpoints and content types
+│   ├── fly.toml             # Production deployment config
+│   ├── fly.dev.toml         # Development deployment config
+│   └── Dockerfile.dev       # Development container
+├── frontend/                 # Astro v5.13.0 static site
+│   ├── src/pages/           # Site pages (index.astro = main page)
+│   ├── src/lib/             # Utilities (Strapi API client)
+│   ├── wrangler.toml       # Cloudflare Pages configuration
+│   └── dist/               # Built static files
+└── CLAUDE.md              # Detailed setup instructions
+```
 
+## 🚀 Quick Start
 
+### Backend (Strapi CMS)
+```bash
+cd backend
+npm install
+npm run dev                 # Development mode
+# Access admin at http://localhost:1337/admin
+```
 
-● To edit the frontend home page in Astro, you'll
-  make changes in:
+### Frontend (Astro Site)
+```bash
+cd frontend
+npm install
+npm run dev                 # Development mode
+# Access site at http://localhost:4321
+```
 
-  frontend/src/pages/index.astro
+## 📝 Content Management
 
-● Read(frontend\src\pages\index.astro)
-  ⎿  Read 219 lines (ctrl+r to expand)
+### Available Content Types
+- **Cannabinoids Types**: Cannabis compound information
+- **Dosing Forms**: Product delivery methods
+- **Ingredients**: Product ingredients
+- **Dosage Products**: Cannabis products
+- **Unit Types**: Measurement units
 
-● This is your home page file! Here's how to edit
-  it:
+### Admin Access
+- **URL**: https://flmintdeal-dev.fly.dev/admin
+- **Development**: Running in development mode with hot-reload
 
-  File Location: frontend/src/pages/index.astro
+## 🔌 API Integration
 
-  Key sections you can modify:
+The frontend automatically connects to the backend API:
 
-  1. Hero Section (lines 67-87): Main banner with       
-  title and description
-  2. Featured Deals (lines 111-154): Large
-  highlighted deals
-  3. All Deals (lines 157-199): Smaller deal grid       
-  4. Call to Action (lines 202-217): Email signup       
-  section
+**API Base URL**: `https://flmintdeal-dev.fly.dev`
 
-  To make changes:
-  1. Edit the file locally
-  2. Test locally: cd frontend && npm run dev
-  3. Deploy: cd frontend && flyctl deploy
+**Example API Endpoints**:
+- `GET /api/cannabinoids-types` - List cannabinoid types
+- `GET /api/dosing-forms` - List dosing forms
+- `GET /api/ingredients` - List ingredients
+- `GET /api/dosage-products` - List products
 
-  Current features:
-  - Uses sample data (lines 6-51)
-  - Connects to Strapi backend (line 54)
-  - Responsive design with Tailwind CSS
-  - Status indicators showing backend connection        
+## 🎯 Current Status
 
-  You can modify the text, colors, layout, or
-  replace the sample data with real Strapi content      
-  by updating the API calls in the frontmatter
-  section (lines 1-63).
+✅ **Backend**: Deployed and running in development mode  
+✅ **Frontend**: Deployed on Cloudflare Pages  
+⚠️ **API Connection**: Frontend needs configuration update to connect to backend  
 
+### Known Issue
+The frontend is currently looking for `/api/deals` but the backend has different content types. This can be resolved by:
+1. Adding a "deals" content type in Strapi admin, or
+2. Updating the frontend to use existing content types
 
+## 🛠️ Development Workflow
 
-## ● Perfect! Now the Swagger documentation should be available. Try these URLs:
+1. **Edit Content**: Use Strapi admin panel to add/edit content
+2. **Frontend Changes**: Edit `frontend/src/pages/index.astro` for homepage
+3. **API Changes**: Modify content types in Strapi admin
+4. **Deploy**: Changes auto-deploy via connected repositories
 
-  Development API Documentation:
-  https://flmintdeal-dev.fly.dev/documentation
+## 📚 Technology Stack
 
-  Available API endpoints you'll see:
-  - GET /api/deals - List all deals
-  - GET /api/deals/:id - Get specific deal
-  - POST /api/deals - Create new deal (requires auth)
-  - PUT /api/deals/:id - Update deal (requires auth)
-  - DELETE /api/deals/:id - Delete deal (requires auth)
-  - GET /api/users-permissions/users/me - Get current user
-  - Authentication endpoints for login/register
+- **Backend**: Strapi v5.22.0 (Node.js, SQLite/PostgreSQL)
+- **Frontend**: Astro v5.13.0 (TypeScript, Tailwind CSS)
+- **Deployment**: 
+  - Backend: Fly.io
+  - Frontend: Cloudflare Pages
+- **Database**: SQLite (development), PostgreSQL (production capable)
 
-  The documentation will show:
-  - Interactive API testing interface
-  - Request/response schemas
-  - Authentication requirements
-  - Field definitions for your content types
-  - Example requests and responses
+## 📖 Documentation
 
-  To also enable it on production:
-  cd backend && flyctl deploy
+- Full setup instructions: See `CLAUDE.md`
+- API documentation: Available at `/documentation` endpoint
+- Strapi docs: [strapi.io/documentation](https://strapi.io/documentation)
+- Astro docs: [docs.astro.build](https://docs.astro.build)
 
-  This will deploy the documentation plugin to your production environment as well.        
+---
 
-  The Swagger UI will automatically update when you add new content types using the        
-  Content Type Builder in the development admin panel!
+*This project was set up with development-first approach for easy content management and rapid iteration.*

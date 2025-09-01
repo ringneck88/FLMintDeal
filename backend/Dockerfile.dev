@@ -29,5 +29,5 @@ RUN mkdir -p /data && chown -R strapi:nodejs /data
 
 USER strapi
 
-# Start the application in development mode (no pre-build)
+# Start the application in development mode
 CMD ["yarn", "develop"]
