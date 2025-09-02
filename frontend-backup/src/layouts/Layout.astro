@@ -1,6 +1,4 @@
 ---
-import '../styles/global.css';
-
 export interface Props {
   title: string;
   description?: string;
@@ -13,7 +11,7 @@ const { title, description = "Your deals website powered by Kelly" } = Astro.pro
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
@@ -24,18 +22,15 @@ const { title, description = "Your deals website powered by Kelly" } = Astro.pro
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center py-6">
           <h1 class="text-3xl font-bold text-gray-900">
-            <a href="/" class="hover:text-blue-600 transition-colors">Mint Dosage Guide</a>
+            <a href="/" class="hover:text-blue-600 transition-colors">MintDeals</a>
           </h1>
           
           <nav class="hidden md:flex space-x-8">
             <a href="/" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-              Dosage Guide
+              Homelife
             </a>
-            <a href="#dosage-forms" class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-              Dosage Forms
-            </a>
-            <a href="#products" class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-              Products
+            <a href="/dosage-products" class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              Dosage Products
             </a>
           </nav>
 
@@ -52,13 +47,10 @@ const { title, description = "Your deals website powered by Kelly" } = Astro.pro
         <!-- Mobile menu -->
         <div id="mobile-menu" class="md:hidden hidden border-t border-gray-200 pt-4 pb-3">
           <a href="/" class="block px-3 py-2 text-gray-700 hover:text-blue-600 text-sm font-medium">
-            Dosage Guide
+            Home
           </a>
-          <a href="#dosage-forms" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium">
-            Dosage Forms
-          </a>
-          <a href="#products" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium">
-            Products
+          <a href="/dosage-products" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium">
+            Dosage Products
           </a>
         </div>
       </div>

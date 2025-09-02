@@ -9,10 +9,9 @@ console.log('🔧 DEBUG: Environment check');
 console.log('PUBLIC_STRAPI_URL from env:', import.meta.env.PUBLIC_STRAPI_URL);
 console.log('Final strapiUrl:', strapiUrl);
 
-// Fetch content from Strapi
+// Initialize data arrays
 let dosageProducts = [];
 let dosageForms = [];
-let deals = [];
 let cannabinoidTypes = [];
 let ingredients = [];
 let apiError = null;
@@ -22,9 +21,9 @@ try {
   
   // Test connection to Strapi with timeout
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+  const timeoutId = setTimeout(() => controller.abort(), 5000);
   
-  const testUrl = `${strapiUrl}/api/dosage-products?pagination[limit]=1`;
+  const testUrl = `${strapiUrl}/api/prouducts?pagination[limit]=1`;
   console.log('🔍 DEBUG: Testing URL:', testUrl);
   
   const healthResponse = await fetch(testUrl, {
@@ -39,50 +38,25 @@ try {
     strapiStatus = 'Connected';
     console.log('✅ DEBUG: Health check passed, fetching data');
     
-    // Fetch all content types from Strapi API
-    console.log('📦 DEBUG: Fetching dosage products...');
-    const productsResponse = await strapi.getMany('/dosage-products', { 
-      'populate': '*',
-      'pagination[limit]': '20'
-    });
+    // Fetch content from Strapi API
+    const [productsResponse, formsResponse, cannabinoidsResponse, ingredientsResponse] = await Promise.allSettled([
+      strapi.getMany('/prouducts', { 'populate': '*', 'pagination[limit]': '20' }),
+      strapi.getMany('/dosing-forms', { 'populate': '*', 'pagination[limit]': '100' }),
+      strapi.getMany('/cannabinoids-types', { 'populate': '*', 'pagination[limit]': '20' }),
+      strapi.getMany('/ingredients', { 'populate': '*', 'pagination[limit]': '20' })
+    ]);
     
-    console.log('📋 DEBUG: Fetching dosage forms...');
-    const formsResponse = await strapi.getMany('/dosage-forms', { 
-      'populate': '*',
-      'pagination[limit]': '100'
-    });
-    
-    console.log('🎯 DEBUG: Fetching deals...');
-    const dealsResponse = await strapi.getMany('/deals', { 
-      'populate': '*',
-      'pagination[limit]': '10'
-    });
-    
-    console.log('🧬 DEBUG: Fetching cannabinoid types...');
-    const cannabinoidsResponse = await strapi.getMany('/cannaboid-types', { 
-      'populate': '*',
-      'pagination[limit]': '20'
-    });
-    
-    console.log('🌿 DEBUG: Fetching ingredients...');
-    const ingredientsResponse = await strapi.getMany('/ingredients', { 
-      'populate': '*',
-      'pagination[limit]': '20'
-    });
-    
-    if (productsResponse && productsResponse.data && productsResponse.data.length > 0) {
-      console.log('🎯 DEBUG: Processing products data, found:', productsResponse.data.length, 'items');
-      console.log('🎯 DEBUG: First product raw data:', productsResponse.data[0]);
-      
-      dosageProducts = productsResponse.data.map(product => ({
+    // Process products
+    if (productsResponse.status === 'fulfilled' && productsResponse.value?.data?.length > 0) {
+      dosageProducts = productsResponse.value.data.map(product => ({
         id: product.id,
         documentId: product.documentId,
-        name: product.Name || product.Title || product.name || 'Unnamed Product',
-        description: product.Description || product.description || 'No description available',
-        slug: product.slug || (product.Name || product.Title)?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `product-${product.id}`,
-        image: product.image?.url ? `${strapiUrl}${product.image.url}` : `https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80`,
-        dosageForm: product.dosage_form?.Title || product.dosage_form?.Name || 'Other',
-        category: product.cannaboid_type?.Title || product.cannaboid_type?.Name || 'General',
+        name: product.Title || product.Name || product.name || 'Unnamed Product',
+        description: product.Description || product.Discription || product.description || 'No description available',
+        slug: product.SEO_Title_Slug || product.slug || (product.Title || product.Name)?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `product-${product.id}`,
+        image: product.image?.url ? `${strapiUrl}${product.image.url}` : product.Form_Image?.url ? `${strapiUrl}${product.Form_Image.url}` : `https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80`,
+        dosageForm: product.dosage_form?.Title || product.dosage_form?.Name || product.dosageForm || product.Title || product.Name || 'Other',
+        category: product.category || product.Category || 'General',
         quantity: product.Quanity || product.quantity,
         unitType: product.unit_type?.Name || product.unit_type?.Title,
         cannabinoidType: product.cannaboid_type?.Title || product.cannaboid_type?.Name,
@@ -90,193 +64,111 @@ try {
         createdAt: product.createdAt,
         updatedAt: product.updatedAt,
         publishedAt: product.publishedAt
-      })).filter(product => product.publishedAt); // Only show published products
-      
-      console.log('✨ DEBUG: Processed products:', dosageProducts.length, 'items');
-      console.log('✨ DEBUG: First processed product:', dosageProducts[0]);
-    } else {
-      console.log('❌ DEBUG: No products data found in response');
-      console.log('❌ DEBUG: productsResponse exists:', !!productsResponse);
-      console.log('❌ DEBUG: productsResponse.data exists:', !!(productsResponse && productsResponse.data));
-      console.log('❌ DEBUG: productsResponse.data length:', productsResponse?.data?.length || 0);
+      })).filter(product => product.publishedAt);
     }
     
     // Process dosage forms
-    if (formsResponse && formsResponse.data && formsResponse.data.length > 0) {
-      dosageForms = formsResponse.data.map(form => ({
+    if (formsResponse.status === 'fulfilled' && formsResponse.value?.data?.length > 0) {
+      dosageForms = formsResponse.value.data.map(form => ({
         id: form.id,
         name: form.Title || form.Name || form.name || 'Unnamed Form',
-        description: form.Description || form.description,
-        slug: form.SEO_Title_Slug || form.slug || form.Title?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `form-${form.id}`,
+        description: form.Description || form.Discription || form.description,
+        slug: form.SEO_Title_Slug || form.slug || (form.Title || form.Name)?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `form-${form.id}`,
         image: form.Form_Image?.url ? `${strapiUrl}${form.Form_Image.url}` : null,
         publishedAt: form.publishedAt
       })).filter(form => form.publishedAt);
     }
     
-    // Process deals
-    if (dealsResponse && dealsResponse.data && dealsResponse.data.length > 0) {
-      deals = dealsResponse.data.map(deal => ({
-        id: deal.id,
-        title: deal.title || 'Unnamed Deal',
-        description: deal.description || 'No description available',
-        price: deal.price,
-        originalPrice: deal.originalPrice,
-        discount: deal.discount,
-        category: deal.category || 'General',
-        featured: deal.featured || false,
-        slug: deal.slug || deal.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `deal-${deal.id}`,
-        publishedAt: deal.publishedAt
-      })).filter(deal => deal.publishedAt);
-    }
-    
-    // Process cannabinoid types
-    if (cannabinoidsResponse && cannabinoidsResponse.data && cannabinoidsResponse.data.length > 0) {
-      cannabinoidTypes = cannabinoidsResponse.data.map(cannabinoid => ({
+    // Process cannabinoids
+    if (cannabinoidsResponse.status === 'fulfilled' && cannabinoidsResponse.value?.data?.length > 0) {
+      cannabinoidTypes = cannabinoidsResponse.value.data.map(cannabinoid => ({
         id: cannabinoid.id,
         name: cannabinoid.Title || cannabinoid.Name || cannabinoid.name || 'Unnamed Cannabinoid',
-        description: cannabinoid.Description || cannabinoid.description || 'No description available',
-        slug: cannabinoid.slug,
+        description: cannabinoid.Description || cannabinoid.Discription || cannabinoid.description || 'No description available',
+        slug: cannabinoid.SEO_Title_Slug || cannabinoid.slug || (cannabinoid.Title || cannabinoid.Name)?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `cannabinoid-${cannabinoid.id}`,
         publishedAt: cannabinoid.publishedAt
       })).filter(cannabinoid => cannabinoid.publishedAt);
     }
     
     // Process ingredients
-    if (ingredientsResponse && ingredientsResponse.data && ingredientsResponse.data.length > 0) {
-      ingredients = ingredientsResponse.data.map(ingredient => ({
+    if (ingredientsResponse.status === 'fulfilled' && ingredientsResponse.value?.data?.length > 0) {
+      ingredients = ingredientsResponse.value.data.map(ingredient => ({
         id: ingredient.id,
-        name: ingredient.Name || ingredient.name || 'Unnamed Ingredient',
-        description: ingredient.Description || ingredient.description || 'No description available',
+        name: ingredient.Title || ingredient.Name || ingredient.name || 'Unnamed Ingredient',
+        description: ingredient.Description || ingredient.Discription || ingredient.description || 'No description available',
         publishedAt: ingredient.publishedAt
       })).filter(ingredient => ingredient.publishedAt);
     }
   } else {
-    console.log('❌ DEBUG: Health check failed with status:', healthResponse.status);
-    const errorText = await healthResponse.text();
-    console.log('❌ DEBUG: Error response body:', errorText);
     throw new Error(`HTTP ${healthResponse.status}`);
   }
 } catch (error) {
-  console.log('💥 DEBUG: Catch block - Error occurred:', error);
-  console.log('💥 DEBUG: Error name:', error.name);
-  console.log('💥 DEBUG: Error message:', error.message);
-  
+  console.log('💥 DEBUG: Error occurred:', error);
   strapiStatus = 'Disconnected - Cannot connect to backend';
   apiError = error.name === 'AbortError' ? 'Connection timeout' : error.message;
   
-  // Comprehensive cannabis product catalog - expanded fallback data
-  console.log('🔄 DEBUG: Using comprehensive cannabis product catalog from backup');
+  // Fallback educational data
   dosageProducts = [
-    // INHALATION PRODUCTS
     {
-      id: 16,
-      name: 'All in One - Distillate',
-      description: 'Premium distillate cartridge with full spectrum cannabinoids for potent, clean vapor',
-      slug: 'all-in-one-distillate',
-      image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80',
-      dosageForm: 'Inhalation',
-      category: 'Concentrate',
-      potency: '85-90% THC',
-      strain: 'Hybrid',
-      size: '1g',
-      price: '$45',
-      createdAt: '2025-08-26T17:39:09.534Z',
-      updatedAt: '2025-08-26T23:28:01.391Z',
-      publishedAt: '2025-08-26T23:28:01.419Z'
-    },
-    // SUBLINGUAL PRODUCTS
-    {
-      id: 28,
-      name: 'THC Tincture - Fast Acting',
-      description: 'Fast-absorbing sublingual THC tincture with precise dosing dropper',
-      slug: 'thc-tincture-fast-acting',
-      image: 'https://images.unsplash.com/photo-1612178537253-bccd437b730e?w=400&h=300&fit=crop&q=80',
-      dosageForm: 'Sublingual',
-      category: 'Tincture',
-      potency: '10mg/mL THC',
-      strain: 'Full Spectrum',
-      size: '30mL',
-      price: '$48',
-      createdAt: '2025-08-27T16:00:00.000Z',
-      updatedAt: '2025-08-27T16:00:00.000Z',
-      publishedAt: '2025-08-27T16:00:00.000Z'
-    },
-    {
-      id: 30,
-      name: 'Sleep Tincture - CBN Blend',
-      description: 'Nighttime tincture with CBN and THC for deep, restful sleep',
-      slug: 'sleep-tincture-cbn-blend',
-      image: 'https://images.unsplash.com/photo-1612178537253-bccd437b730e?w=400&h=300&fit=crop&q=80',
-      dosageForm: 'Sublingual',
-      category: 'Sleep Aid',
-      potency: '5mg THC / 10mg CBN per mL',
-      strain: 'Indica Blend',
-      size: '30mL',
-      price: '$55',
-      createdAt: '2025-08-27T17:00:00.000Z',
-      updatedAt: '2025-08-27T17:00:00.000Z',
-      publishedAt: '2025-08-27T17:00:00.000Z'
-    },
-
-    // EDIBLE PRODUCTS
-    {
-      id: 31,
-      name: 'Gummies - Mixed Berry',
-      description: 'Delicious mixed berry gummies with precise 5mg THC dosing',
-      slug: 'gummies-mixed-berry',
+      id: 1,
+      name: 'THC Gummies - 5mg Dose',
+      description: 'Standard low-dose edible for beginners. Start with 2.5mg, wait 2 hours before taking more. Effects typically last 4-8 hours.',
+      slug: 'thc-gummies-5mg-dose',
       image: 'https://images.unsplash.com/photo-1582048928301-2b9c1ed1b93a?w=400&h=300&fit=crop&q=80',
       dosageForm: 'Edibles',
-      category: 'Gummy',
-      potency: '5mg THC each',
-      strain: 'Hybrid',
-      size: '20 count (100mg total)',
-      price: '$25',
-      createdAt: '2025-08-27T18:00:00.000Z',
-      updatedAt: '2025-08-27T18:00:00.000Z',
-      publishedAt: '2025-08-27T18:00:00.000Z'
+      category: 'Micro-dose',
+      quantity: 5,
+      unitType: 'mg THC',
+      cannabinoidType: 'THC',
+      ingredients: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      publishedAt: new Date().toISOString()
     },
     {
-      id: 32,
-      name: 'Chocolate Bar - Dark Cacao',
-      description: 'Artisanal dark chocolate infused with premium cannabis extract',
-      slug: 'chocolate-bar-dark-cacao',
-      image: 'https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=400&h=300&fit=crop&q=80',
-      dosageForm: 'Edibles',
-      category: 'Chocolate',
-      potency: '10mg THC per square',
-      strain: 'Sativa',
-      size: '100mg total (10 squares)',
-      price: '$22',
-      createdAt: '2025-08-27T18:30:00.000Z',
-      updatedAt: '2025-08-27T18:30:00.000Z',
-      publishedAt: '2025-08-27T18:30:00.000Z'
-    },
-    {
-      id: 33,
-      name: 'Cookies - Snickerdoodle',
-      description: 'Homestyle snickerdoodle cookies infused with cannabis butter',
-      slug: 'cookies-snickerdoodle',
-      image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&h=300&fit=crop&q=80',
-      dosageForm: 'Edibles',
-      category: 'Baked Goods',
-      potency: '10mg THC each',
-      strain: 'Indica',
-      size: '2 count (20mg total)',
-      price: '$18',
-      createdAt: '2025-08-27T19:00:00.000Z',
-      updatedAt: '2025-08-27T19:00:00.000Z',
-      publishedAt: '2025-08-27T19:00:00.000Z'
+      id: 2,
+      name: 'CBD Tincture - 10mg/mL',
+      description: 'Sublingual tincture for precise dosing. Hold under tongue for 30-60 seconds. Effects begin within 15-45 minutes.',
+      slug: 'cbd-tincture-10mg-ml',
+      image: 'https://images.unsplash.com/photo-1612178537253-bccd437b730e?w=400&h=300&fit=crop&q=80',
+      dosageForm: 'Sublingual',
+      category: 'Therapeutic',
+      quantity: 10,
+      unitType: 'mg/mL CBD',
+      cannabinoidType: 'CBD',
+      ingredients: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      publishedAt: new Date().toISOString()
     }
   ];
   
   dosageForms = [
-    { id: 7, name: 'Inhalation', slug: 'inhalation', publishedAt: '2025-08-25T21:03:08.240Z' },
-    { id: 11, name: 'Oral Capsule', slug: 'oral-capsule', publishedAt: '2025-08-26T17:19:19.769Z' },
-    { id: 9, name: 'Sublingual', slug: 'sublingual', publishedAt: '2025-08-26T17:18:04.519Z' },
-    { id: 13, name: 'Edibles', slug: 'edibles', publishedAt: '2025-08-26T17:20:13.643Z' }
+    { 
+      id: 1, 
+      name: 'Inhalation', 
+      description: 'Fastest onset (seconds to minutes). Effects last 1-3 hours. Most precise dose control.',
+      slug: 'inhalation', 
+      publishedAt: new Date().toISOString() 
+    },
+    { 
+      id: 2, 
+      name: 'Sublingual', 
+      description: 'Moderate onset (15-45 minutes). Effects last 2-4 hours. Good bioavailability.',
+      slug: 'sublingual', 
+      publishedAt: new Date().toISOString() 
+    },
+    { 
+      id: 3, 
+      name: 'Edibles', 
+      description: 'Slow onset (30 minutes - 2 hours). Effects last 4-8 hours. Start low, go slow.',
+      slug: 'edibles', 
+      publishedAt: new Date().toISOString() 
+    }
   ];
 }
 
-// Group products by dosage form for filtering
+// Group products by dosage form
 const productsByDosageForm = {};
 dosageProducts.forEach(product => {
   const formName = product.dosageForm || 'Other';
@@ -286,31 +178,26 @@ dosageProducts.forEach(product => {
   productsByDosageForm[formName].push(product);
 });
 
-// Get unique dosage forms that have products
-const availableDosageForms = Object.keys(productsByDosageForm);
-
-console.log('📊 DEBUG: Final summary:');
-console.log('📊 DEBUG: Total products:', dosageProducts.length);
-console.log('📊 DEBUG: Dosage forms found:', availableDosageForms);
-console.log('📊 DEBUG: Products by form:', productsByDosageForm);
-console.log('📊 DEBUG: Strapi status:', strapiStatus);
-console.log('📊 DEBUG: API error:', apiError);
+const availableDosageForms = Object.keys(productsByDosageForm).sort();
 ---
 
-<Layout title="FLMintDeals - Cannabis Information Hub">
+<Layout title="Mint Dosage Guide - Cannabis Dosing Information">
   <!-- Hero Section -->
   <div class="bg-gradient-to-r from-green-600 to-blue-700 text-white">
     <div class="px-4 py-16 sm:px-6 lg:px-8">
       <div class="text-center">
         <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-          FLMintDeals
+          Mint Dosage Guide
         </h1>
+        <h2 class="text-2xl font-medium mt-2 text-green-100">
+          Cannabis Dosing Information
+        </h2>
         <p class="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
-          Your comprehensive cannabis information and deals platform. Explore products, ingredients, cannabinoids, and more.
+          Your comprehensive educational resource for cannabis dosing information. Learn about different dosage forms, cannabinoids, ingredients, and safe consumption practices.
         </p>
         <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="#featured" class="inline-flex items-center px-6 py-3 border border-transparent text-lg font-medium rounded-md text-green-700 bg-white hover:bg-green-50 transition-colors duration-200">
-            Explore Content
+          <a href="#dosage-forms" class="inline-flex items-center px-6 py-3 border border-transparent text-lg font-medium rounded-md text-green-700 bg-white hover:bg-green-50 transition-colors duration-200">
+            Explore Dosage Forms
           </a>
           <a href="#products" class="inline-flex items-center px-6 py-3 border-2 border-white text-lg font-medium rounded-md text-white hover:bg-white hover:text-green-700 transition-colors duration-200">
             Browse Products
@@ -336,66 +223,28 @@ console.log('📊 DEBUG: API error:', apiError);
       </div>
     </div>
   </div>
-  <!-- Featured Deals Section -->
-  {deals.length > 0 && (
-    <div id="featured" class="py-16 bg-white">
-      <div class="px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Featured Deals</h2>
-          <p class="mt-4 text-lg text-gray-600">Hand-picked deals with the biggest savings</p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {deals.slice(0, 6).map(deal => (
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-              <div class="p-6">
-                <div class="flex items-center justify-between mb-2">
-                  <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-semibold">
-                    {deal.category}
-                  </span>
-                  {deal.discount && (
-                    <span class="bg-red-500 text-white text-sm font-bold px-2 py-1 rounded">
-                      -{deal.discount}%
-                    </span>
-                  )}
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-2">{deal.title}</h3>
-                <p class="text-gray-600 mb-4">{deal.description}</p>
-                {deal.price && (
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                      <span class="text-2xl font-bold text-blue-600">${deal.price}</span>
-                      {deal.originalPrice && (
-                        <span class="text-lg text-gray-500 line-through">${deal.originalPrice}</span>
-                      )}
-                    </div>
-                    <span class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium">
-                      View Deal
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )}
 
-  <!-- Cannabinoids Information Section -->
-  {cannabinoidTypes.length > 0 && (
-    <div class="py-16 bg-gray-50">
+  <!-- Dosage Forms Section -->
+  {dosageForms.length > 0 && (
+    <div id="dosage-forms" class="py-16 bg-gray-50">
       <div class="px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Cannabinoid Types</h2>
-          <p class="mt-4 text-lg text-gray-600">Learn about different cannabinoids and their properties</p>
+          <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Dosage Forms</h2>
+          <p class="mt-4 text-lg text-gray-600">Learn about different methods of cannabis administration</p>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {cannabinoidTypes.slice(0, 8).map(cannabinoid => (
+          {dosageForms.slice(0, 8).map(form => (
             <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-              <h3 class="text-lg font-semibold text-gray-900 mb-2">{cannabinoid.name}</h3>
-              <p class="text-gray-600 text-sm">{cannabinoid.description}</p>
+              {form.image && (
+                <img 
+                  src={form.image} 
+                  alt={form.name}
+                  class="w-full h-32 object-cover rounded-lg mb-4"
+                />
+              )}
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">{form.name}</h3>
+              <p class="text-gray-600 text-sm line-clamp-3">{form.description}</p>
             </div>
           ))}
         </div>
@@ -408,14 +257,14 @@ console.log('📊 DEBUG: API error:', apiError);
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
         <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Dosage Products</h2>
-        <p class="mt-4 text-lg text-gray-600">Browse products organized by dosage form</p>
+        <p class="mt-4 text-lg text-gray-600">Detailed information about cannabis products organized by dosage form</p>
       </div>
 
       {dosageProducts.length > 0 ? (
         <div class="space-y-16">
           {availableDosageForms.map(dosageForm => (
             <div key={dosageForm} class="max-w-7xl mx-auto">
-              <!-- Dosage Form Category Header -->
+              <!-- Category Header -->
               <div class="mb-8">
                 <div class="flex items-center">
                   <h3 class="text-2xl font-bold text-gray-900">{dosageForm}</h3>
@@ -426,7 +275,7 @@ console.log('📊 DEBUG: API error:', apiError);
                 </div>
               </div>
               
-              <!-- Products Grid for this dosage form -->
+              <!-- Products Grid -->
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {productsByDosageForm[dosageForm].map(product => (
                   <div key={product.id} class="group">
@@ -443,7 +292,6 @@ console.log('📊 DEBUG: API error:', apiError);
                           <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded font-medium">
                             {product.category}
                           </span>
-                          
                         </div>
                         
                         <h4 class="text-lg font-semibold text-gray-900 mb-2 group-hover:text-blue-600 line-clamp-2">
@@ -452,30 +300,18 @@ console.log('📊 DEBUG: API error:', apiError);
                         
                         <p class="text-gray-600 mb-3 text-sm line-clamp-2">{product.description}</p>
                         
-                        {/* Product details grid */}
+                        <!-- Product details -->
                         <div class="grid grid-cols-2 gap-2 mb-3 text-xs">
-                          {product.potency && (
-                            <div>
-                              <span class="text-gray-500">Potency:</span>
-                              <span class="ml-1 font-medium text-green-600">{product.potency}</span>
-                            </div>
-                          )}
-                          {product.strain && (
+                          {product.cannabinoidType && (
                             <div>
                               <span class="text-gray-500">Type:</span>
-                              <span class="ml-1 font-medium">{product.strain}</span>
+                              <span class="ml-1 font-medium text-green-600">{product.cannabinoidType}</span>
                             </div>
                           )}
-                          {product.size && (
+                          {product.quantity && product.unitType && (
                             <div>
-                              <span class="text-gray-500">Size:</span>
-                              <span class="ml-1 font-medium">{product.size}</span>
-                            </div>
-                          )}
-                          {product.price && (
-                            <div>
-                              <span class="text-gray-500">Price:</span>
-                              <span class="ml-1 font-bold text-blue-600">{product.price}</span>
+                              <span class="text-gray-500">Quantity:</span>
+                              <span class="ml-1 font-medium">{product.quantity} {product.unitType}</span>
                             </div>
                           )}
                         </div>
@@ -507,7 +343,7 @@ console.log('📊 DEBUG: API error:', apiError);
             </svg>
             <h3 class="text-lg font-medium text-gray-900 mb-2">No Products Available</h3>
             <p class="text-gray-600">
-              {strapiStatus === 'Connected' ? 'Add dosage products in your Strapi admin panel.' : 'Connect to Strapi backend to load products.'}
+              {strapiStatus === 'Connected' ? 'Add products in your Strapi admin panel.' : 'Connect to Strapi backend to load products.'}
             </p>
             {apiError && (
               <p class="text-red-600 text-sm mt-2">Error: {apiError}</p>
@@ -518,48 +354,19 @@ console.log('📊 DEBUG: API error:', apiError);
     </div>
   </div>
 
-  <!-- Ingredients Section -->
-  {ingredients.length > 0 && (
-    <div class="py-16 bg-gray-50">
-      <div class="px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Common Ingredients</h2>
-          <p class="mt-4 text-lg text-gray-600">Explore ingredients commonly found in cannabis products</p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {ingredients.slice(0, 12).map(ingredient => (
-            <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
-              <h3 class="text-md font-semibold text-gray-900 mb-2">{ingredient.name}</h3>
-              <p class="text-gray-600 text-sm line-clamp-3">{ingredient.description}</p>
-            </div>
-          ))}
-        </div>
-        
-        {ingredients.length > 12 && (
-          <div class="text-center mt-8">
-            <button class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium">
-              View All {ingredients.length} Ingredients
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  )}
-
-  <!-- Site Statistics -->
+  <!-- Educational Content Statistics -->
   <div class="py-16 bg-blue-900 text-white">
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-8">
-          <h2 class="text-3xl font-bold">Platform Overview</h2>
-          <p class="mt-4 text-xl text-blue-200">Content available from Strapi backend</p>
+          <h2 class="text-3xl font-bold">Educational Resources</h2>
+          <p class="mt-4 text-xl text-blue-200">Comprehensive cannabis dosing information from our content management system</p>
         </div>
         
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div class="text-center">
-            <div class="text-3xl font-bold text-blue-200">{deals.length}</div>
-            <div class="text-blue-100">Deals</div>
+            <div class="text-3xl font-bold text-blue-200">{dosageForms.length}</div>
+            <div class="text-blue-100">Dosage Forms</div>
           </div>
           <div class="text-center">
             <div class="text-3xl font-bold text-blue-200">{dosageProducts.length}</div>

@@ -1,127 +1,43 @@
-# FLMintDeals Frontend - Astro Site
+# Astro Starter Kit: Minimal
 
-The frontend for FLMintDeals cannabis deals platform, built with Astro and Tailwind CSS.
+```sh
+npm create astro@latest -- --template minimal
+```
 
-## 🌐 Live Site
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-**Main Site**: https://flmintdeal-frontend.pages.dev
+## 🚀 Project Structure
 
-## 🏗️ Project Structure
+Inside of your Astro project, you'll see the following folders and files:
 
 ```text
-frontend/
+/
+├── public/
 ├── src/
-│   ├── pages/
-│   │   └── index.astro          # Homepage - edit this for main content
-│   ├── layouts/
-│   │   └── Layout.astro         # Base layout template
-│   ├── lib/
-│   │   └── strapi.ts           # Strapi API client
-│   └── components/             # Reusable components
-├── public/                     # Static assets
-├── dist/                      # Built site (auto-generated)
-└── wrangler.toml             # Cloudflare Pages deployment config
+│   └── pages/
+│       └── index.astro
+└── package.json
 ```
 
-## 🚀 Development
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-### Local Development
-```bash
-# Install dependencies
-npm install
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
-# Start development server
-npm run dev
-# Visit: http://localhost:4321
+Any static assets, like images, can be placed in the `public/` directory.
 
-# Build for production
-npm run build
+## 🧞 Commands
 
-# Preview production build
-npm run preview
-```
+All commands are run from the root of the project, from a terminal:
 
-### Environment Variables
-Create `.env` file:
-```bash
-# For local development with local Strapi
-PUBLIC_STRAPI_URL=http://localhost:1337
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-# For connecting to deployed Strapi
-# PUBLIC_STRAPI_URL=https://flmintdeal-dev.fly.dev
-```
+## 👀 Want to learn more?
 
-## 📝 Editing Content
-
-### Homepage (`src/pages/index.astro`)
-Key sections you can modify:
-
-1. **Hero Section** (lines 62-82): Main banner with title and description
-2. **Featured Deals** (lines 106-165): Large highlighted deals grid
-3. **All Deals** (lines 167-212): Smaller deal cards grid  
-4. **Call to Action** (lines 214-231): Email signup section
-
-### API Integration
-The site automatically connects to your Strapi backend:
-
-- **Current Backend**: `https://flmintdeal-dev.fly.dev`
-- **API Client**: Located in `src/lib/strapi.ts`
-- **Status Display**: Shows connection status on homepage
-
-## 🔌 Backend Connection
-
-### Current Status
-- ✅ **Frontend**: Deployed and running
-- ⚠️ **Backend**: Needs content type configuration
-
-### Fixing Backend Connection
-The frontend expects `/api/deals` but your Strapi has different content types. Fix by either:
-
-1. **Add Deals Content Type** (Recommended):
-   - Go to https://flmintdeal-dev.fly.dev/admin
-   - Content-Types Builder → Create "Deal"
-   - Add fields: title, description, price, originalPrice, discount, category, featured
-
-2. **Update Frontend Code**:
-   - Modify `src/pages/index.astro` lines 19-31
-   - Change API calls to use existing content types (`cannabinoids-types`, etc.)
-
-## 🎨 Styling
-
-- **Framework**: Tailwind CSS
-- **Configuration**: `tailwind.config.mjs`
-- **Responsive**: Mobile-first design
-- **Theme**: Blue/purple gradient with modern card layouts
-
-## 🚀 Deployment
-
-### Cloudflare Pages (Current)
-```bash
-# Build and deploy
-npm run build
-wrangler pages publish dist
-```
-
-### Auto-Deployment
-Connected to your repository for automatic deployments on git push.
-
-## 🧞 Available Commands
-
-| Command           | Action                                        |
-| :---------------- | :-------------------------------------------- |
-| `npm install`     | Install dependencies                          |
-| `npm run dev`     | Start dev server at `localhost:4321`         |
-| `npm run build`   | Build production site to `./dist/`           |
-| `npm run preview` | Preview build locally before deploying       |
-| `npm run astro`   | Run Astro CLI commands                        |
-
-## 🔗 Related Links
-
-- **Backend Admin**: https://flmintdeal-dev.fly.dev/admin
-- **API Documentation**: https://flmintdeal-dev.fly.dev/documentation  
-- **Project Documentation**: See `../CLAUDE.md`
-- **Astro Docs**: https://docs.astro.build
-
----
-
-*Edit `src/pages/index.astro` to customize your homepage content and styling.*
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
