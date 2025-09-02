@@ -5,7 +5,6 @@
 import strapiCloud from "@strapi/plugin-cloud/strapi-admin";
 import documentation from "@strapi/plugin-documentation/strapi-admin";
 import usersPermissions from "@strapi/plugin-users-permissions/strapi-admin";
-import superfields from "strapi-plugin-superfields/strapi-admin";
 import { renderAdmin } from "@strapi/strapi/admin";
 
 renderAdmin(document.getElementById("strapi"), {
@@ -13,6 +12,5 @@ renderAdmin(document.getElementById("strapi"), {
     "strapi-cloud": strapiCloud,
     documentation: documentation,
     "users-permissions": usersPermissions,
-    superfields: superfields,
   },
 });

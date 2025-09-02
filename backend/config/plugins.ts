@@ -1,7 +1,4 @@
 export default ({ env }) => ({
-  superfields: {
-    enabled: true,
-  },
   documentation: {
     enabled: true,
     config: {

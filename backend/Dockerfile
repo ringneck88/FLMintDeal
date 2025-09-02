@@ -7,16 +7,23 @@ WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
-# Copy all source code
+# Copy source code
 COPY . .
 
-# Make data directory
+# Create data directory
 RUN mkdir -p /data
 
-# Set runtime environment to development to skip build issues
-ENV NODE_ENV=development
+# Build the application
+RUN yarn build
 
-# Skip building entirely and just start
-USER 1001
+# Remove dev dependencies to reduce image size
+RUN yarn install --production --frozen-lockfile && yarn cache clean
+
+# Create non-root user and set permissions
+RUN addgroup -g 1001 -S nodejs && adduser -S strapi -u 1001
+RUN chown -R strapi:nodejs /app /data
+
+USER strapi
 EXPOSE 8080
-CMD ["yarn", "develop"]
+
+CMD ["yarn", "start"]
