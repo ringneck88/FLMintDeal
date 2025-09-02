@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(node:*)",
-      "Bash(npm:*)"
+      "Bash(npm:*)",
+      "Bash(bash:*)",
+      "WebFetch(domain:flmintdeal-dev.fly.dev)",
+      "Bash(timeout 45 npm run build)",
+      "Bash(timeout 30 npm run build)"
     ],
     "deny": [],
     "ask": []
