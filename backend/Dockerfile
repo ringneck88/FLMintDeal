@@ -14,8 +14,8 @@ COPY . .
 # Build the application
 RUN yarn build
 
-# Expose port
-EXPOSE 1337
+# Expose port (matches Fly.io configuration)
+EXPOSE 8080
 
 # Create non-root user
 RUN addgroup -g 1001 -S nodejs
