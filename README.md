@@ -87,12 +87,49 @@ The frontend is currently looking for `/api/deals` but the backend has different
 1. Adding a "deals" content type in Strapi admin, or
 2. Updating the frontend to use existing content types
 
+## 🚀 Deployment Instructions
+
+### Frontend Deployment (Cloudflare Pages)
+
+After making changes to the frontend, deploy using these commands:
+
+```bash
+cd frontend
+
+# 1. Build the Astro site
+npm run build
+
+# 2. Deploy to Cloudflare Pages
+npx wrangler pages deploy dist
+```
+
+**Alternative one-command deploy:**
+```bash
+cd frontend
+npm run deploy  # Runs build + deploy automatically
+```
+
+**Expected output:**
+- Build creates optimized static files in `dist/` directory
+- Deploy uploads to Cloudflare Pages and provides deployment URL
+- New deployment URL format: `https://[hash].flmintdeal-frontend.pages.dev`
+
+### Backend Deployment (Fly.io)
+
+The backend is already deployed and running. Changes require redeployment:
+
+```bash
+cd backend
+fly deploy --app flmintdeal  # Production backend
+```
+
 ## 🛠️ Development Workflow
 
 1. **Edit Content**: Use Strapi admin panel to add/edit content
 2. **Frontend Changes**: Edit `frontend/src/pages/index.astro` for homepage
 3. **API Changes**: Modify content types in Strapi admin
-4. **Deploy**: Changes auto-deploy via connected repositories
+4. **Deploy Frontend**: Use `npm run deploy` in frontend directory
+5. **Deploy Backend**: Use `fly deploy` if backend changes are made
 
 ## 📚 Technology Stack
 

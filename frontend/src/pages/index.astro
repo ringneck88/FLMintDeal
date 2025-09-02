@@ -9,9 +9,12 @@ console.log('🔧 DEBUG: Environment check');
 console.log('PUBLIC_STRAPI_URL from env:', import.meta.env.PUBLIC_STRAPI_URL);
 console.log('Final strapiUrl:', strapiUrl);
 
-// Fetch dosage products from Strapi
+// Fetch content from Strapi
 let dosageProducts = [];
 let dosageForms = [];
+let deals = [];
+let cannabinoidTypes = [];
+let ingredients = [];
 let apiError = null;
 
 try {
@@ -36,21 +39,36 @@ try {
     strapiStatus = 'Connected';
     console.log('✅ DEBUG: Health check passed, fetching data');
     
-    // Fetch dosage products from Strapi API
+    // Fetch all content types from Strapi API
     console.log('📦 DEBUG: Fetching dosage products...');
     const productsResponse = await strapi.getMany('/dosage-products', { 
       'populate': '*',
-      'pagination[limit]': '100'
+      'pagination[limit]': '20'
     });
-    console.log('📦 DEBUG: Products response:', productsResponse);
     
-    // Also fetch dosage forms for category filtering
     console.log('📋 DEBUG: Fetching dosage forms...');
     const formsResponse = await strapi.getMany('/dosage-forms', { 
       'populate': '*',
       'pagination[limit]': '100'
     });
-    console.log('📋 DEBUG: Forms response:', formsResponse);
+    
+    console.log('🎯 DEBUG: Fetching deals...');
+    const dealsResponse = await strapi.getMany('/deals', { 
+      'populate': '*',
+      'pagination[limit]': '10'
+    });
+    
+    console.log('🧬 DEBUG: Fetching cannabinoid types...');
+    const cannabinoidsResponse = await strapi.getMany('/cannaboid-types', { 
+      'populate': '*',
+      'pagination[limit]': '20'
+    });
+    
+    console.log('🌿 DEBUG: Fetching ingredients...');
+    const ingredientsResponse = await strapi.getMany('/ingredients', { 
+      'populate': '*',
+      'pagination[limit]': '20'
+    });
     
     if (productsResponse && productsResponse.data && productsResponse.data.length > 0) {
       console.log('🎯 DEBUG: Processing products data, found:', productsResponse.data.length, 'items');
@@ -59,12 +77,16 @@ try {
       dosageProducts = productsResponse.data.map(product => ({
         id: product.id,
         documentId: product.documentId,
-        name: product.Title || product.Name || product.name || 'Unnamed Product',
-        description: product.Description || product.Discription || product.description || 'No description available',
-        slug: product.SEO_Title_Slug || product.slug || (product.Title || product.Name)?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `product-${product.id}`,
-        image: product.image?.url ? `${strapiUrl}${product.image.url}` : product.Form_Image?.url ? `${strapiUrl}${product.Form_Image.url}` : `https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80`,
-        dosageForm: product.dosage_form?.Title || product.dosage_form?.Name || product.dosageForm || product.Title || product.Name || 'Other',
-        category: product.category || product.Category || 'General',
+        name: product.Name || product.Title || product.name || 'Unnamed Product',
+        description: product.Description || product.description || 'No description available',
+        slug: product.slug || (product.Name || product.Title)?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `product-${product.id}`,
+        image: product.image?.url ? `${strapiUrl}${product.image.url}` : `https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80`,
+        dosageForm: product.dosage_form?.Title || product.dosage_form?.Name || 'Other',
+        category: product.cannaboid_type?.Title || product.cannaboid_type?.Name || 'General',
+        quantity: product.Quanity || product.quantity,
+        unitType: product.unit_type?.Name || product.unit_type?.Title,
+        cannabinoidType: product.cannaboid_type?.Title || product.cannaboid_type?.Name,
+        ingredients: product.ingredients || [],
         createdAt: product.createdAt,
         updatedAt: product.updatedAt,
         publishedAt: product.publishedAt
@@ -79,13 +101,53 @@ try {
       console.log('❌ DEBUG: productsResponse.data length:', productsResponse?.data?.length || 0);
     }
     
+    // Process dosage forms
     if (formsResponse && formsResponse.data && formsResponse.data.length > 0) {
       dosageForms = formsResponse.data.map(form => ({
         id: form.id,
-        name: form.Name || form.name || 'Unnamed Form',
-        slug: form.slug || form.Name?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `form-${form.id}`,
+        name: form.Title || form.Name || form.name || 'Unnamed Form',
+        description: form.Description || form.description,
+        slug: form.SEO_Title_Slug || form.slug || form.Title?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `form-${form.id}`,
+        image: form.Form_Image?.url ? `${strapiUrl}${form.Form_Image.url}` : null,
         publishedAt: form.publishedAt
       })).filter(form => form.publishedAt);
+    }
+    
+    // Process deals
+    if (dealsResponse && dealsResponse.data && dealsResponse.data.length > 0) {
+      deals = dealsResponse.data.map(deal => ({
+        id: deal.id,
+        title: deal.title || 'Unnamed Deal',
+        description: deal.description || 'No description available',
+        price: deal.price,
+        originalPrice: deal.originalPrice,
+        discount: deal.discount,
+        category: deal.category || 'General',
+        featured: deal.featured || false,
+        slug: deal.slug || deal.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || `deal-${deal.id}`,
+        publishedAt: deal.publishedAt
+      })).filter(deal => deal.publishedAt);
+    }
+    
+    // Process cannabinoid types
+    if (cannabinoidsResponse && cannabinoidsResponse.data && cannabinoidsResponse.data.length > 0) {
+      cannabinoidTypes = cannabinoidsResponse.data.map(cannabinoid => ({
+        id: cannabinoid.id,
+        name: cannabinoid.Title || cannabinoid.Name || cannabinoid.name || 'Unnamed Cannabinoid',
+        description: cannabinoid.Description || cannabinoid.description || 'No description available',
+        slug: cannabinoid.slug,
+        publishedAt: cannabinoid.publishedAt
+      })).filter(cannabinoid => cannabinoid.publishedAt);
+    }
+    
+    // Process ingredients
+    if (ingredientsResponse && ingredientsResponse.data && ingredientsResponse.data.length > 0) {
+      ingredients = ingredientsResponse.data.map(ingredient => ({
+        id: ingredient.id,
+        name: ingredient.Name || ingredient.name || 'Unnamed Ingredient',
+        description: ingredient.Description || ingredient.description || 'No description available',
+        publishedAt: ingredient.publishedAt
+      })).filter(ingredient => ingredient.publishedAt);
     }
   } else {
     console.log('❌ DEBUG: Health check failed with status:', healthResponse.status);
@@ -235,53 +297,118 @@ console.log('📊 DEBUG: Strapi status:', strapiStatus);
 console.log('📊 DEBUG: API error:', apiError);
 ---
 
-<Layout title="Dosage Products - FLMintDeals">
+<Layout title="FLMintDeals - Cannabis Information Hub">
   <!-- Hero Section -->
   <div class="bg-gradient-to-r from-green-600 to-blue-700 text-white">
     <div class="px-4 py-16 sm:px-6 lg:px-8">
       <div class="text-center">
         <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-          Dosage Products
+          FLMintDeals
         </h1>
         <p class="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
-          Browse our comprehensive catalog of pharmaceutical products organized by dosage form.
+          Your comprehensive cannabis information and deals platform. Explore products, ingredients, cannabinoids, and more.
         </p>
-        <div class="mt-8">
-          <a href="#products" class="inline-flex items-center px-6 py-3 border border-transparent text-lg font-medium rounded-md text-green-700 bg-white hover:bg-green-50 transition-colors duration-200">
+        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#featured" class="inline-flex items-center px-6 py-3 border border-transparent text-lg font-medium rounded-md text-green-700 bg-white hover:bg-green-50 transition-colors duration-200">
+            Explore Content
+          </a>
+          <a href="#products" class="inline-flex items-center px-6 py-3 border-2 border-white text-lg font-medium rounded-md text-white hover:bg-white hover:text-green-700 transition-colors duration-200">
             Browse Products
-            <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-            </svg>
           </a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Breadcrumb -->
-  <div class="bg-gray-50 py-4">
+  <!-- Status Bar -->
+  <div class="bg-gray-50 py-3">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <nav class="flex" aria-label="Breadcrumb">
-        <ol class="flex items-center space-x-2">
-          <li>
-            <a href="/" class="text-blue-600 hover:text-blue-800">Home</a>
-          </li>
-          <li>
-            <span class="text-gray-500">/</span>
-          </li>
-          <li>
-            <span class="text-gray-900 font-medium">Dosage Products</span>
-          </li>
-        </ol>
-      </nav>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-gray-600">Status:</span>
+          <span class={`px-2 py-1 rounded text-xs font-medium ${strapiStatus === 'Connected' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+            Backend {strapiStatus}
+          </span>
+        </div>
+        <div class="text-sm text-gray-500">
+          API: {strapiUrl}
+        </div>
+      </div>
     </div>
   </div>
-  <!-- Products Section -->
-  <div id="products" class="py-16">
+  <!-- Featured Deals Section -->
+  {deals.length > 0 && (
+    <div id="featured" class="py-16 bg-white">
+      <div class="px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Featured Deals</h2>
+          <p class="mt-4 text-lg text-gray-600">Hand-picked deals with the biggest savings</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {deals.slice(0, 6).map(deal => (
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-semibold">
+                    {deal.category}
+                  </span>
+                  {deal.discount && (
+                    <span class="bg-red-500 text-white text-sm font-bold px-2 py-1 rounded">
+                      -{deal.discount}%
+                    </span>
+                  )}
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">{deal.title}</h3>
+                <p class="text-gray-600 mb-4">{deal.description}</p>
+                {deal.price && (
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                      <span class="text-2xl font-bold text-blue-600">${deal.price}</span>
+                      {deal.originalPrice && (
+                        <span class="text-lg text-gray-500 line-through">${deal.originalPrice}</span>
+                      )}
+                    </div>
+                    <span class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium">
+                      View Deal
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+  <!-- Cannabinoids Information Section -->
+  {cannabinoidTypes.length > 0 && (
+    <div class="py-16 bg-gray-50">
+      <div class="px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Cannabinoid Types</h2>
+          <p class="mt-4 text-lg text-gray-600">Learn about different cannabinoids and their properties</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          {cannabinoidTypes.slice(0, 8).map(cannabinoid => (
+            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">{cannabinoid.name}</h3>
+              <p class="text-gray-600 text-sm">{cannabinoid.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+  <!-- Dosage Products Section -->
+  <div id="products" class="py-16 bg-white">
     <div class="px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
-        <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Available Products</h2>
-        <p class="mt-4 text-lg text-gray-600">Browse products organized by dosage form category</p>
+        <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Dosage Products</h2>
+        <p class="mt-4 text-lg text-gray-600">Browse products organized by dosage form</p>
       </div>
 
       {dosageProducts.length > 0 ? (
@@ -388,6 +515,66 @@ console.log('📊 DEBUG: API error:', apiError);
           </div>
         </div>
       )}
+    </div>
+  </div>
+
+  <!-- Ingredients Section -->
+  {ingredients.length > 0 && (
+    <div class="py-16 bg-gray-50">
+      <div class="px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">Common Ingredients</h2>
+          <p class="mt-4 text-lg text-gray-600">Explore ingredients commonly found in cannabis products</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          {ingredients.slice(0, 12).map(ingredient => (
+            <div class="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300">
+              <h3 class="text-md font-semibold text-gray-900 mb-2">{ingredient.name}</h3>
+              <p class="text-gray-600 text-sm line-clamp-3">{ingredient.description}</p>
+            </div>
+          ))}
+        </div>
+        
+        {ingredients.length > 12 && (
+          <div class="text-center mt-8">
+            <button class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium">
+              View All {ingredients.length} Ingredients
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+
+  <!-- Site Statistics -->
+  <div class="py-16 bg-blue-900 text-white">
+    <div class="px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold">Platform Overview</h2>
+          <p class="mt-4 text-xl text-blue-200">Content available from Strapi backend</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-blue-200">{deals.length}</div>
+            <div class="text-blue-100">Deals</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-blue-200">{dosageProducts.length}</div>
+            <div class="text-blue-100">Products</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-blue-200">{cannabinoidTypes.length}</div>
+            <div class="text-blue-100">Cannabinoids</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-blue-200">{ingredients.length}</div>
+            <div class="text-blue-100">Ingredients</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
