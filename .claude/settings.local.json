@@ -6,7 +6,8 @@
       "Bash(bash:*)",
       "WebFetch(domain:flmintdeal-dev.fly.dev)",
       "Bash(timeout 45 npm run build)",
-      "Bash(timeout 30 npm run build)"
+      "Bash(timeout 30 npm run build)",
+      "WebFetch(domain:flmintdeal.fly.dev)"
     ],
     "deny": [],
     "ask": []
