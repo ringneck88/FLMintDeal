@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+@variant dark (.dark &);
+
+/* Ensure dark mode works with class-based switching */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tw-dark: initial;
+  }
+}
+
+.dark {
+  --tw-dark: initial;
+}
