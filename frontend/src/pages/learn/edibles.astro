@@ -1,0 +1,281 @@
+---
+// src/pages/learn/edibles.astro
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = 'Learn About Cannabis Edibles | FLMint Deals';
+const category = {
+  name: 'Edibles',
+  icon: '🍭',
+  slug: 'edibles'
+};
+
+const relatedPosts = [
+  {
+    title: "Dosing Cannabis Edibles: A Complete Beginner's Guide",
+    excerpt: "Learn how to dose edibles safely and effectively for the perfect experience every time.",
+    slug: "cannabis-edibles-dosing-guide",
+    readTime: "6 min read",
+    category: "Dosage Guide"
+  },
+  {
+    title: "Why Do Edibles Take So Long to Work?",
+    excerpt: "Understanding the science behind edible onset times and duration of effects.",
+    slug: "edibles-onset-time-explained",
+    readTime: "5 min read",
+    category: "Science"
+  },
+  {
+    title: "Homemade Cannabis Edibles: Tips and Recipes",
+    excerpt: "Safe and effective methods for creating cannabis-infused foods at home.",
+    slug: "homemade-cannabis-edibles-recipes",
+    readTime: "10 min read",
+    category: "DIY"
+  },
+  {
+    title: "Microdosing with Cannabis Edibles",
+    excerpt: "How to use small doses of edibles for wellness and daily functionality.",
+    slug: "cannabis-edibles-microdosing",
+    readTime: "4 min read",
+    category: "Wellness"
+  }
+];
+---
+
+<Layout title={pageTitle}>
+  <!-- Breadcrumb Navigation -->
+  <nav class="bg-slate-50 dark:bg-slate-900 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center space-x-2 text-sm">
+        <a href="/" class="text-emerald-600 hover:text-emerald-800 dark:text-emerald-400">Home</a>
+        <span class="text-slate-400">/</span>
+        <a href="/categories" class="text-emerald-600 hover:text-emerald-800 dark:text-emerald-400">Categories</a>
+        <span class="text-slate-400">/</span>
+        <span class="text-slate-600 dark:text-slate-300">Cannabis Edibles</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 dark:from-purple-800 dark:via-pink-800 dark:to-red-800">
+    <div class="absolute inset-0 bg-black opacity-20"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div class="text-center">
+        <div class="text-8xl mb-8">{category.icon}</div>
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+          Cannabis Edibles Guide
+        </h1>
+        <p class="text-xl md:text-2xl text-pink-100 max-w-3xl mx-auto leading-relaxed">
+          Discover the world of cannabis-infused foods, from dosing basics to advanced consumption strategies.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Article Content -->
+  <article class="py-16 -mt-12 relative z-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-2xl border border-white/20 dark:border-slate-700/20">
+
+        <div class="prose prose-lg max-w-none dark:prose-invert">
+          <h2 class="text-3xl font-bold text-purple-800 dark:text-purple-400 mb-6">What are Cannabis Edibles?</h2>
+
+          <p class="text-lg text-slate-700 dark:text-slate-300 leading-relaxed mb-8">
+            Cannabis edibles are food and beverage products infused with cannabinoids like THC and CBD. Unlike smoking or vaping,
+            edibles are processed through the digestive system, creating longer-lasting and often more intense effects.
+            From gummies and chocolates to beverages and baked goods, edibles offer a discreet and precise way to consume cannabis.
+          </p>
+
+          <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-4">Types of Cannabis Edibles</h3>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8 not-prose">
+            <div class="bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 p-6 rounded-xl border border-pink-200 dark:border-pink-800">
+              <h4 class="text-lg font-bold text-pink-800 dark:text-pink-400 mb-3">Gummies & Candies</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-400">
+                Pre-dosed, flavorful, and convenient. Perfect for beginners due to consistent dosing and long shelf life.
+              </p>
+            </div>
+
+            <div class="bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 p-6 rounded-xl border border-orange-200 dark:border-orange-800">
+              <h4 class="text-lg font-bold text-orange-800 dark:text-orange-400 mb-3">Baked Goods</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-400">
+                Brownies, cookies, and muffins infused with cannabis. Often higher doses, ideal for sharing or extended effects.
+              </p>
+            </div>
+
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-xl border border-blue-200 dark:border-blue-800">
+              <h4 class="text-lg font-bold text-blue-800 dark:text-blue-400 mb-3">Beverages</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-400">
+                Cannabis-infused drinks including sodas, teas, and coffees. Fast-acting due to liquid absorption.
+              </p>
+            </div>
+
+            <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-6 rounded-xl border border-green-200 dark:border-green-800">
+              <h4 class="text-lg font-bold text-green-800 dark:text-green-400 mb-3">Chocolates</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-400">
+                Premium cannabis chocolates offering precise dosing with gourmet flavors and smooth onset.
+              </p>
+            </div>
+          </div>
+
+          <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-4">Understanding Dosage & Effects</h3>
+
+          <div class="bg-amber-50 dark:bg-amber-900/20 p-6 rounded-xl border border-amber-200 dark:border-amber-800 mb-8">
+            <h4 class="font-bold text-amber-800 dark:text-amber-400 mb-4">Dosing Guidelines for Beginners:</h4>
+            <ul class="space-y-2 text-sm">
+              <li><strong>Start Low:</strong> Begin with 2.5-5mg THC</li>
+              <li><strong>Go Slow:</strong> Wait 2+ hours before taking more</li>
+              <li><strong>Track Effects:</strong> Keep a journal of dose and response</li>
+              <li><strong>Empty Stomach:</strong> Faster onset but potentially stronger effects</li>
+              <li><strong>With Food:</strong> Slower onset but more sustained effects</li>
+            </ul>
+          </div>
+
+          <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-4">How Edibles Work in Your Body</h3>
+
+          <p class="text-slate-700 dark:text-slate-300 mb-6">
+            When you consume cannabis edibles, THC is metabolized by your liver into 11-hydroxy-THC, a compound that's
+            more potent and longer-lasting than inhaled THC. This process explains why edibles:
+          </p>
+
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start">
+              <span class="text-purple-600 font-bold mr-3">⏰</span>
+              <span><strong>Take 30 minutes to 2+ hours</strong> to feel effects (depending on metabolism and stomach contents)</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-purple-600 font-bold mr-3">🕐</span>
+              <span><strong>Last 4-8 hours</strong> (sometimes longer for high doses or sensitive individuals)</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-purple-600 font-bold mr-3">💪</span>
+              <span><strong>Provide more body-focused effects</strong> compared to inhaled cannabis</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-purple-600 font-bold mr-3">📊</span>
+              <span><strong>Offer consistent dosing</strong> when purchased from licensed dispensaries</span>
+            </li>
+          </ul>
+
+          <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-4">Safety Tips & Best Practices</h3>
+
+          <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl border border-red-200 dark:border-red-800 mb-8">
+            <h4 class="font-bold text-red-800 dark:text-red-400 mb-4">Important Safety Reminders:</h4>
+            <ul class="space-y-2 text-sm">
+              <li>• Never drive or operate machinery while under the influence</li>
+              <li>• Keep all edibles away from children and pets</li>
+              <li>• Store in original, child-resistant packaging</li>
+              <li>• Don't mix with alcohol or other substances</li>
+              <li>• Have CBD on hand to counteract unwanted THC effects</li>
+              <li>• Stay hydrated and in a comfortable environment</li>
+            </ul>
+          </div>
+
+          <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-4">Benefits of Cannabis Edibles</h3>
+
+          <p class="text-slate-700 dark:text-slate-300 mb-6">
+            Edibles offer unique advantages that make them ideal for many medical and recreational users:
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-4 mb-8 text-sm">
+            <div>
+              <strong class="text-purple-700 dark:text-purple-400">Long-lasting relief:</strong> Perfect for chronic conditions requiring sustained effects
+            </div>
+            <div>
+              <strong class="text-purple-700 dark:text-purple-400">Discreet consumption:</strong> No smell or visible vapor, ideal for public settings
+            </div>
+            <div>
+              <strong class="text-purple-700 dark:text-purple-400">Precise dosing:</strong> Consistent, measurable amounts in each serving
+            </div>
+            <div>
+              <strong class="text-purple-700 dark:text-purple-400">Lung-friendly:</strong> No smoke or vapor inhalation required
+            </div>
+            <div>
+              <strong class="text-purple-700 dark:text-purple-400">Easy storage:</strong> Long shelf life and portable packaging
+            </div>
+            <div>
+              <strong class="text-purple-700 dark:text-purple-400">Variety of options:</strong> Multiple flavors, strengths, and formats available
+            </div>
+          </div>
+
+          <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-4">Florida Medical Cannabis Laws</h3>
+
+          <p class="text-slate-700 dark:text-slate-300 mb-6">
+            Cannabis edibles are available to qualified medical marijuana patients in Florida through licensed dispensaries.
+            Key regulations include:
+          </p>
+
+          <ul class="space-y-2 mb-8 text-sm">
+            <li>• Valid medical marijuana card required for purchase</li>
+            <li>• Products must be consumed in private residences</li>
+            <li>• Keep in original dispensary packaging during transport</li>
+            <li>• Follow physician recommendations for dosage</li>
+            <li>• Possession limits apply - check your allotment</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Related Blog Posts Section -->
+  <section class="py-16 bg-gradient-to-r from-slate-50 to-purple-50 dark:from-slate-900 dark:to-purple-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-4">
+          Related Articles & Guides
+        </h2>
+        <p class="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+          Master the art of cannabis edibles with our expert guides and educational content.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {relatedPosts.map((post, index) => (
+          <article class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div class="mb-4">
+              <span class="inline-block bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-400 text-xs font-semibold px-3 py-1 rounded-full">
+                {post.category}
+              </span>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-3 leading-tight">
+              <a href={`/blog/${post.slug}`} class="hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                {post.title}
+              </a>
+            </h3>
+
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
+              {post.excerpt}
+            </p>
+
+            <div class="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
+              <span>{post.readTime}</span>
+              <a href={`/blog/${post.slug}`} class="text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 font-semibold">
+                Read More →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="py-16 bg-gradient-to-r from-purple-600 to-pink-600">
+    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+        Ready to Try Cannabis Edibles?
+      </h2>
+      <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+        Explore our selection of lab-tested cannabis edibles from trusted Florida dispensaries.
+      </p>
+      <div class="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
+        <a href="/stores" class="inline-block bg-white text-purple-700 font-semibold py-3 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+          Find Dispensaries
+        </a>
+        <a href="/categories" class="inline-block bg-purple-700 text-white font-semibold py-3 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-white/20">
+          Explore Categories
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

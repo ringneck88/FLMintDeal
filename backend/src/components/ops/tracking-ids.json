@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_ops_tracking_ids",
+  "info": {
+    "displayName": "Tracking IDs",
+    "description": "Analytics and tracking configuration"
+  },
+  "options": {},
+  "attributes": {
+    "google_analytics": {
+      "type": "string"
+    },
+    "google_tag_manager": {
+      "type": "string"
+    },
+    "facebook_pixel": {
+      "type": "string"
+    },
+    "hotjar_id": {
+      "type": "string"
+    },
+    "linkedin_insight": {
+      "type": "string"
+    },
+    "custom_scripts": {
+      "type": "text"
+    },
+    "conversion_tracking": {
+      "type": "json"
+    }
+  }
+}

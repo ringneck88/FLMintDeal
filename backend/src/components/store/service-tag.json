@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_store_service_tags",
+  "info": {
+    "displayName": "Service Tag",
+    "description": "Store services like curbside, delivery, medical"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

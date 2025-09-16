@@ -1,0 +1,89 @@
+---
+import Layout from '../../layouts/Layout.astro';
+const pageTitle = 'Learn About Cannabis Topicals | FLMint Deals';
+const category = { name: 'Topicals', icon: '🧴', slug: 'topicals' };
+const relatedPosts = [
+  { title: "How Cannabis Topicals Work: Science Behind the Skin", excerpt: "Understanding how topicals provide localized relief without psychoactive effects.", slug: "topicals-science-guide", readTime: "6 min", category: "Science" },
+  { title: "DIY Cannabis Topicals: Making Balms and Salves", excerpt: "Create your own cannabis-infused topical products at home safely.", slug: "diy-cannabis-topicals", readTime: "12 min", category: "DIY" },
+  { title: "Choosing Cannabis Topicals for Pain Relief", excerpt: "Find the right topical products for different types of pain and inflammation.", slug: "topicals-pain-relief-guide", readTime: "7 min", category: "Medical" },
+  { title: "CBD vs THC Topicals: Which is Better?", excerpt: "Compare cannabinoid profiles in topical products for different needs.", slug: "cbd-vs-thc-topicals", readTime: "5 min", category: "Comparison" }
+];
+---
+<Layout title={pageTitle}>
+  <nav class="bg-slate-50 dark:bg-slate-900 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center space-x-2 text-sm">
+        <a href="/" class="text-emerald-600 hover:text-emerald-800">Home</a><span class="text-slate-400">/</span>
+        <a href="/categories" class="text-emerald-600 hover:text-emerald-800">Categories</a><span class="text-slate-400">/</span>
+        <span class="text-slate-600">Cannabis Topicals</span>
+      </div>
+    </div>
+  </nav>
+  <section class="relative bg-gradient-to-r from-pink-600 via-rose-600 to-red-600">
+    <div class="absolute inset-0 bg-black opacity-20"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+      <div class="text-8xl mb-8">{category.icon}</div>
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Cannabis Topicals Guide</h1>
+      <p class="text-xl md:text-2xl text-pink-100 max-w-3xl mx-auto">Localized relief through cannabis-infused lotions, balms, and salves without psychoactive effects.</p>
+    </div>
+  </section>
+  <article class="py-16 -mt-12 relative z-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-2xl">
+        <div class="prose prose-lg max-w-none dark:prose-invert">
+          <h2 class="text-3xl font-bold text-pink-800 dark:text-pink-400 mb-6">What are Cannabis Topicals?</h2>
+          <p class="text-lg leading-relaxed mb-8">Cannabis topicals are creams, lotions, balms, and salves infused with cannabinoids that are applied directly to the skin. They provide localized relief from pain, inflammation, and skin conditions without producing psychoactive effects.</p>
+          <h3 class="text-2xl font-bold mb-4">Types of Topicals</h3>
+          <div class="grid md:grid-cols-2 gap-6 mb-8 not-prose">
+            <div class="bg-pink-50 dark:bg-pink-900/20 p-6 rounded-xl">
+              <h4 class="font-bold text-pink-800 dark:text-pink-400 mb-3">Balms & Salves</h4>
+              <p class="text-sm">Thick, waxy consistency perfect for targeted application on joints and muscle pain.</p>
+            </div>
+            <div class="bg-rose-50 dark:bg-rose-900/20 p-6 rounded-xl">
+              <h4 class="font-bold text-rose-800 dark:text-rose-400 mb-3">Lotions & Creams</h4>
+              <p class="text-sm">Lightweight, easily absorbed formulas ideal for larger areas of skin application.</p>
+            </div>
+            <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl">
+              <h4 class="font-bold text-red-800 dark:text-red-400 mb-3">Massage Oils</h4>
+              <p class="text-sm">Smooth, gliding oils perfect for therapeutic massage and muscle relaxation.</p>
+            </div>
+            <div class="bg-orange-50 dark:bg-orange-900/20 p-6 rounded-xl">
+              <h4 class="font-bold text-orange-800 dark:text-orange-400 mb-3">Patches</h4>
+              <p class="text-sm">Transdermal patches providing controlled, extended release of cannabinoids.</p>
+            </div>
+          </div>
+          <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl mb-8">
+            <h4 class="font-bold text-green-800 dark:text-green-400 mb-4">Benefits of Cannabis Topicals:</h4>
+            <ul class="text-sm space-y-2">
+              <li>• No psychoactive effects - won't get you "high"</li>
+              <li>• Targeted, localized relief</li>
+              <li>• Won't show up in drug tests</li>
+              <li>• Safe for daily use</li>
+              <li>• Natural alternative to OTC pain relief</li>
+              <li>• Can be combined with other treatments</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+  <section class="py-16 bg-gradient-to-r from-slate-50 to-pink-50 dark:from-slate-900 dark:to-pink-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Related Articles</h2>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {relatedPosts.map((post) => (
+          <article class="bg-white/60 dark:bg-slate-800/60 rounded-2xl p-6 shadow-lg hover:-translate-y-2 transition-all">
+            <span class="inline-block bg-pink-100 dark:bg-pink-900/50 text-pink-800 dark:text-pink-400 text-xs px-3 py-1 rounded-full mb-4">{post.category}</span>
+            <h3 class="text-lg font-bold mb-3"><a href={`/blog/${post.slug}`} class="hover:text-pink-600">{post.title}</a></h3>
+            <p class="text-sm text-slate-600 mb-4">{post.excerpt}</p>
+            <div class="flex justify-between text-xs text-slate-500">
+              <span>{post.readTime}</span><a href={`/blog/${post.slug}`} class="font-semibold">Read More →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

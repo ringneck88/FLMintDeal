@@ -1,11 +1,10 @@
 FROM node:20-alpine
-RUN npm install -g yarn
 
 WORKDIR /app
 
 # Copy package files and install dependencies
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json ./
+RUN npm install --omit=dev
 
 # Copy source code
 COPY . .
@@ -14,10 +13,7 @@ COPY . .
 RUN mkdir -p /data
 
 # Build the application
-RUN yarn build
-
-# Remove dev dependencies to reduce image size
-RUN yarn install --production --frozen-lockfile && yarn cache clean
+RUN npm run build
 
 # Create non-root user and set permissions
 RUN addgroup -g 1001 -S nodejs && adduser -S strapi -u 1001
@@ -26,4 +22,4 @@ RUN chown -R strapi:nodejs /app /data
 USER strapi
 EXPOSE 8080
 
-CMD ["yarn", "start"]
+CMD ["npm", "start"]

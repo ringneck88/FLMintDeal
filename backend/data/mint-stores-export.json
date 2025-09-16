@@ -1,0 +1,234 @@
+{
+  "version": 2,
+  "data": {
+    "api::brand.brand": [
+      {
+        "id": 1,
+        "name": "Mint Cannabis",
+        "slug": "mint-cannabis",
+        "description": "Premium cannabis dispensary chain with locations across multiple states. Recently named 'Most Innovative Medical Cannabis Dispensary'",
+        "website": "https://mintdeals.com",
+        "phone": "480-749-6468",
+        "is_active": true,
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      }
+    ],
+    "api::region.region": [
+      {
+        "id": 1,
+        "name": "Arizona",
+        "slug": "arizona",
+        "state_code": "AZ",
+        "country": "United States",
+        "tax_rate": 16.0,
+        "is_active": true,
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      },
+      {
+        "id": 2,
+        "name": "Michigan",
+        "slug": "michigan",
+        "state_code": "MI",
+        "country": "United States",
+        "tax_rate": 10.0,
+        "is_active": true,
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      },
+      {
+        "id": 3,
+        "name": "Illinois",
+        "slug": "illinois",
+        "state_code": "IL",
+        "country": "United States",
+        "tax_rate": 25.0,
+        "is_active": true,
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      },
+      {
+        "id": 4,
+        "name": "Missouri",
+        "slug": "missouri",
+        "state_code": "MO",
+        "country": "United States",
+        "tax_rate": 12.0,
+        "is_active": true,
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      }
+    ],
+    "api::city.city": [
+      {
+        "id": 1,
+        "name": "Guadalupe",
+        "slug": "guadalupe-az",
+        "region": 1,
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      },
+      {
+        "id": 2,
+        "name": "Phoenix",
+        "slug": "phoenix-az",
+        "region": 1,
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      },
+      {
+        "id": 3,
+        "name": "Scottsdale",
+        "slug": "scottsdale-az",
+        "region": 1,
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      },
+      {
+        "id": 4,
+        "name": "Kalamazoo",
+        "slug": "kalamazoo-mi",
+        "region": 2,
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      },
+      {
+        "id": 5,
+        "name": "Roseville",
+        "slug": "roseville-mi",
+        "region": 2,
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      },
+      {
+        "id": 6,
+        "name": "Willowbrook",
+        "slug": "willowbrook-il",
+        "region": 3,
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      },
+      {
+        "id": 7,
+        "name": "St. Peters",
+        "slug": "st-peters-mo",
+        "region": 4,
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      }
+    ],
+    "api::store.store": [
+      {
+        "id": 1,
+        "name": "Mint Cannabis - Tempe/Guadalupe",
+        "slug": "mint-cannabis-tempe-guadalupe",
+        "store_code": "MINT-AZ-001",
+        "brand": 1,
+        "region": 1,
+        "city": 1,
+        "address": {
+          "street": "5210 S Priest Dr",
+          "city": "Guadalupe",
+          "state": "AZ",
+          "zip_code": "85283",
+          "country": "United States"
+        },
+        "geo": {
+          "latitude": 33.3711,
+          "longitude": -112.0471
+        },
+        "phone": "480-749-6468",
+        "email": null,
+        "timezone": "America/Phoenix",
+        "hours": {
+          "monday": { "open": "00:00", "close": "23:59", "is_closed": false },
+          "tuesday": { "open": "00:00", "close": "23:59", "is_closed": false },
+          "wednesday": { "open": "00:00", "close": "23:59", "is_closed": false },
+          "thursday": { "open": "00:00", "close": "23:59", "is_closed": false },
+          "friday": { "open": "00:00", "close": "23:59", "is_closed": false },
+          "saturday": { "open": "00:00", "close": "23:59", "is_closed": false },
+          "sunday": { "open": "00:00", "close": "23:59", "is_closed": false }
+        },
+        "services": [
+          { "name": "Drive-Thru", "is_available": true },
+          { "name": "Online Ordering", "is_available": true },
+          { "name": "Delivery", "is_available": false },
+          { "name": "Curbside Pickup", "is_available": true }
+        ],
+        "amenities": [
+          { "name": "Rewards Program", "description": "Earn Weed rewards program" },
+          { "name": "Daily Deals", "description": "Daily cannabis specials" },
+          { "name": "ATM Available", "description": "On-site ATM for convenience" }
+        ],
+        "is_active": true,
+        "menu_url": "https://mintdeals.com/tempe-az/menu/",
+        "online_ordering_url": "https://mintdeals.com/tempe-az/",
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      },
+      {
+        "id": 2,
+        "name": "Mint Cannabis - Phoenix Cave Creek",
+        "slug": "mint-cannabis-phoenix-cave-creek",
+        "store_code": "MINT-AZ-002",
+        "brand": 1,
+        "region": 1,
+        "city": 2,
+        "address": {
+          "street": "17036 N Cave Creek Rd",
+          "city": "Phoenix",
+          "state": "AZ",
+          "zip_code": "85032",
+          "country": "United States"
+        },
+        "geo": {
+          "latitude": 33.6119,
+          "longitude": -112.0431
+        },
+        "phone": "480-749-6468",
+        "email": null,
+        "timezone": "America/Phoenix",
+        "hours": {
+          "monday": { "open": "08:00", "close": "22:00", "is_closed": false },
+          "tuesday": { "open": "08:00", "close": "22:00", "is_closed": false },
+          "wednesday": { "open": "08:00", "close": "22:00", "is_closed": false },
+          "thursday": { "open": "08:00", "close": "22:00", "is_closed": false },
+          "friday": { "open": "08:00", "close": "22:00", "is_closed": false },
+          "saturday": { "open": "08:00", "close": "22:00", "is_closed": false },
+          "sunday": { "open": "08:00", "close": "22:00", "is_closed": false }
+        },
+        "services": [
+          { "name": "Drive-Thru", "is_available": true },
+          { "name": "Online Ordering", "is_available": true },
+          { "name": "Delivery", "is_available": false },
+          { "name": "Curbside Pickup", "is_available": true }
+        ],
+        "amenities": [
+          { "name": "Rewards Program", "description": "Earn Weed rewards program" },
+          { "name": "Daily Deals", "description": "Daily cannabis specials" },
+          { "name": "Cannabis Events", "description": "Regular cannabis education events" }
+        ],
+        "is_active": true,
+        "menu_url": "https://mintdeals.com/phoenix-az/menu/",
+        "online_ordering_url": "https://mintdeals.com/phoenix-az/",
+        "createdAt": "2025-09-15T21:00:00.000Z",
+        "updatedAt": "2025-09-15T21:00:00.000Z",
+        "publishedAt": "2025-09-15T21:00:00.000Z"
+      }
+    ]
+  }
+}

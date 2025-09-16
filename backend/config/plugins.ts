@@ -1,4 +1,7 @@
 export default ({ env }) => ({
+  graphql: {
+    enabled: false
+  },
   documentation: {
     enabled: true,
     config: {

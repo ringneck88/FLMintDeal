@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Read(//c/Users/kshar/flmintdealsexpress/FLMintDeal/backend/**)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(node:*)",
+      "Bash(npm install:*)",
+      "Bash(PORT=1339 yarn develop)"
     ],
     "deny": [],
     "ask": []

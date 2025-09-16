@@ -1,0 +1,116 @@
+{
+  "kind": "collectionType",
+  "collectionName": "promotions",
+  "info": {
+    "singularName": "promotion",
+    "pluralName": "promotions",
+    "displayName": "Promotion",
+    "description": "Marketing promotions and deals"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "summary": {
+      "type": "text",
+      "maxLength": 500
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "creative": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "videos"
+      ]
+    },
+    "terms": {
+      "type": "component",
+      "repeatable": false,
+      "component": "legal.terms"
+    },
+    "start_at": {
+      "type": "datetime",
+      "required": true
+    },
+    "end_at": {
+      "type": "datetime"
+    },
+    "days_of_week": {
+      "type": "json"
+    },
+    "eligible_customer_types": {
+      "type": "enumeration",
+      "enum": [
+        "all",
+        "new",
+        "loyalty",
+        "medical",
+        "recreational"
+      ],
+      "multiple": true,
+      "default": [
+        "all"
+      ]
+    },
+    "min_age": {
+      "type": "integer",
+      "default": 21,
+      "min": 18,
+      "max": 25
+    },
+    "regions": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::region.region",
+      "inversedBy": "promotions"
+    },
+    "store": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::store.store",
+      "inversedBy": "promotions"
+    },
+    "exclude_stores": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::store.store"
+    },
+    "brand": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::brand.brand",
+      "inversedBy": "promotions"
+    },
+    "external_campaign_id": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "priority": {
+      "type": "integer",
+      "default": 0
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "seo.meta"
+    }
+  }
+}

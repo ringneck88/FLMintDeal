@@ -1,0 +1,218 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const states = [
+  { name: 'Florida', slug: 'florida', emoji: '🌴', description: 'Medical cannabis with expanding access' },
+  { name: 'California', slug: 'california', emoji: '☀️', description: 'Leading recreational cannabis market' },
+  { name: 'Colorado', slug: 'colorado', emoji: '🏔️', description: 'Pioneer in cannabis legalization' },
+  { name: 'Nevada', slug: 'nevada', emoji: '🎰', description: 'Tourist-friendly cannabis laws' },
+  { name: 'Arizona', slug: 'arizona', emoji: '🌵', description: 'Growing medical and recreational market' },
+  { name: 'New York', slug: 'new-york', emoji: '🗽', description: 'Emerging recreational market' },
+  { name: 'Massachusetts', slug: 'massachusetts', emoji: '🦞', description: 'East Coast cannabis hub' },
+  { name: 'Michigan', slug: 'michigan', emoji: '🏭', description: 'Strong recreational cannabis industry' },
+  { name: 'Illinois', slug: 'illinois', emoji: '🌆', description: 'Midwest recreational cannabis leader' },
+  { name: 'Oregon', slug: 'oregon', emoji: '🌲', description: 'Mature cannabis market with variety' },
+  { name: 'Washington', slug: 'washington', emoji: '⛰️', description: 'Pacific Northwest cannabis culture' }
+];
+
+const categories = [
+  { name: 'Flower', slug: 'flower', icon: '🌿' },
+  { name: 'Edibles', slug: 'edibles', icon: '🍭' },
+  { name: 'Concentrates', slug: 'concentrates', icon: '🍯' },
+  { name: 'Vaporizers', slug: 'vaporizers', icon: '💨' },
+  { name: 'Pre-Rolls', slug: 'pre-rolls', icon: '🚬' },
+  { name: 'Topicals', slug: 'topicals', icon: '🧴' },
+  { name: 'Cartridges', slug: 'cartridges', icon: '🖊️' }
+];
+
+const pageTitle = 'Cannabis Products by State | FLMint Deals';
+---
+
+<Layout title={pageTitle}>
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-r from-blue-600 via-purple-600 to-green-600">
+    <div class="absolute inset-0 bg-black opacity-20"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
+      <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+        Cannabis Products by State
+      </h1>
+      <p class="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
+        Explore cannabis products, dispensaries, and regulations specific to your state.
+        Find local deals and stay informed about your state's cannabis laws.
+      </p>
+    </div>
+  </section>
+
+  <!-- States Grid -->
+  <section class="py-16 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
+          Choose Your State
+        </h2>
+        <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
+          Select your state to find local dispensaries, products, and current deals
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {states.map(state => (
+          <div class="group bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 hover:shadow-lg hover:-translate-y-2 transition-all duration-300 border border-gray-200 dark:border-gray-700 hover:border-emerald-300 dark:hover:border-emerald-600">
+            <div class="text-center">
+              <div class="text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                {state.emoji}
+              </div>
+              <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                {state.name}
+              </h3>
+              <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                {state.description}
+              </p>
+
+              <!-- Quick Category Links -->
+              <div class="grid grid-cols-4 gap-2 mb-4">
+                {categories.slice(0, 4).map(category => (
+                  <a
+                    href={`/${category.slug}/${category.slug}-in-${state.slug}`}
+                    class="p-2 bg-white dark:bg-gray-700 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors duration-200 text-center"
+                    title={`${category.name} in ${state.name}`}
+                  >
+                    <div class="text-lg">{category.icon}</div>
+                  </a>
+                ))}
+              </div>
+
+              <a
+                href={`/flower/flower-in-${state.slug}`}
+                class="block w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
+              >
+                Explore {state.name}
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Categories Section -->
+  <section class="py-16 bg-emerald-50 dark:bg-emerald-900/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+          Browse by Category
+        </h2>
+        <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
+          Explore cannabis products across all states
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-4">
+        {categories.map(category => (
+          <a href={`/learn/${category.slug}`} class="group bg-white dark:bg-slate-800 rounded-xl p-6 text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-200">
+            <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-200">
+              {category.icon}
+            </div>
+            <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
+              {category.name}
+            </h3>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured State Combinations -->
+  <section class="py-16 bg-white dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+          Popular State & Product Combinations
+        </h2>
+        <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
+          Most searched cannabis products by state
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a href="/flower/flower-in-california" class="group bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-xl p-6 hover:shadow-lg transition-all duration-200 border border-yellow-200 dark:border-yellow-700">
+          <div class="flex items-center mb-4">
+            <span class="text-3xl mr-3">🌿</span>
+            <span class="text-3xl">☀️</span>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            California Flower
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">
+            Premium flower from the Golden State's top cultivators
+          </p>
+        </a>
+
+        <a href="/edibles/edibles-in-colorado" class="group bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6 hover:shadow-lg transition-all duration-200 border border-blue-200 dark:border-blue-700">
+          <div class="flex items-center mb-4">
+            <span class="text-3xl mr-3">🍭</span>
+            <span class="text-3xl">🏔️</span>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            Colorado Edibles
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">
+            Innovative edibles from cannabis legalization pioneers
+          </p>
+        </a>
+
+        <a href="/concentrates/concentrates-in-oregon" class="group bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl p-6 hover:shadow-lg transition-all duration-200 border border-green-200 dark:border-green-700">
+          <div class="flex items-center mb-4">
+            <span class="text-3xl mr-3">🍯</span>
+            <span class="text-3xl">🌲</span>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            Oregon Concentrates
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">
+            Artisanal extracts from Pacific Northwest producers
+          </p>
+        </a>
+
+        <a href="/vaporizers/vaporizers-in-nevada" class="group bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-6 hover:shadow-lg transition-all duration-200 border border-purple-200 dark:border-purple-700">
+          <div class="flex items-center mb-4">
+            <span class="text-3xl mr-3">💨</span>
+            <span class="text-3xl">🎰</span>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            Nevada Vaporizers
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">
+            Convenient vaping options for tourists and locals
+          </p>
+        </a>
+
+        <a href="/pre-rolls/pre-rolls-in-florida" class="group bg-gradient-to-br from-teal-50 to-cyan-50 dark:from-teal-900/20 dark:to-cyan-900/20 rounded-xl p-6 hover:shadow-lg transition-all duration-200 border border-teal-200 dark:border-teal-700">
+          <div class="flex items-center mb-4">
+            <span class="text-3xl mr-3">🚬</span>
+            <span class="text-3xl">🌴</span>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            Florida Pre-Rolls
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">
+            Medical cannabis pre-rolls in the Sunshine State
+          </p>
+        </a>
+
+        <a href="/topicals/topicals-in-massachusetts" class="group bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-900/20 dark:to-rose-900/20 rounded-xl p-6 hover:shadow-lg transition-all duration-200 border border-red-200 dark:border-red-700">
+          <div class="flex items-center mb-4">
+            <span class="text-3xl mr-3">🧴</span>
+            <span class="text-3xl">🦞</span>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+            Massachusetts Topicals
+          </h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">
+            Therapeutic topicals from East Coast dispensaries
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

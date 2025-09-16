@@ -373,6 +373,92 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAnnouncementAnnouncement
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'announcements';
+  info: {
+    description: 'Store notices and alerts';
+    displayName: 'Announcement';
+    pluralName: 'announcements';
+    singularName: 'announcement';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    body: Schema.Attribute.RichText & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    end_at: Schema.Attribute.DateTime;
+    is_active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::announcement.announcement'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    regions: Schema.Attribute.Relation<'manyToMany', 'api::region.region'>;
+    severity: Schema.Attribute.Enumeration<['info', 'warning', 'urgent']> &
+      Schema.Attribute.DefaultTo<'info'>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    start_at: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    stores: Schema.Attribute.Relation<'manyToMany', 'api::store.store'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiBrandBrand extends Struct.CollectionTypeSchema {
+  collectionName: 'brands';
+  info: {
+    description: 'Brand management for dispensary chains';
+    displayName: 'Brand';
+    pluralName: 'brands';
+    singularName: 'brand';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    default_seo: Schema.Attribute.Component<'seo.meta', false>;
+    events: Schema.Attribute.Relation<'oneToMany', 'api::event.event'>;
+    jobs: Schema.Attribute.Relation<'oneToMany', 'api::job.job'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::brand.brand'> &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images'>;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    pages: Schema.Attribute.Relation<'oneToMany', 'api::page.page'>;
+    primary_color: Schema.Attribute.String;
+    promotions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::promotion.promotion'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    secondary_color: Schema.Attribute.String;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCannaboidTypeCannaboidType
   extends Struct.CollectionTypeSchema {
   collectionName: 'cannaboid_types';
@@ -405,6 +491,79 @@ export interface ApiCannaboidTypeCannaboidType
     Title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCityCity extends Struct.CollectionTypeSchema {
+  collectionName: 'cities';
+  info: {
+    description: 'Cities/markets for filtering stores';
+    displayName: 'City';
+    pluralName: 'cities';
+    singularName: 'city';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::city.city'> &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    region: Schema.Attribute.Relation<'manyToOne', 'api::region.region'>;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    stores: Schema.Attribute.Relation<'oneToMany', 'api::store.store'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCompliancePolicyCompliancePolicy
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'compliance_policies';
+  info: {
+    description: 'State-level compliance rules and regulations';
+    displayName: 'Compliance Policy';
+    pluralName: 'compliance-policies';
+    singularName: 'compliance-policy';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    body: Schema.Attribute.RichText & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    effective_date: Schema.Attribute.Date & Schema.Attribute.Required;
+    expires_date: Schema.Attribute.Date;
+    is_active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::compliance-policy.compliance-policy'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    region: Schema.Attribute.Relation<'manyToOne', 'api::region.region'>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -529,6 +688,87 @@ export interface ApiDosageProductDosageProduct
   };
 }
 
+export interface ApiEventEvent extends Struct.CollectionTypeSchema {
+  collectionName: 'events';
+  info: {
+    description: 'Store events and special occasions';
+    displayName: 'Event';
+    pluralName: 'events';
+    singularName: 'event';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    brand: Schema.Attribute.Relation<'manyToOne', 'api::brand.brand'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText;
+    end_at: Schema.Attribute.DateTime;
+    hero_media: Schema.Attribute.Media<'images' | 'videos'>;
+    is_active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
+      Schema.Attribute.Private;
+    location_override: Schema.Attribute.Component<'common.address', false>;
+    publishedAt: Schema.Attribute.DateTime;
+    region: Schema.Attribute.Relation<'manyToOne', 'api::region.region'>;
+    rsvp_url: Schema.Attribute.String;
+    seo: Schema.Attribute.Component<'seo.meta', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    start_at: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    stores: Schema.Attribute.Relation<'manyToMany', 'api::store.store'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
+  collectionName: 'globals';
+  info: {
+    description: 'Global site configuration and settings';
+    displayName: 'Global';
+    pluralName: 'globals';
+    singularName: 'global';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    brands: Schema.Attribute.Relation<'oneToMany', 'api::brand.brand'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    default_seo: Schema.Attribute.Component<'seo.meta', false>;
+    footer_nav: Schema.Attribute.Component<'ui.nav', false>;
+    header_nav: Schema.Attribute.Component<'ui.nav', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::global.global'
+    > &
+      Schema.Attribute.Private;
+    primary_brand: Schema.Attribute.Relation<'oneToOne', 'api::brand.brand'>;
+    publishedAt: Schema.Attribute.DateTime;
+    store_finder_settings: Schema.Attribute.Component<
+      'ui.store-finder-settings',
+      false
+    >;
+    support_links: Schema.Attribute.Component<'ui.link-list', false>;
+    tracking: Schema.Attribute.Component<'ops.tracking-ids', false>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
   collectionName: 'ingredients';
   info: {
@@ -558,6 +798,379 @@ export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
     Name: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.String & Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiJobJob extends Struct.CollectionTypeSchema {
+  collectionName: 'jobs';
+  info: {
+    description: 'Employment opportunities';
+    displayName: 'Job';
+    pluralName: 'jobs';
+    singularName: 'job';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    apply_email: Schema.Attribute.Email;
+    apply_url: Schema.Attribute.String;
+    brand: Schema.Attribute.Relation<'manyToOne', 'api::brand.brand'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText & Schema.Attribute.Required;
+    employment_type: Schema.Attribute.Enumeration<
+      ['full-time', 'part-time', 'contract', 'temporary']
+    > &
+      Schema.Attribute.Required;
+    is_active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::job.job'> &
+      Schema.Attribute.Private;
+    posted_at: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    region: Schema.Attribute.Relation<'manyToOne', 'api::region.region'>;
+    seo: Schema.Attribute.Component<'seo.meta', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    store: Schema.Attribute.Relation<'manyToOne', 'api::store.store'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiLegalLegal extends Struct.SingleTypeSchema {
+  collectionName: 'legals';
+  info: {
+    description: 'Legal pages and compliance content';
+    displayName: 'Legal';
+    pluralName: 'legals';
+    singularName: 'legal';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    accessibility_statement: Schema.Attribute.Blocks;
+    age_gate_text: Schema.Attribute.RichText;
+    ccpa_notice: Schema.Attribute.Blocks;
+    cookie_policy: Schema.Attribute.Blocks;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    gdpr_notice: Schema.Attribute.Blocks;
+    global_disclaimer: Schema.Attribute.RichText;
+    last_updated: Schema.Attribute.DateTime;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::legal.legal'> &
+      Schema.Attribute.Private;
+    privacy_policy: Schema.Attribute.Blocks;
+    publishedAt: Schema.Attribute.DateTime;
+    terms_of_use: Schema.Attribute.Blocks;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPagePage extends Struct.CollectionTypeSchema {
+  collectionName: 'pages';
+  info: {
+    description: 'CMS pages with dynamic layouts';
+    displayName: 'Page';
+    pluralName: 'pages';
+    singularName: 'page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    brand: Schema.Attribute.Relation<'manyToOne', 'api::brand.brand'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    layout: Schema.Attribute.Component<'page.blocks', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'seo.meta', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPromotionPromotion extends Struct.CollectionTypeSchema {
+  collectionName: 'promotions';
+  info: {
+    description: 'Marketing promotions and deals';
+    displayName: 'Promotion';
+    pluralName: 'promotions';
+    singularName: 'promotion';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    brand: Schema.Attribute.Relation<'manyToOne', 'api::brand.brand'>;
+    content: Schema.Attribute.RichText;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creative: Schema.Attribute.Media<'images' | 'videos'>;
+    days_of_week: Schema.Attribute.JSON;
+    eligible_customer_types: Schema.Attribute.Enumeration<
+      ['all', 'new', 'loyalty', 'medical', 'recreational']
+    > &
+      Schema.Attribute.DefaultTo<['all']>;
+    end_at: Schema.Attribute.DateTime;
+    exclude_stores: Schema.Attribute.Relation<'manyToMany', 'api::store.store'>;
+    external_campaign_id: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    is_active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::promotion.promotion'
+    > &
+      Schema.Attribute.Private;
+    min_age: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 25;
+          min: 18;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<21>;
+    priority: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    publishedAt: Schema.Attribute.DateTime;
+    regions: Schema.Attribute.Relation<'manyToMany', 'api::region.region'>;
+    seo: Schema.Attribute.Component<'seo.meta', false>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    start_at: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    store: Schema.Attribute.Relation<'manyToOne', 'api::store.store'>;
+    summary: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 500;
+      }>;
+    terms: Schema.Attribute.Component<'legal.terms', false>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiRegionRegion extends Struct.CollectionTypeSchema {
+  collectionName: 'regions';
+  info: {
+    description: 'State/region management for legal and operational requirements';
+    displayName: 'Region';
+    pluralName: 'regions';
+    singularName: 'region';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    age_restriction: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 25;
+          min: 18;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<21>;
+    announcements: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::announcement.announcement'
+    >;
+    cities: Schema.Attribute.Relation<'oneToMany', 'api::city.city'>;
+    code: Schema.Attribute.Enumeration<
+      [
+        'AL',
+        'AK',
+        'AZ',
+        'AR',
+        'CA',
+        'CO',
+        'CT',
+        'DE',
+        'FL',
+        'GA',
+        'HI',
+        'ID',
+        'IL',
+        'IN',
+        'IA',
+        'KS',
+        'KY',
+        'LA',
+        'ME',
+        'MD',
+        'MA',
+        'MI',
+        'MN',
+        'MS',
+        'MO',
+        'MT',
+        'NE',
+        'NV',
+        'NH',
+        'NJ',
+        'NM',
+        'NY',
+        'NC',
+        'ND',
+        'OH',
+        'OK',
+        'OR',
+        'PA',
+        'RI',
+        'SC',
+        'SD',
+        'TN',
+        'TX',
+        'UT',
+        'VT',
+        'VA',
+        'WA',
+        'WV',
+        'WI',
+        'WY',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    compliance_policies: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::compliance-policy.compliance-policy'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    delivery_rules: Schema.Attribute.Component<'ops.fulfillment-rules', false>;
+    events: Schema.Attribute.Relation<'oneToMany', 'api::event.event'>;
+    jobs: Schema.Attribute.Relation<'oneToMany', 'api::job.job'>;
+    legal_disclaimer: Schema.Attribute.Component<'legal.disclaimer', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::region.region'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    promotions: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::promotion.promotion'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    stores: Schema.Attribute.Relation<'oneToMany', 'api::store.store'>;
+    tax_profile: Schema.Attribute.Component<'commerce.tax-profile', false>;
+    timezone: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'America/New_York'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiStoreStore extends Struct.CollectionTypeSchema {
+  collectionName: 'stores';
+  info: {
+    description: 'Physical dispensary store locations';
+    displayName: 'Store';
+    pluralName: 'stores';
+    singularName: 'store';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Schema.Attribute.Component<'common.address', false> &
+      Schema.Attribute.Required;
+    amenities: Schema.Attribute.Component<'store.amenity-tag', true>;
+    announcements: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::announcement.announcement'
+    >;
+    brand: Schema.Attribute.Relation<'manyToOne', 'api::brand.brand'>;
+    city: Schema.Attribute.Relation<'manyToOne', 'api::city.city'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta_blocks: Schema.Attribute.Component<'ui.cta', true>;
+    email: Schema.Attribute.Email;
+    events: Schema.Attribute.Relation<'manyToMany', 'api::event.event'>;
+    gallery: Schema.Attribute.Media<'images' | 'videos', true>;
+    geo: Schema.Attribute.Component<'common.geo-point', false>;
+    hero_media: Schema.Attribute.Media<'images' | 'videos'>;
+    hour_exceptions: Schema.Attribute.Component<'common.hours-exception', true>;
+    hours: Schema.Attribute.Component<'common.hours', false>;
+    is_active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    jobs: Schema.Attribute.Relation<'oneToMany', 'api::job.job'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::store.store'> &
+      Schema.Attribute.Private;
+    menu_url: Schema.Attribute.String;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 200;
+      }>;
+    online_ordering_url: Schema.Attribute.String;
+    phone: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 20;
+      }>;
+    pos_location_id: Schema.Attribute.String &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 100;
+      }>;
+    promotions: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::promotion.promotion'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    region: Schema.Attribute.Relation<'manyToOne', 'api::region.region'>;
+    seo: Schema.Attribute.Component<'seo.meta', false>;
+    services: Schema.Attribute.Component<'store.service-tag', true>;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    store_code: Schema.Attribute.String &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 50;
+      }>;
+    timezone: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'America/New_York'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1108,11 +1721,23 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::announcement.announcement': ApiAnnouncementAnnouncement;
+      'api::brand.brand': ApiBrandBrand;
       'api::cannaboid-type.cannaboid-type': ApiCannaboidTypeCannaboidType;
+      'api::city.city': ApiCityCity;
+      'api::compliance-policy.compliance-policy': ApiCompliancePolicyCompliancePolicy;
       'api::deal.deal': ApiDealDeal;
       'api::dosage-form.dosage-form': ApiDosageFormDosageForm;
       'api::dosage-product.dosage-product': ApiDosageProductDosageProduct;
+      'api::event.event': ApiEventEvent;
+      'api::global.global': ApiGlobalGlobal;
       'api::ingredient.ingredient': ApiIngredientIngredient;
+      'api::job.job': ApiJobJob;
+      'api::legal.legal': ApiLegalLegal;
+      'api::page.page': ApiPagePage;
+      'api::promotion.promotion': ApiPromotionPromotion;
+      'api::region.region': ApiRegionRegion;
+      'api::store.store': ApiStoreStore;
       'api::unit-type.unit-type': ApiUnitTypeUnitType;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

@@ -30,7 +30,7 @@
     },
     "cannaboid_type": {
       "type": "relation",
-      "relation": "manyToOne", 
+      "relation": "manyToOne",
       "target": "api::cannaboid-type.cannaboid-type",
       "inversedBy": "dosage_products"
     },
@@ -50,7 +50,9 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }

@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_ui_store_finder_settings",
+  "info": {
+    "displayName": "Store Finder Settings",
+    "description": "Configuration for store finder functionality"
+  },
+  "options": {},
+  "attributes": {
+    "default_zoom": {
+      "type": "integer",
+      "default": 10
+    },
+    "max_distance": {
+      "type": "integer",
+      "default": 50
+    },
+    "google_maps_api_key": {
+      "type": "string"
+    },
+    "default_location": {
+      "type": "component",
+      "repeatable": false,
+      "component": "common.geo-point"
+    },
+    "search_placeholder": {
+      "type": "string",
+      "default": "Enter your address or ZIP code"
+    },
+    "no_results_message": {
+      "type": "string",
+      "default": "No stores found in your area"
+    },
+    "filters": {
+      "type": "json"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_common_geo_points",
+  "info": {
+    "displayName": "Geo Point",
+    "description": "Geographic coordinates"
+  },
+  "options": {},
+  "attributes": {
+    "latitude": {
+      "type": "decimal",
+      "required": true
+    },
+    "longitude": {
+      "type": "decimal",
+      "required": true
+    },
+    "accuracy": {
+      "type": "decimal"
+    }
+  }
+}

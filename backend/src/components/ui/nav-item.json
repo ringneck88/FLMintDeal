@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_ui_nav_items",
+  "info": {
+    "displayName": "Navigation Item",
+    "description": "Individual navigation item"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "is_external": {
+      "type": "boolean",
+      "default": false
+    },
+    "icon": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

@@ -1,0 +1,199 @@
+---
+// src/pages/learn/concentrates.astro
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = 'Learn About Cannabis Concentrates | FLMint Deals';
+const category = {
+  name: 'Concentrates',
+  icon: '🍯',
+  slug: 'concentrates'
+};
+
+const relatedPosts = [
+  {
+    title: "Cannabis Concentrate Types: Shatter, Wax, Live Resin & More",
+    excerpt: "Complete guide to different concentrate forms and their unique characteristics.",
+    slug: "cannabis-concentrate-types-guide",
+    readTime: "8 min read",
+    category: "Education"
+  },
+  {
+    title: "Dabbing for Beginners: Equipment and Techniques",
+    excerpt: "Everything you need to know to start dabbing safely and effectively.",
+    slug: "dabbing-beginners-guide",
+    readTime: "10 min read",
+    category: "How-To"
+  },
+  {
+    title: "Understanding Cannabis Extraction Methods",
+    excerpt: "Learn about solvent-based and solventless extraction techniques.",
+    slug: "cannabis-extraction-methods",
+    readTime: "6 min read",
+    category: "Science"
+  },
+  {
+    title: "Concentrate Storage: Maintaining Quality and Potency",
+    excerpt: "Best practices for storing cannabis concentrates to preserve effects.",
+    slug: "concentrate-storage-guide",
+    readTime: "4 min read",
+    category: "Tips"
+  }
+];
+---
+
+<Layout title={pageTitle}>
+  <nav class="bg-slate-50 dark:bg-slate-900 py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center space-x-2 text-sm">
+        <a href="/" class="text-emerald-600 hover:text-emerald-800 dark:text-emerald-400">Home</a>
+        <span class="text-slate-400">/</span>
+        <a href="/categories" class="text-emerald-600 hover:text-emerald-800 dark:text-emerald-400">Categories</a>
+        <span class="text-slate-400">/</span>
+        <span class="text-slate-600 dark:text-slate-300">Cannabis Concentrates</span>
+      </div>
+    </div>
+  </nav>
+
+  <section class="relative overflow-hidden bg-gradient-to-r from-amber-600 via-orange-600 to-yellow-600">
+    <div class="absolute inset-0 bg-black opacity-20"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div class="text-center">
+        <div class="text-8xl mb-8">{category.icon}</div>
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+          Cannabis Concentrates Guide
+        </h1>
+        <p class="text-xl md:text-2xl text-amber-100 max-w-3xl mx-auto leading-relaxed">
+          Explore high-potency cannabis concentrates, extraction methods, and consumption techniques for experienced users.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <article class="py-16 -mt-12 relative z-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-2xl">
+        <div class="prose prose-lg max-w-none dark:prose-invert">
+          <h2 class="text-3xl font-bold text-amber-800 dark:text-amber-400 mb-6">What are Cannabis Concentrates?</h2>
+
+          <p class="text-lg text-slate-700 dark:text-slate-300 leading-relaxed mb-8">
+            Cannabis concentrates are potent extracts that contain high levels of cannabinoids and terpenes with most
+            plant material removed. These products typically range from 60-90% THC content, making them significantly
+            more potent than traditional flower. Concentrates come in various consistencies and are produced through
+            different extraction methods.
+          </p>
+
+          <div class="grid md:grid-cols-2 gap-6 mb-8 not-prose">
+            <div class="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/20 dark:to-yellow-900/20 p-6 rounded-xl">
+              <h4 class="text-lg font-bold text-amber-800 dark:text-amber-400 mb-3">Shatter</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-400">
+                Glass-like consistency that breaks or "shatters." High potency with clean flavor profiles.
+              </p>
+            </div>
+            <div class="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 p-6 rounded-xl">
+              <h4 class="text-lg font-bold text-orange-800 dark:text-orange-400 mb-3">Wax/Budder</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-400">
+                Soft, pliable consistency. Easy to handle and measure for precise dosing.
+              </p>
+            </div>
+            <div class="bg-gradient-to-br from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 p-6 rounded-xl">
+              <h4 class="text-lg font-bold text-green-800 dark:text-green-400 mb-3">Live Resin</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-400">
+                Made from fresh-frozen plants. Preserves terpenes for exceptional flavor and aroma.
+              </p>
+            </div>
+            <div class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl">
+              <h4 class="text-lg font-bold text-purple-800 dark:text-purple-400 mb-3">Rosin</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-400">
+                Solventless extraction using heat and pressure. Pure, clean product with no chemical residues.
+              </p>
+            </div>
+          </div>
+
+          <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-xl border border-red-200 dark:border-red-800 mb-8">
+            <h4 class="font-bold text-red-800 dark:text-red-400 mb-4">⚠️ Important Safety Notice:</h4>
+            <p class="text-sm">
+              Concentrates are extremely potent and recommended for experienced cannabis users only.
+              Start with tiny amounts (rice grain size) and wait for effects before consuming more.
+              Always purchase from licensed dispensaries to ensure safety and quality.
+            </p>
+          </div>
+
+          <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-4">Extraction Methods</h3>
+
+          <div class="space-y-4 mb-8">
+            <div class="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-lg">
+              <h5 class="font-bold text-slate-800 dark:text-white mb-2">Solvent-Based Extraction</h5>
+              <p class="text-sm text-slate-600 dark:text-slate-400">
+                Uses solvents like butane, propane, or CO2 to extract cannabinoids. Requires professional equipment
+                and proper purging to remove all solvent residues.
+              </p>
+            </div>
+            <div class="bg-slate-50 dark:bg-slate-700/50 p-4 rounded-lg">
+              <h5 class="font-bold text-slate-800 dark:text-white mb-2">Solventless Extraction</h5>
+              <p class="text-sm text-slate-600 dark:text-slate-400">
+                Uses mechanical separation, heat, and pressure. Includes methods like rosin pressing and
+                ice water hash. Generally considered safer and cleaner.
+              </p>
+            </div>
+          </div>
+
+          <h3 class="text-2xl font-bold text-slate-800 dark:text-white mb-4">Consumption Methods</h3>
+
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-start">
+              <span class="text-amber-600 font-bold mr-3">🔥</span>
+              <span><strong>Dabbing:</strong> Using a heated surface (nail) to vaporize concentrates instantly</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-amber-600 font-bold mr-3">💨</span>
+              <span><strong>Vaping:</strong> Using concentrate-compatible vaporizers for controlled temperature</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-amber-600 font-bold mr-3">🌿</span>
+              <span><strong>Twaxing:</strong> Adding small amounts to flower before smoking</span>
+            </li>
+            <li class="flex items-start">
+              <span class="text-amber-600 font-bold mr-3">🍳</span>
+              <span><strong>Infusion:</strong> Creating edibles or topicals with precise dosing</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <section class="py-16 bg-gradient-to-r from-slate-50 to-amber-50 dark:from-slate-900 dark:to-amber-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-white mb-4">
+          Related Articles & Guides
+        </h2>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {relatedPosts.map((post) => (
+          <article class="bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+            <div class="mb-4">
+              <span class="inline-block bg-amber-100 dark:bg-amber-900/50 text-amber-800 dark:text-amber-400 text-xs font-semibold px-3 py-1 rounded-full">
+                {post.category}
+              </span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800 dark:text-white mb-3">
+              <a href={`/blog/${post.slug}`} class="hover:text-amber-600 dark:hover:text-amber-400">
+                {post.title}
+              </a>
+            </h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">
+              {post.excerpt}
+            </p>
+            <div class="flex justify-between items-center text-xs text-slate-500">
+              <span>{post.readTime}</span>
+              <a href={`/blog/${post.slug}`} class="text-amber-600 dark:text-amber-400 font-semibold">
+                Read More →
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

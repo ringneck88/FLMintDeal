@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_ui_ctas",
+  "info": {
+    "displayName": "CTA Block",
+    "description": "Call-to-action component"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "button_text": {
+      "type": "string",
+      "required": true
+    },
+    "button_url": {
+      "type": "string",
+      "required": true
+    },
+    "button_style": {
+      "type": "enumeration",
+      "enum": ["primary", "secondary", "outline"],
+      "default": "primary"
+    },
+    "background_color": {
+      "type": "string"
+    },
+    "text_color": {
+      "type": "string"
+    },
+    "is_external": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
