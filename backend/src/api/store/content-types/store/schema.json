@@ -8,12 +8,21 @@
     "description": "Physical dispensary store locations"
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "name": {
       "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "maxLength": 200,
       "required": true
     },
@@ -24,6 +33,11 @@
     },
     "store_code": {
       "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "maxLength": 50,
       "unique": true
     },
@@ -46,48 +60,98 @@
     },
     "address": {
       "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "component": "common.address",
       "repeatable": false,
       "required": true
     },
     "geo": {
       "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "component": "common.geo-point",
       "repeatable": false
     },
     "phone": {
       "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "maxLength": 20
     },
     "email": {
-      "type": "email"
+      "type": "email",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "timezone": {
       "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "default": "America/New_York"
     },
     "services": {
       "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "component": "store.service-tag",
       "repeatable": true
     },
     "amenities": {
       "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "component": "store.amenity-tag",
       "repeatable": true
     },
     "hours": {
       "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "component": "common.hours",
       "repeatable": false
     },
     "hour_exceptions": {
       "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "component": "common.hours-exception",
       "repeatable": true
     },
     "hero_media": {
       "type": "media",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "multiple": false,
       "allowedTypes": [
         "images",
@@ -96,6 +160,11 @@
     },
     "gallery": {
       "type": "media",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "multiple": true,
       "allowedTypes": [
         "images",
@@ -104,27 +173,57 @@
     },
     "cta_blocks": {
       "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "component": "ui.cta",
       "repeatable": true
     },
     "seo": {
       "type": "component",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "component": "seo.meta",
       "repeatable": false
     },
     "is_active": {
       "type": "boolean",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "default": true
     },
     "pos_location_id": {
       "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "maxLength": 100
     },
     "menu_url": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "online_ordering_url": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "promotions": {
       "type": "relation",
@@ -138,17 +237,20 @@
       "target": "api::event.event",
       "mappedBy": "stores"
     },
-    "jobs": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::job.job",
-      "mappedBy": "store"
-    },
     "announcements": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::announcement.announcement",
       "mappedBy": "stores"
+    },
+    "testing": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true
     }
   }
 }

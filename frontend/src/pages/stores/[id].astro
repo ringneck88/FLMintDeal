@@ -17,13 +17,8 @@ export async function getStaticPaths() {
     }));
   } catch (error) {
     console.error('Error fetching stores for static paths:', error);
-    // Safe minimal fallbacks
-    return [
-      { params: { id: 'miami-beach' }, props: { store: null } },
-      { params: { id: 'orlando-downtown' }, props: { store: null } },
-      { params: { id: 'tampa' }, props: { store: null } },
-      { params: { id: 'jacksonville' }, props: { store: null } },
-    ];
+    // No fallback paths - only show content from database
+    return [];
   }
 }
 
@@ -46,126 +41,8 @@ if (!storeData && id) {
     storeData = match ?? null;
   } catch (e: any) {
     error = e?.message ?? 'Failed to load store';
-    // Fallback samples
-    const sampleStores: Record<string, any> = {
-      'miami-beach': {
-        id: 1,
-        documentId: 'miami-beach',
-        Name: 'FL Mint Miami Beach',
-        Description:
-          'Premier cannabis dispensary serving Miami Beach and surrounding areas. Known for our extensive selection of premium products and knowledgeable staff.',
-        Address: '1234 Ocean Drive',
-        City: 'Miami Beach',
-        State: 'Florida',
-        ZipCode: '33139',
-        Phone: '(305) 555-0101',
-        Email: 'miamibeach@flmint.com',
-        Website: 'https://flmint.com/locations/miami-beach',
-        Latitude: 25.7617,
-        Longitude: -80.1918,
-        Hours: {
-          Monday: '9:00 AM - 9:00 PM',
-          Tuesday: '9:00 AM - 9:00 PM',
-          Wednesday: '9:00 AM - 9:00 PM',
-          Thursday: '9:00 AM - 9:00 PM',
-          Friday: '9:00 AM - 10:00 PM',
-          Saturday: '9:00 AM - 10:00 PM',
-          Sunday: '10:00 AM - 8:00 PM',
-        },
-        IsActive: true,
-        IsFeatured: true,
-        StoreManager: 'Sarah Rodriguez',
-        region: { id: 1, Name: 'South Florida', Code: 'SFL' },
-      },
-      'orlando-downtown': {
-        id: 2,
-        documentId: 'orlando-downtown',
-        Name: 'FL Mint Orlando Downtown',
-        Description:
-          'Flagship Central Florida location with state-of-the-art facilities and extensive product variety.',
-        Address: '1357 Orange Avenue',
-        City: 'Orlando',
-        State: 'Florida',
-        ZipCode: '32801',
-        Phone: '(407) 555-0201',
-        Email: 'orlando@flmint.com',
-        Website: 'https://flmint.com/locations/orlando',
-        Latitude: 28.5383,
-        Longitude: -81.3792,
-        Hours: {
-          Monday: '9:00 AM - 9:00 PM',
-          Tuesday: '9:00 AM - 9:00 PM',
-          Wednesday: '9:00 AM - 9:00 PM',
-          Thursday: '9:00 AM - 9:00 PM',
-          Friday: '9:00 AM - 10:00 PM',
-          Saturday: '9:00 AM - 10:00 PM',
-          Sunday: '10:00 AM - 8:00 PM',
-        },
-        IsActive: true,
-        IsFeatured: true,
-        StoreManager: 'Michael Thompson',
-        region: { id: 2, Name: 'Central Florida', Code: 'CFL' },
-      },
-      tampa: {
-        id: 3,
-        documentId: 'tampa',
-        Name: 'FL Mint Tampa',
-        Description:
-          'Large format store with consultation rooms and comprehensive wellness programs.',
-        Address: '5678 Kennedy Boulevard',
-        City: 'Tampa',
-        State: 'Florida',
-        ZipCode: '33609',
-        Phone: '(813) 555-0301',
-        Email: 'tampa@flmint.com',
-        Website: 'https://flmint.com/locations/tampa',
-        Latitude: 27.9506,
-        Longitude: -82.4572,
-        Hours: {
-          Monday: '9:00 AM - 9:00 PM',
-          Tuesday: '9:00 AM - 9:00 PM',
-          Wednesday: '9:00 AM - 9:00 PM',
-          Thursday: '9:00 AM - 9:00 PM',
-          Friday: '9:00 AM - 10:00 PM',
-          Saturday: '9:00 AM - 10:00 PM',
-          Sunday: '10:00 AM - 8:00 PM',
-        },
-        IsActive: true,
-        IsFeatured: true,
-        StoreManager: 'David Brown',
-        region: { id: 3, Name: 'Tampa Bay', Code: 'TB' },
-      },
-      jacksonville: {
-        id: 4,
-        documentId: 'jacksonville',
-        Name: 'FL Mint Jacksonville',
-        Description:
-          'North Florida flagship with full-service lab testing and custom product consultations.',
-        Address: '3344 Beach Boulevard',
-        City: 'Jacksonville',
-        State: 'Florida',
-        ZipCode: '32207',
-        Phone: '(904) 555-0401',
-        Email: 'jacksonville@flmint.com',
-        Website: 'https://flmint.com/locations/jacksonville',
-        Latitude: 30.3322,
-        Longitude: -81.6557,
-        Hours: {
-          Monday: '9:00 AM - 9:00 PM',
-          Tuesday: '9:00 AM - 9:00 PM',
-          Wednesday: '9:00 AM - 9:00 PM',
-          Thursday: '9:00 AM - 9:00 PM',
-          Friday: '9:00 AM - 10:00 PM',
-          Saturday: '9:00 AM - 10:00 PM',
-          Sunday: '10:00 AM - 8:00 PM',
-        },
-        IsActive: true,
-        IsFeatured: false,
-        StoreManager: 'Kevin Wilson',
-        region: { id: 4, Name: 'North Florida', Code: 'NFL' },
-      },
-    };
-    storeData = sampleStores[id];
+    // No fallback data - only show content from database
+    storeData = null;
   }
 }
 
@@ -179,63 +56,8 @@ if (storeData?.id) {
     });
   } catch (e) {
     console.error('Error fetching store products:', e);
-    // Fallback sample products (leaving your shape as-is)
-    products = [
-      {
-        id: 1,
-        Name: 'Premium Indica Flower',
-        Description: 'High-quality indica strain perfect for relaxation and evening use.',
-        Quanity: 3.5,
-        dosage_form: { Name: 'Flower', Title: 'Flower' },
-        cannaboid_type: { Name: 'THC Dominant', Title: 'THC Dominant' },
-        unit_type: { Name: 'grams', Title: 'grams' },
-      },
-      {
-        id: 2,
-        Name: 'Sativa Pre-Rolls',
-        Description: 'Energizing sativa blend in convenient pre-roll format.',
-        Quanity: 1,
-        dosage_form: { Name: 'Pre-Roll', Title: 'Pre-Roll' },
-        cannaboid_type: { Name: 'THC Dominant', Title: 'THC Dominant' },
-        unit_type: { Name: 'unit', Title: 'unit' },
-      },
-      {
-        id: 3,
-        Name: 'CBD Tincture',
-        Description: 'Pure CBD oil tincture for wellness and therapeutic benefits.',
-        Quanity: 30,
-        dosage_form: { Name: 'Tincture', Title: 'Tincture' },
-        cannaboid_type: { Name: 'CBD Dominant', Title: 'CBD Dominant' },
-        unit_type: { Name: 'ml', Title: 'ml' },
-      },
-      {
-        id: 4,
-        Name: 'Hybrid Gummies',
-        Description: 'Delicious hybrid cannabis gummies with balanced effects.',
-        Quanity: 10,
-        dosage_form: { Name: 'Edibles', Title: 'Edibles' },
-        cannaboid_type: { Name: 'Hybrid', Title: 'Hybrid' },
-        unit_type: { Name: 'pieces', Title: 'pieces' },
-      },
-      {
-        id: 5,
-        Name: 'Live Resin Cartridge',
-        Description: 'Premium live resin vape cartridge with full-spectrum effects.',
-        Quanity: 1,
-        dosage_form: { Name: 'Vape', Title: 'Vape' },
-        cannaboid_type: { Name: 'THC Dominant', Title: 'THC Dominant' },
-        unit_type: { Name: 'gram', Title: 'gram' },
-      },
-      {
-        id: 6,
-        Name: 'Topical Balm',
-        Description: 'Therapeutic cannabis-infused balm for localized relief.',
-        Quanity: 50,
-        dosage_form: { Name: 'Topical', Title: 'Topical' },
-        cannaboid_type: { Name: 'CBD Dominant', Title: 'CBD Dominant' },
-        unit_type: { Name: 'ml', Title: 'ml' },
-      },
-    ];
+    // No fallback data - only show content from database
+    products = [];
   }
 }
 

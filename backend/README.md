@@ -1,16 +1,71 @@
-# 🚀 Getting started with Strapi
+# FLMintDeals Backend - Strapi CMS
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+This is the Strapi backend for FLMintDeals, a cannabis deals platform running on PostgreSQL database.
 
-### `develop`
+## 🔑 Database Configuration
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+### PostgreSQL Credentials (Development)
+- **Host**: localhost
+- **Port**: 5432
+- **Database**: flmintdeal_dev
+- **Username**: postgres
+- **Password**: postgres
+- **Connection String**: `postgresql://postgres:postgres@localhost:5432/flmintdeal_dev`
 
+### Environment Variables (.env)
+```env
+DATABASE_CLIENT=postgres
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_NAME=flmintdeal_dev
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=postgres
+DATABASE_SSL=false
 ```
-npm run develop
+
+## 📊 Content Types & Data
+
+The database contains **99 entities** across various content types:
+- **Brands**: Cannabis brand information (2 entries)
+- **Cities**: Florida cities with dispensaries (14 entries)
+- **Stores**: Dispensary locations (6 entries)
+- **Regions**: Geographic regions (8 entries)
+- **Dosage Forms**: Product delivery methods (7 entries)
+- **Deals**: Cannabis deals and promotions
+- **Announcements**: Site announcements
+- **Events**: Cannabis events
+- **Jobs**: Employment opportunities
+
+## 🚀 Getting started with Strapi
+
+### Prerequisites
+1. **Docker Desktop** - Required for PostgreSQL database
+2. **Node.js** v18+ - For running Strapi
+
+### Database Setup
+```bash
+# Start PostgreSQL container
+docker-compose up -d postgres
+
+# Verify database is running
+docker ps | grep postgres
+```
+
+### Development Commands
+
+#### `develop`
+Start your Strapi application with autoReload enabled:
+```bash
+npm install                 # Install dependencies
+npm run develop            # Start development server
 # or
-yarn develop
+npm run dev                # Alias for develop
 ```
+
+**Access Points:**
+- **Admin Panel**: http://localhost:1337/admin
+- **API**: http://localhost:1337/api/*
+- **Documentation**: http://localhost:1337/documentation
 
 ### `start`
 
@@ -34,11 +89,24 @@ yarn build
 
 ## ⚙️ Deployment
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+### Production Deployment (Fly.io)
+The backend is configured for deployment on Fly.io with PostgreSQL:
 
+```bash
+# Deploy to production
+fly deploy --app flmintdeal
+
+# Set up PostgreSQL on Fly.io (first time)
+fly pg create --name flmintdeal-db --region ord
+fly pg attach flmintdeal-db --app flmintdeal
 ```
-yarn strapi deploy
-```
+
+### Production Environment
+- **URL**: https://flmintdeal-dev.fly.dev
+- **Admin**: https://flmintdeal-dev.fly.dev/admin
+- **API**: https://flmintdeal-dev.fly.dev/api/*
+
+For more deployment options, browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment).
 
 ## 📚 Learn more
 

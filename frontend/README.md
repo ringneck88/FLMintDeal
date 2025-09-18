@@ -1,10 +1,16 @@
-# Astro Starter Kit: Minimal
+# FLMintDeals Frontend - Astro Static Site
 
-```sh
-npm create astro@latest -- --template minimal
-```
+This is the frontend for FLMintDeals, a cannabis deals platform built with Astro and connected to a Strapi backend with PostgreSQL database.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🌐 URLs
+
+### Development
+- **Frontend**: http://localhost:4321
+- **Backend API**: http://localhost:1337/api/*
+
+### Production
+- **Frontend**: https://flmintdeal-frontend.pages.dev
+- **Backend API**: https://flmintdeal-dev.fly.dev/api/*
 
 ## 🚀 Project Structure
 

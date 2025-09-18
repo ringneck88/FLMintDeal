@@ -433,7 +433,6 @@ export interface ApiBrandBrand extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     default_seo: Schema.Attribute.Component<'seo.meta', false>;
     events: Schema.Attribute.Relation<'oneToMany', 'api::event.event'>;
-    jobs: Schema.Attribute.Relation<'oneToMany', 'api::job.job'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::brand.brand'> &
       Schema.Attribute.Private;
@@ -804,50 +803,6 @@ export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiJobJob extends Struct.CollectionTypeSchema {
-  collectionName: 'jobs';
-  info: {
-    description: 'Employment opportunities';
-    displayName: 'Job';
-    pluralName: 'jobs';
-    singularName: 'job';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    apply_email: Schema.Attribute.Email;
-    apply_url: Schema.Attribute.String;
-    brand: Schema.Attribute.Relation<'manyToOne', 'api::brand.brand'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.RichText & Schema.Attribute.Required;
-    employment_type: Schema.Attribute.Enumeration<
-      ['full-time', 'part-time', 'contract', 'temporary']
-    > &
-      Schema.Attribute.Required;
-    is_active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::job.job'> &
-      Schema.Attribute.Private;
-    posted_at: Schema.Attribute.DateTime & Schema.Attribute.Required;
-    publishedAt: Schema.Attribute.DateTime;
-    region: Schema.Attribute.Relation<'manyToOne', 'api::region.region'>;
-    seo: Schema.Attribute.Component<'seo.meta', false>;
-    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
-    store: Schema.Attribute.Relation<'manyToOne', 'api::store.store'>;
-    title: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 200;
-      }>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiLegalLegal extends Struct.SingleTypeSchema {
   collectionName: 'legals';
   info: {
@@ -1064,8 +1019,7 @@ export interface ApiRegionRegion extends Struct.CollectionTypeSchema {
         'WY',
       ]
     > &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+      Schema.Attribute.Required;
     compliance_policies: Schema.Attribute.Relation<
       'oneToMany',
       'api::compliance-policy.compliance-policy'
@@ -1075,7 +1029,6 @@ export interface ApiRegionRegion extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     delivery_rules: Schema.Attribute.Component<'ops.fulfillment-rules', false>;
     events: Schema.Attribute.Relation<'oneToMany', 'api::event.event'>;
-    jobs: Schema.Attribute.Relation<'oneToMany', 'api::job.job'>;
     legal_disclaimer: Schema.Attribute.Component<'legal.disclaimer', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -1112,12 +1065,27 @@ export interface ApiStoreStore extends Struct.CollectionTypeSchema {
     singularName: 'store';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
   };
   attributes: {
     address: Schema.Attribute.Component<'common.address', false> &
-      Schema.Attribute.Required;
-    amenities: Schema.Attribute.Component<'store.amenity-tag', true>;
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    amenities: Schema.Attribute.Component<'store.amenity-tag', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     announcements: Schema.Attribute.Relation<
       'manyToMany',
       'api::announcement.announcement'
@@ -1127,31 +1095,98 @@ export interface ApiStoreStore extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    cta_blocks: Schema.Attribute.Component<'ui.cta', true>;
-    email: Schema.Attribute.Email;
+    cta_blocks: Schema.Attribute.Component<'ui.cta', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    email: Schema.Attribute.Email &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     events: Schema.Attribute.Relation<'manyToMany', 'api::event.event'>;
-    gallery: Schema.Attribute.Media<'images' | 'videos', true>;
-    geo: Schema.Attribute.Component<'common.geo-point', false>;
-    hero_media: Schema.Attribute.Media<'images' | 'videos'>;
-    hour_exceptions: Schema.Attribute.Component<'common.hours-exception', true>;
-    hours: Schema.Attribute.Component<'common.hours', false>;
-    is_active: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
-    jobs: Schema.Attribute.Relation<'oneToMany', 'api::job.job'>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::store.store'> &
-      Schema.Attribute.Private;
-    menu_url: Schema.Attribute.String;
+    gallery: Schema.Attribute.Media<'images' | 'videos', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    geo: Schema.Attribute.Component<'common.geo-point', false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    hero_media: Schema.Attribute.Media<'images' | 'videos'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    hour_exceptions: Schema.Attribute.Component<
+      'common.hours-exception',
+      true
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    hours: Schema.Attribute.Component<'common.hours', false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    is_active: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
+      Schema.Attribute.DefaultTo<true>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::store.store'>;
+    menu_url: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     name: Schema.Attribute.String &
       Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 200;
       }>;
-    online_ordering_url: Schema.Attribute.String;
+    online_ordering_url: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     phone: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 20;
       }>;
     pos_location_id: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 100;
       }>;
@@ -1161,15 +1196,42 @@ export interface ApiStoreStore extends Struct.CollectionTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     region: Schema.Attribute.Relation<'manyToOne', 'api::region.region'>;
-    seo: Schema.Attribute.Component<'seo.meta', false>;
-    services: Schema.Attribute.Component<'store.service-tag', true>;
+    seo: Schema.Attribute.Component<'seo.meta', false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    services: Schema.Attribute.Component<'store.service-tag', true> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
     store_code: Schema.Attribute.String &
       Schema.Attribute.Unique &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 50;
       }>;
+    testing: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
     timezone: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
       Schema.Attribute.DefaultTo<'America/New_York'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1732,7 +1794,6 @@ declare module '@strapi/strapi' {
       'api::event.event': ApiEventEvent;
       'api::global.global': ApiGlobalGlobal;
       'api::ingredient.ingredient': ApiIngredientIngredient;
-      'api::job.job': ApiJobJob;
       'api::legal.legal': ApiLegalLegal;
       'api::page.page': ApiPagePage;
       'api::promotion.promotion': ApiPromotionPromotion;

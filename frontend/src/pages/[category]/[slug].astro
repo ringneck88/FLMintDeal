@@ -137,41 +137,9 @@ try {
 } catch (error) {
   console.log('Using fallback data for state-specific page');
 
-  // Fallback store data
-  storeData = [
-    {
-      name: `Cannabis Dispensary - ${stateName}`,
-      address: '123 Main Street',
-      city: 'Downtown',
-      state: stateName,
-      phone: '(555) 123-4567',
-      hours: 'Mon-Sun: 9AM-9PM'
-    },
-    {
-      name: `Green Medicine - ${stateName}`,
-      address: '456 Oak Avenue',
-      city: 'Midtown',
-      state: stateName,
-      phone: '(555) 234-5678',
-      hours: 'Mon-Sun: 8AM-10PM'
-    }
-  ];
-
-  // Fallback deals data
-  deals = [
-    {
-      title: `20% Off ${categoryName}`,
-      description: `Save 20% on all ${categoryName.toLowerCase()} products this week.`,
-      discount: '20% OFF',
-      store: `Dispensary in ${stateName}`
-    },
-    {
-      title: `Buy 2 Get 1 Free ${categoryName}`,
-      description: `Special promotion on ${categoryName.toLowerCase()} - buy any two and get the third free.`,
-      discount: 'B2G1 FREE',
-      store: `Green Medicine ${stateName}`
-    }
-  ];
+  // No fallback data - only show content from database
+  storeData = [];
+  deals = [];
 }
 ---
 

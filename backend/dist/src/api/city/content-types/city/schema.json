@@ -1,0 +1,38 @@
+{
+    "kind": "collectionType",
+    "collectionName": "cities",
+    "info": {
+        "singularName": "city",
+        "pluralName": "cities",
+        "displayName": "City",
+        "description": "Cities/markets for filtering stores"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "name": {
+            "type": "string",
+            "required": true,
+            "maxLength": 100
+        },
+        "slug": {
+            "type": "uid",
+            "targetField": "name",
+            "required": true
+        },
+        "region": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::region.region",
+            "inversedBy": "cities"
+        },
+        "stores": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::store.store",
+            "mappedBy": "city"
+        }
+    }
+}

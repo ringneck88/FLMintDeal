@@ -14,11 +14,12 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": true,
-      "maxLength": 100
+      "maxLength": 100,
+      "required": true
     },
     "code": {
       "type": "enumeration",
+      "required": true,
       "enum": [
         "AL",
         "AK",
@@ -70,9 +71,7 @@
         "WV",
         "WI",
         "WY"
-      ],
-      "required": true,
-      "unique": true
+      ]
     },
     "timezone": {
       "type": "string",
@@ -80,8 +79,8 @@
     },
     "tax_profile": {
       "type": "component",
-      "repeatable": false,
-      "component": "commerce.tax-profile"
+      "component": "commerce.tax-profile",
+      "repeatable": false
     },
     "age_restriction": {
       "type": "integer",
@@ -91,13 +90,13 @@
     },
     "legal_disclaimer": {
       "type": "component",
-      "repeatable": false,
-      "component": "legal.disclaimer"
+      "component": "legal.disclaimer",
+      "repeatable": false
     },
     "delivery_rules": {
       "type": "component",
-      "repeatable": false,
-      "component": "ops.fulfillment-rules"
+      "component": "ops.fulfillment-rules",
+      "repeatable": false
     },
     "stores": {
       "type": "relation",
@@ -127,12 +126,6 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::event.event",
-      "mappedBy": "region"
-    },
-    "jobs": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::job.job",
       "mappedBy": "region"
     },
     "announcements": {

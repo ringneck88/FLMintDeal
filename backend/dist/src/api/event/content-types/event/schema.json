@@ -1,0 +1,79 @@
+{
+    "kind": "collectionType",
+    "collectionName": "events",
+    "info": {
+        "singularName": "event",
+        "pluralName": "events",
+        "displayName": "Event",
+        "description": "Store events and special occasions"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "title": {
+            "type": "string",
+            "required": true,
+            "maxLength": 200
+        },
+        "slug": {
+            "type": "uid",
+            "targetField": "title",
+            "required": true
+        },
+        "description": {
+            "type": "richtext"
+        },
+        "start_at": {
+            "type": "datetime",
+            "required": true
+        },
+        "end_at": {
+            "type": "datetime"
+        },
+        "location_override": {
+            "type": "component",
+            "repeatable": false,
+            "component": "common.address"
+        },
+        "hero_media": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images",
+                "videos"
+            ]
+        },
+        "rsvp_url": {
+            "type": "string"
+        },
+        "stores": {
+            "type": "relation",
+            "relation": "manyToMany",
+            "target": "api::store.store",
+            "inversedBy": "events"
+        },
+        "brand": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::brand.brand",
+            "inversedBy": "events"
+        },
+        "region": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::region.region",
+            "inversedBy": "events"
+        },
+        "seo": {
+            "type": "component",
+            "repeatable": false,
+            "component": "seo.meta"
+        },
+        "is_active": {
+            "type": "boolean",
+            "default": true
+        }
+    }
+}

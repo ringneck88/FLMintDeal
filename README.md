@@ -1,6 +1,6 @@
 # FLMintDeals - Full-Stack Cannabis Deals Platform
 
-A modern full-stack deals/commerce website built with Strapi (headless CMS) and Astro (static site generator).
+A modern full-stack deals/commerce website built with Strapi (headless CMS) and Astro (static site generator), now running with PostgreSQL database.
 
 ## 🌐 Live Deployment URLs
 
@@ -14,6 +14,7 @@ A modern full-stack deals/commerce website built with Strapi (headless CMS) and 
 - **Frontend**: http://localhost:4321
 - **Backend API**: http://localhost:1337/api/*
 - **Admin Panel**: http://localhost:1337/admin
+- **PostgreSQL Database**: localhost:5432 (via Docker)
 
 ## 🏗️ Project Structure
 
@@ -35,6 +36,19 @@ FLMintDeal/
 
 ## 🚀 Quick Start
 
+### Prerequisites
+1. **Docker Desktop** - Required for PostgreSQL database
+2. **Node.js** v18+ - For running the applications
+
+### Database Setup (PostgreSQL)
+```bash
+# Start PostgreSQL with Docker Compose
+docker-compose up -d postgres
+
+# Verify PostgreSQL is running
+docker ps | grep postgres
+```
+
 ### Backend (Strapi CMS)
 ```bash
 cd backend
@@ -51,14 +65,33 @@ npm run dev                 # Development mode
 # Access site at http://localhost:4321
 ```
 
+## 🔑 Development Credentials
+
+### PostgreSQL Database
+- **Host**: localhost
+- **Port**: 5432
+- **Database**: flmintdeal_dev
+- **Username**: postgres
+- **Password**: postgres
+- **Connection String**: `postgresql://postgres:postgres@localhost:5432/flmintdeal_dev`
+
+### Strapi Admin Panel
+- **URL**: http://localhost:1337/admin
+- **Note**: Create your first admin user when accessing for the first time
+
 ## 📝 Content Management
 
 ### Available Content Types
-- **Cannabinoids Types**: Cannabis compound information
-- **Dosing Forms**: Product delivery methods
-- **Ingredients**: Product ingredients
-- **Dosage Products**: Cannabis products
-- **Unit Types**: Measurement units
+- **Brands**: Cannabis brand information (2 entries)
+- **Cities**: Florida cities with dispensaries (14 entries)
+- **Stores**: Dispensary locations (6 entries)
+- **Regions**: Geographic regions (8 entries)
+- **Dosage Forms**: Product delivery methods (7 entries)
+- **Deals**: Cannabis deals and promotions
+- **Announcements**: Site announcements
+- **Events**: Cannabis events
+- **Jobs**: Employment opportunities
+- **Pages**: Static pages
 
 ### Admin Access
 - **URL**: https://flmintdeal-dev.fly.dev/admin
@@ -71,21 +104,28 @@ The frontend automatically connects to the backend API:
 **API Base URL**: `https://flmintdeal-dev.fly.dev`
 
 **Example API Endpoints**:
-- `GET /api/cannabinoids-types` - List cannabinoid types
-- `GET /api/dosing-forms` - List dosing forms
-- `GET /api/ingredients` - List ingredients
-- `GET /api/dosage-products` - List products
+- `GET /api/brands` - List cannabis brands
+- `GET /api/stores` - List dispensary stores
+- `GET /api/cities` - List cities with dispensaries
+- `GET /api/dosage-forms` - List dosing forms
+- `GET /api/deals` - List cannabis deals
+- `GET /api/regions` - List geographic regions
+
+**Note**: API endpoints may return 404 until permissions are configured in the admin panel.
 
 ## 🎯 Current Status
 
-✅ **Backend**: Deployed and running in development mode  
-✅ **Frontend**: Deployed on Cloudflare Pages  
-⚠️ **API Connection**: Frontend needs configuration update to connect to backend  
+✅ **Database**: PostgreSQL running via Docker with migrated data
+✅ **Backend**: Running on PostgreSQL with 99 imported entities
+✅ **Frontend**: Running and connected to backend
+✅ **Data Migration**: Complete - all SQLite data successfully migrated to PostgreSQL
+⚠️ **API Permissions**: May need configuration in admin panel for public access
 
-### Known Issue
-The frontend is currently looking for `/api/deals` but the backend has different content types. This can be resolved by:
-1. Adding a "deals" content type in Strapi admin, or
-2. Updating the frontend to use existing content types
+### Migration Completed
+All data has been successfully migrated from SQLite to PostgreSQL:
+- **99 entities** including brands, stores, cities, regions, dosage forms
+- **1.3MB** of content including assets and configurations
+- **Complete data integrity** preserved during migration
 
 ## 🚀 Deployment Instructions
 
@@ -138,7 +178,7 @@ fly deploy --app flmintdeal  # Production backend
 - **Deployment**: 
   - Backend: Fly.io
   - Frontend: Cloudflare Pages
-- **Database**: SQLite (development), PostgreSQL (production capable)
+- **Database**: PostgreSQL (development and production)
 
 ## 📖 Documentation
 

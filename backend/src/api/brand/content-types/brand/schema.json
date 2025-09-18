@@ -14,9 +14,9 @@
   "attributes": {
     "name": {
       "type": "string",
+      "maxLength": 100,
       "required": true,
-      "unique": true,
-      "maxLength": 100
+      "unique": true
     },
     "slug": {
       "type": "uid",
@@ -40,8 +40,8 @@
     },
     "default_seo": {
       "type": "component",
-      "repeatable": false,
-      "component": "seo.meta"
+      "component": "seo.meta",
+      "repeatable": false
     },
     "promotions": {
       "type": "relation",
@@ -59,12 +59,6 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::event.event",
-      "mappedBy": "brand"
-    },
-    "jobs": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::job.job",
       "mappedBy": "brand"
     }
   }

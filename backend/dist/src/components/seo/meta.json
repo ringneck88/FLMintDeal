@@ -1,0 +1,49 @@
+{
+    "collectionName": "components_seo_metas",
+    "info": {
+        "displayName": "SEO Meta",
+        "description": "SEO metadata fields"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string",
+            "maxLength": 60
+        },
+        "description": {
+            "type": "text",
+            "maxLength": 160
+        },
+        "keywords": {
+            "type": "string"
+        },
+        "canonical_url": {
+            "type": "string"
+        },
+        "og_title": {
+            "type": "string",
+            "maxLength": 60
+        },
+        "og_description": {
+            "type": "text",
+            "maxLength": 160
+        },
+        "og_image": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": ["images"]
+        },
+        "twitter_card": {
+            "type": "enumeration",
+            "enum": ["summary", "summary_large_image", "app", "player"],
+            "default": "summary_large_image"
+        },
+        "robots": {
+            "type": "string",
+            "default": "index,follow"
+        },
+        "structured_data": {
+            "type": "json"
+        }
+    }
+}

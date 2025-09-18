@@ -87,105 +87,44 @@ try {
   strapiStatus = 'Disconnected - Cannot connect to backend';
   apiError = error.name === 'AbortError' ? 'Connection timeout' : error.message;
 
-  // Fallback sample data
-  deals = [
-    {
-      id: 1,
-      title: '25% Off All Flower',
-      description: 'Get 25% off all flower products this week. High-quality strains available.',
-      discount: '25% OFF',
-      validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-      store: 'Green Valley Dispensary',
-      category: 'Flower',
-      image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=300&fit=crop&q=80',
-      publishedAt: new Date().toISOString()
-    },
-    {
-      id: 2,
-      title: 'Buy 2 Get 1 Free Edibles',
-      description: 'Stock up on your favorite edibles with our buy 2 get 1 free promotion.',
-      discount: 'B2G1 FREE',
-      validUntil: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
-      store: 'Sunshine Cannabis',
-      category: 'Edibles',
-      image: 'https://images.unsplash.com/photo-1582048928301-2b9c1ed1b93a?w=400&h=300&fit=crop&q=80',
-      publishedAt: new Date().toISOString()
-    }
-  ];
-
-  stores = [
-    {
-      id: 1,
-      name: 'Mint Cannabis - Tempe',
-      address: '1237 E University Dr',
-      city: 'Tempe',
-      state: 'AZ',
-      phone: '(480) 999-6468',
-      hours: 'Mon-Sun: 8AM-10PM',
-      slug: 'mint-cannabis-tempe',
-      image: 'https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=400&h=300&fit=crop&q=80',
-      publishedAt: new Date().toISOString()
-    },
-    {
-      id: 2,
-      name: 'Mint Cannabis - Phoenix',
-      address: '1949 E Camelback Rd',
-      city: 'Phoenix',
-      state: 'AZ',
-      phone: '(602) 999-6468',
-      hours: 'Mon-Sun: 8AM-10PM',
-      slug: 'mint-cannabis-phoenix',
-      image: 'https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=400&h=300&fit=crop&q=80',
-      publishedAt: new Date().toISOString()
-    },
-    {
-      id: 3,
-      name: 'Mint Cannabis - Mesa',
-      address: '1919 S Stapley Dr',
-      city: 'Mesa',
-      state: 'AZ',
-      phone: '(480) 999-6468',
-      hours: 'Mon-Sun: 8AM-10PM',
-      slug: 'mint-cannabis-mesa',
-      image: 'https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=400&h=300&fit=crop&q=80',
-      publishedAt: new Date().toISOString()
-    }
-  ];
-
-  categories = [
-    { id: 1, title: 'Flower', description: 'Premium cannabis flower for smoking and vaporizing', slug: 'flower', icon: '🌿', publishedAt: new Date().toISOString() },
-    { id: 2, title: 'Edibles', description: 'Cannabis-infused food products with precise dosing', slug: 'edibles', icon: '🍭', publishedAt: new Date().toISOString() },
-    { id: 3, title: 'Concentrates', description: 'High-potency cannabis extracts for experienced users', slug: 'concentrates', icon: '🍯', publishedAt: new Date().toISOString() },
-    { id: 4, title: 'Vaporizers', description: 'Clean, efficient cannabis vaporization products', slug: 'vaporizers', icon: '💨', publishedAt: new Date().toISOString() },
-    { id: 5, title: 'Pre-Rolls', description: 'Ready-to-smoke pre-rolled cannabis joints', slug: 'pre-rolls', icon: '🚬', publishedAt: new Date().toISOString() },
-    { id: 6, title: 'Topicals', description: 'Cannabis-infused topical products for localized relief', slug: 'topicals', icon: '🧴', publishedAt: new Date().toISOString() }
-  ];
+  // No fallback data - only show content from database
+  deals = [];
+  stores = [];
+  categories = [];
 }
 ---
 
 <Layout title="FLMintDeals - Cannabis Deals in Florida" description="Find the best cannabis deals and dispensary locations across Florida. Your trusted source for cannabis savings.">
   <!-- Hero Section -->
-  <div class="relative bg-gradient-to-r from-green-600 to-blue-700 text-white">
-    <div class="px-4 py-16 sm:px-6 lg:px-8">
+  <div id="hero" class="relative bg-gradient-to-r from-green-600 to-blue-700 text-white overflow-hidden">
+    <!-- Background parallax image -->
+    <div
+      id="parallax-bg"
+      class="absolute inset-0 opacity-30 bg-cover bg-center transition-transform duration-100 ease-out"
+      style="background-image: url('https://mintdeals.com/wp-content/uploads/2024/08/header-FLOWER-mobile@2x.jpg'); transform: scale(1.1);"
+    ></div>
+
+    <div class="relative z-10 px-4 py-8 sm:px-6 lg:px-8">
       <div class="text-center">
-        <div class="mb-6">
+        <div class="mb-4">
           <img
+            id="parallax-logo"
             src="/Mint_Full_Logo_Vector_Bead.png"
             alt="FLMintDeals"
-            class="h-20 w-auto sm:h-24 lg:h-32 mx-auto"
+            class="h-16 w-auto sm:h-20 lg:h-24 mx-auto transition-transform duration-100 ease-out"
           />
         </div>
-        <h1 class="text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+        <h1 class="text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
           Florida Cannabis Deals
         </h1>
-        <p class="mt-6 text-xl text-green-100 max-w-3xl mx-auto">
-          Discover the best cannabis deals and dispensary locations across Florida. Save money on quality products from trusted dispensaries.
+        <p class="mt-4 text-lg text-green-100 max-w-2xl mx-auto">
+          Discover the best cannabis deals and dispensary locations across Florida.
         </p>
-        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="#deals" class="inline-flex items-center px-6 py-3 border border-transparent text-lg font-medium rounded-md text-green-700 bg-white hover:bg-green-50 transition-colors duration-200">
+        <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="#deals" class="inline-flex items-center px-5 py-2.5 border border-transparent text-base font-medium rounded-md text-green-700 bg-white hover:bg-green-50 transition-colors duration-200">
             🔥 View Current Deals
           </a>
-          <a href="/stores" class="inline-flex items-center px-6 py-3 border-2 border-white text-lg font-medium rounded-md text-white hover:bg-white hover:text-green-700 transition-colors duration-200">
+          <a href="/stores" class="inline-flex items-center px-5 py-2.5 border-2 border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-green-700 transition-colors duration-200">
             📍 Find Dispensaries
           </a>
         </div>
@@ -403,3 +342,52 @@ try {
     overflow: hidden;
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const hero = document.getElementById('hero');
+    const parallaxBg = document.getElementById('parallax-bg');
+    const parallaxLogo = document.getElementById('parallax-logo');
+
+    if (!hero || !parallaxBg || !parallaxLogo) return;
+
+    let ticking = false;
+
+    function updateParallax(x, y) {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          // Get hero dimensions
+          const rect = hero.getBoundingClientRect();
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          // Calculate mouse position relative to hero center
+          const mouseX = x - rect.left - centerX;
+          const mouseY = y - rect.top - centerY;
+
+          // Calculate movement as percentage of hero size
+          const moveX = (mouseX / centerX) * 15; // Max 15px movement
+          const moveY = (mouseY / centerY) * 15; // Max 15px movement
+
+          // Apply transforms
+          parallaxBg.style.transform = `scale(1.1) translate(${moveX * 0.5}px, ${moveY * 0.5}px)`;
+          parallaxLogo.style.transform = `translate(${moveX * 0.3}px, ${moveY * 0.3}px)`;
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    // Mouse move event
+    hero.addEventListener('mousemove', function(e) {
+      updateParallax(e.clientX, e.clientY);
+    });
+
+    // Reset on mouse leave
+    hero.addEventListener('mouseleave', function() {
+      parallaxBg.style.transform = 'scale(1.1) translate(0px, 0px)';
+      parallaxLogo.style.transform = 'translate(0px, 0px)';
+    });
+  });
+</script>

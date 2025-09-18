@@ -1,0 +1,34 @@
+{
+    "collectionName": "components_ops_redirects",
+    "info": {
+        "displayName": "Redirect",
+        "description": "URL redirect configuration"
+    },
+    "options": {},
+    "attributes": {
+        "from_path": {
+            "type": "string",
+            "required": true
+        },
+        "to_path": {
+            "type": "string",
+            "required": true
+        },
+        "status_code": {
+            "type": "enumeration",
+            "enum": ["permanent_301", "temporary_302", "temporary_307", "permanent_308"],
+            "default": "permanent_301"
+        },
+        "is_active": {
+            "type": "boolean",
+            "default": true
+        },
+        "is_regex": {
+            "type": "boolean",
+            "default": false
+        },
+        "description": {
+            "type": "string"
+        }
+    }
+}

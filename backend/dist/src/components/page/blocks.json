@@ -1,0 +1,33 @@
+{
+    "collectionName": "components_page_blocks",
+    "info": {
+        "displayName": "Page Blocks",
+        "description": "Dynamic page layout blocks"
+    },
+    "options": {},
+    "attributes": {
+        "block_type": {
+            "type": "enumeration",
+            "enum": ["hero", "text", "image", "gallery", "cta", "form", "map", "video"],
+            "required": true
+        },
+        "title": {
+            "type": "string"
+        },
+        "content": {
+            "type": "richtext"
+        },
+        "media": {
+            "type": "media",
+            "multiple": true,
+            "allowedTypes": ["images", "videos"]
+        },
+        "settings": {
+            "type": "json"
+        },
+        "order": {
+            "type": "integer",
+            "default": 0
+        }
+    }
+}

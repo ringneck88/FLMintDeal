@@ -1,0 +1,31 @@
+{
+    "collectionName": "components_common_hours_exceptions",
+    "info": {
+        "displayName": "Hours Exception",
+        "description": "Special hours for holidays and events"
+    },
+    "options": {},
+    "attributes": {
+        "date": {
+            "type": "date",
+            "required": true
+        },
+        "name": {
+            "type": "string",
+            "required": true
+        },
+        "is_closed": {
+            "type": "boolean",
+            "default": false
+        },
+        "open_time": {
+            "type": "time"
+        },
+        "close_time": {
+            "type": "time"
+        },
+        "note": {
+            "type": "text"
+        }
+    }
+}

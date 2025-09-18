@@ -1,0 +1,56 @@
+{
+    "kind": "singleType",
+    "collectionName": "globals",
+    "info": {
+        "singularName": "global",
+        "pluralName": "globals",
+        "displayName": "Global",
+        "description": "Global site configuration and settings"
+    },
+    "options": {
+        "draftAndPublish": false
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "brands": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::brand.brand"
+        },
+        "primary_brand": {
+            "type": "relation",
+            "relation": "oneToOne",
+            "target": "api::brand.brand"
+        },
+        "header_nav": {
+            "type": "component",
+            "repeatable": false,
+            "component": "ui.nav"
+        },
+        "footer_nav": {
+            "type": "component",
+            "repeatable": false,
+            "component": "ui.nav"
+        },
+        "default_seo": {
+            "type": "component",
+            "repeatable": false,
+            "component": "seo.meta"
+        },
+        "tracking": {
+            "type": "component",
+            "repeatable": false,
+            "component": "ops.tracking-ids"
+        },
+        "store_finder_settings": {
+            "type": "component",
+            "repeatable": false,
+            "component": "ui.store-finder-settings"
+        },
+        "support_links": {
+            "type": "component",
+            "repeatable": false,
+            "component": "ui.link-list"
+        }
+    }
+}

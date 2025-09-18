@@ -1,0 +1,23 @@
+{
+    "collectionName": "components_legal_terms",
+    "info": {
+        "displayName": "Legal Terms",
+        "description": "Terms and conditions component"
+    },
+    "options": {},
+    "attributes": {
+        "content": {
+            "type": "richtext",
+            "required": true
+        },
+        "version": {
+            "type": "string"
+        },
+        "effective_date": {
+            "type": "date"
+        },
+        "summary": {
+            "type": "text"
+        }
+    }
+}

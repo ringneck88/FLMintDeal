@@ -1,0 +1,38 @@
+{
+    "collectionName": "components_commerce_tax_profiles",
+    "info": {
+        "displayName": "Tax Profile",
+        "description": "Tax calculation configuration"
+    },
+    "options": {},
+    "attributes": {
+        "sales_tax_rate": {
+            "type": "decimal",
+            "min": 0,
+            "max": 1
+        },
+        "excise_tax_rate": {
+            "type": "decimal",
+            "min": 0,
+            "max": 1
+        },
+        "local_tax_rate": {
+            "type": "decimal",
+            "min": 0,
+            "max": 1
+        },
+        "tax_inclusive": {
+            "type": "boolean",
+            "default": false
+        },
+        "medical_tax_exempt": {
+            "type": "boolean",
+            "default": false
+        },
+        "tax_display_mode": {
+            "type": "enumeration",
+            "enum": ["inclusive", "exclusive", "both"],
+            "default": "exclusive"
+        }
+    }
+}
