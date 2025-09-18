@@ -79,6 +79,12 @@
       "type": "component",
       "component": "seo.meta",
       "repeatable": false
+    },
+    "regions": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::region.region",
+      "inversedBy": "promotions"
     }
   }
 }

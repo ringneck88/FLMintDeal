@@ -52,12 +52,6 @@
       "target": "api::region.region",
       "inversedBy": "stores"
     },
-    "city": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::city.city",
-      "inversedBy": "stores"
-    },
     "address": {
       "type": "component",
       "pluginOptions": {
@@ -242,15 +236,6 @@
       "relation": "manyToMany",
       "target": "api::announcement.announcement",
       "mappedBy": "stores"
-    },
-    "testing": {
-      "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "required": true
     }
   }
 }

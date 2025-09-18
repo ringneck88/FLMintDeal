@@ -77,11 +77,6 @@
       "type": "string",
       "default": "America/New_York"
     },
-    "tax_profile": {
-      "type": "component",
-      "component": "commerce.tax-profile",
-      "repeatable": false
-    },
     "age_restriction": {
       "type": "integer",
       "default": 21,
@@ -93,21 +88,10 @@
       "component": "legal.disclaimer",
       "repeatable": false
     },
-    "delivery_rules": {
-      "type": "component",
-      "component": "ops.fulfillment-rules",
-      "repeatable": false
-    },
     "stores": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::store.store",
-      "mappedBy": "region"
-    },
-    "cities": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::city.city",
       "mappedBy": "region"
     },
     "promotions": {

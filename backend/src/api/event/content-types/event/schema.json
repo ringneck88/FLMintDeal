@@ -97,6 +97,12 @@
       "type": "component",
       "component": "seo.meta",
       "repeatable": false
+    },
+    "region": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::region.region",
+      "inversedBy": "events"
     }
   }
 }
