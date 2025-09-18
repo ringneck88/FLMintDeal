@@ -1,0 +1,120 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+.astro/
+
+# Database files (SQLite)
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Temporary files and directories
+.tmp/
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Backup files
+*.backup*
+*.bak
+*.orig
+
+# Archive files (unless specifically needed)
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# Database dumps and backups
+*.sql
+*.dump
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# IDE and editor files
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+.nyc_output/
+
+# Cache directories
+.npm
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Strapi specific
+.cache/
+.strapi/
+.strapi-updater.json
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Export directories (temporary)
+strapi-export/
+exports/
+
+# Windows specific
+nul
+
+# Development and testing files
+dev-*.json
+test-*.js
+*-test.js
+*.test.js
+*.spec.js
+
+# Migration and setup scripts (keep essential ones, ignore temporary)
+complete-migration.bat
+fix-permissions.js
+migration-script.sh
+production_backup_*.sql
+
+# Project specific files that shouldn't be tracked
+preview.html
+Untitled-*
