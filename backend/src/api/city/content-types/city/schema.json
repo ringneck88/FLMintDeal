@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cities",
+  "info": {
+    "singularName": "city",
+    "pluralName": "cities",
+    "displayName": "City",
+    "description": "City management for store locations"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "state": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50
+    },
+    "country": {
+      "type": "string",
+      "required": true,
+      "default": "United States",
+      "maxLength": 50
+    },
+    "timezone": {
+      "type": "string",
+      "default": "America/New_York"
+    },
+    "stores": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::store.store",
+      "mappedBy": "city"
+    }
+  }
+}

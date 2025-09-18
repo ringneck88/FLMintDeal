@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_commerce_tax_profiles",
+  "info": {
+    "displayName": "Tax Profile",
+    "description": "Tax rates for different tax types"
+  },
+  "options": {},
+  "attributes": {
+    "salesTax": {
+      "type": "decimal",
+      "required": false,
+      "min": 0,
+      "max": 100,
+      "default": 0
+    },
+    "exciseTax": {
+      "type": "decimal",
+      "required": false,
+      "min": 0,
+      "max": 100,
+      "default": 0
+    },
+    "localTax": {
+      "type": "decimal",
+      "required": false,
+      "min": 0,
+      "max": 100,
+      "default": 0
+    }
+  }
+}
